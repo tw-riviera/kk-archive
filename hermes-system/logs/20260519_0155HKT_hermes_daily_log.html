@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日誌 · 2026/05/18</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --ink: #1a1a1a;
+            --ink-light: #4a4a4a;
+            --ink-faint: #8a8a8a;
+            --paper: #fafafa;
+            --paper-warm: #f5f3f0;
+            --rule: #e0ddd8;
+            --rule-light: #eceae6;
+            --accent: #c45c26;
+            --accent-soft: #d4845a;
+            --success: #4a7c59;
+            --warn: #b8860b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.85;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 頁首 */
+        .masthead {
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 0;
+            background: linear-gradient(180deg, #fff 0%, var(--paper) 100%);
+        }
+
+        .masthead .date-badge {
+            display: inline-block;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .masthead h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            color: var(--ink);
+        }
+
+        .masthead .subtitle {
+            font-size: 15px;
+            color: var(--ink-faint);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .divider-ornament {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin: 28px auto 0;
+            opacity: 0.6;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* 章節 */
+        section {
+            margin: 64px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--rule-light);
+        }
+
+        .section-number {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-soft);
+            opacity: 0.4;
+            line-height: 1;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .section-title span {
+            display: block;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 12px;
+            color: var(--ink-faint);
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        /* 問題卡片 */
+        .problem-card {
+            background: #fff;
+            border: 1px solid var(--rule);
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0.7;
+        }
+
+        .problem-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .problem-title {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .problem-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--ink-faint);
+        }
+
+        .problem-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 指令區塊 */
+        .command-block {
+            margin: 28px 0;
+            background: var(--paper-warm);
+            border: 1px solid var(--rule);
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .command-header {
+            background: #fff;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--rule);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .command-tag {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .command-risk {
+            font-size: 11px;
+            padding: 2px 10px;
+            border: 1px solid var(--rule);
+            color: var(--ink-faint);
+        }
+
+        .command-risk.safe {
+            color: var(--success);
+            border-color: #c8dccf;
+        }
+
+        .command-risk.warn {
+            color: var(--warn);
+            border-color: #e8d9a0;
+        }
+
+        .command-risk.danger {
+            color: #a04545;
+            border-color: #e0c0c0;
+        }
+
+        pre {
+            padding: 20px 24px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--ink);
+            background: transparent;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            font-size: 13px;
+            background: var(--rule-light);
+            padding: 2px 6px;
+            color: var(--ink-light);
+        }
+
+        .command-explain {
+            padding: 20px 24px;
+            background: #fff;
+            border-top: 1px solid var(--rule);
+            font-size: 14px;
+            color: var(--ink-light);
+        }
+
+        .command-explain strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* 重點指令（詳細版） */
+        .command-featured {
+            margin: 40px 0;
+            border: 2px solid var(--ink);
+            background: #fff;
+        }
+
+        .command-featured .command-header {
+            background: var(--ink);
+            color: #fff;
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .command-featured .command-tag {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .command-featured .command-risk {
+            color: #fff;
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .command-featured pre {
+            background: var(--paper-warm);
+            font-size: 14px;
+            padding: 24px;
+        }
+
+        .command-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-top: 1px solid var(--rule);
+        }
+
+        .command-detail-item {
+            padding: 20px 24px;
+            border-right: 1px solid var(--rule);
+        }
+
+        .command-detail-item:last-child {
+            border-right: none;
+        }
+
+        .command-detail-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ink-faint);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .command-detail-item p {
+            font-size: 14px;
+            color: var(--ink-light);
+            line-height: 1.7;
+        }
+
+        /* 解決邏輯 */
+        .logic-flow {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .logic-flow::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--rule);
+        }
+
+        .logic-step {
+            position: relative;
+            margin-bottom: 28px;
+            padding-left: 20px;
+        }
+
+        .logic-step::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 6px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--accent-soft);
+        }
+
+        .logic-step.resolved::before {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .logic-step-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+
+        .logic-step-desc {
+            font-size: 14px;
+            color: var(--ink-light);
+            line-height: 1.7;
+        }
+
+        .logic-step-result {
+            margin-top: 10px;
+            padding: 10px 16px;
+            background: var(--paper-warm);
+            border-left: 2px solid var(--accent-soft);
+            font-size: 13px;
+            color: var(--ink-light);
+        }
+
+        .logic-step-result.false-track {
+            border-left-color: var(--warn);
+            background: #fdfbf5;
+        }
+
+        /* 價值區塊 */
+        .value-quote {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--ink-light);
+            text-align: center;
+            padding: 48px 40px;
+            margin: 48px 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            position: relative;
+        }
+
+        .value-quote::before {
+            content: '「';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            color: var(--rule);
+            font-family: 'Noto Serif TC', serif;
+            line-height: 1;
+        }
+
+        .value-quote::after {
+            content: '」';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 48px;
+            color: var(--rule);
+            font-family: 'Noto Serif TC', serif;
+            line-height: 1;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .value-item {
+            padding: 28px;
+            background: #fff;
+            border: 1px solid var(--rule);
+        }
+
+        .value-item h4 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--ink);
+        }
+
+        .value-item p {
+            font-size: 14px;
+            color: var(--ink-light);
+            line-height: 1.7;
+        }
+
+        /* 頁腳 */
+        .colophon {
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid var(--rule);
+            text-align: center;
+            color: var(--ink-faint);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* 列印優化 */
+        @media print {
+            body {
+                font-size: 12pt;
+                line-height: 1.6;
+            }
+            .masthead {
+                padding: 40px 0 30px;
+            }
+            .command-block, .problem-card, .value-item {
+                break-inside: avoid;
+            }
+            section {
+                margin: 32px 0;
+            }
+            .value-quote {
+                padding: 24px;
+            }
+        }
+
+        /* 響應式 */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 20px;
+            }
+            .masthead h1 {
+                font-size: 28px;
+            }
+            .command-detail-grid,
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+            .command-detail-item {
+                border-right: none;
+                border-bottom: 1px solid var(--rule);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="masthead">
+        <div class="date-badge">Monday · 18 May 2026</div>
+        <h1>排查日誌</h1>
+        <p class="subtitle">從一個 loading 轉圈，到理解整個系統的輪廓</p>
+        <div class="divider-ornament"></div>
+    </header>
+
+    <div class="container">
+
+        <!-- 第一節：問題概述 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">
+                    核心問題
+                    <span>The Problem</span>
+                </h2>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-label">Primary Issue</div>
+                <div class="problem-title">FileBrowser 網頁持續顯示 loading 動畫，無法進入</div>
+                <div class="problem-meta">
+                    <span>環境 Hostinger VPS</span>
+                    <span>端口 8085</span>
+                    <span>容器 Docker</span>
+                </div>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-label">Secondary Issue</div>
+                <div class="problem-title">SSH 連線 timeout，無法遠端登入 VPS</div>
+                <div class="problem-meta">
+                    <span>端口 22</span>
+                    <span>防火牆規則延遲生效</span>
+                </div>
+            </div>
+
+            <div class="problem-card">
+                <div class="problem-label">Tertiary Discussion</div>
+                <div class="problem-title">Hermes Agent 瀏覽器工具是否會殘留 cookies 與快取</div>
+                <div class="problem-meta">
+                    <span>隱私安全</span>
+                    <span>Docker 容器隔離</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二節：指令記錄 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">
+                    指令紀錄
+                    <span>Command Reference</span>
+                </h2>
+            </div>
+
+            <!-- SSH -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">連線指令</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>ssh root@76.13.216.229</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>從自己電腦遠端登入 VPS 主機。<code>root</code> 是超級管理員帳號，<code>@</code> 後面接 IP 位址。首次連線會問是否信任主機，輸入 <code>yes</code> 後再輸入密碼即可。
+                </div>
+            </div>
+
+            <!-- docker ps -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">容器管理</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>docker ps</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>列出「正在運行」的 Docker 容器。顯示容器 ID、使用的映像檔、狀態、端口映射等。若要看到已停止的容器，則用 <code>docker ps -a</code>。
+                </div>
+            </div>
+
+            <!-- docker logs -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">日誌排查</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>docker logs filebrowser-filebrowser-1 --tail 20</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>查看指定容器的日誌輸出。<code>--tail 20</code> 表示只看最後 20 行，避免資訊過量淹沒重點。這是排查問題時最重要的一步——程式不會說謊，日誌會誠實記錄一切。
+                </div>
+            </div>
+
+            <!-- docker exec -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">進入容器</span>
+                    <span class="command-risk warn">需注意</span>
+                </div>
+                <pre>docker exec -it filebrowser-filebrowser-1 sh</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>進入正在運行的容器內部。<code>-i</code> 保持互動，<code>-t</code> 分配虛擬終端。<code>sh</code> 是容器內的 shell。進去後可以像操作普通 Linux 一樣瀏覽檔案系統。執行 <code>exit</code> 即可離開，不會影響容器運行。
+                </div>
+            </div>
+
+            <!-- docker restart -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">重啟服務</span>
+                    <span class="command-risk warn">需注意</span>
+                </div>
+                <pre>docker restart filebrowser-filebrowser-1</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>重新啟動指定容器。這會短暫中斷服務（幾秒鐘），但配置變更通常需要重啟才生效。若容器設定了 <code>restart: always</code>，即使宿主機重開機也會自動啟動。
+                </div>
+            </div>
+
+            <!-- curl -I -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">網路測試</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>curl -I http://localhost:8085</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>只取得 HTTP 回應標頭（Header），不下載內容。<code>-I</code> 是「head」之意，用來快速檢查狀態碼（200/404/403 等）。<code>localhost</code> 代表本機，繞過網路與防火牆，直接測試服務本身是否正常。
+                </div>
+            </div>
+
+            <!-- curl GET -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">內容測試</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>curl http://localhost:8085 | head -20</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>實際取得網頁內容，並用 <code>head -20</code> 只顯示前 20 行。這次排查的關鍵發現：<code>curl -I</code> 返回 404，但 <code>curl</code>（GET）卻成功返回 HTML——說明服務活著，但某些請求路徑有問題。
+                </div>
+            </div>
+
+            <!-- cat settings.json -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">配置檢查</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>cat /config/settings.json</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>在容器內查看 FileBrowser 的配置檔。重點欄位：<code>baseURL</code>（若設為子路徑會導致根目錄 404）、<code>port</code>（容器內監聽端口）、<code>database</code>（用戶資料庫位置）。
+                </div>
+            </div>
+
+            <!-- docker inspect env -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">環境變量</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>docker inspect filebrowser-filebrowser-1 --format='{{range .Config.Env}}{{.}}{{"\n"}}{{end}}'</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>查看容器啟動時的環境變量。許多 Docker 映像會用環境變量覆蓋設定檔，例如 <code>FB_BASEURL</code>。若設定檔正確但行為異常，極有可能是環境變量在覆蓋。
+                </div>
+            </div>
+
+            <!-- docker exec ls -->
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="command-tag">檔案檢視</span>
+                    <span class="command-risk safe">安全</span>
+                </div>
+                <pre>docker exec filebrowser-filebrowser-1 ls -la /srv</pre>
+                <div class="command-explain">
+                    <strong>用途：</strong>不進入容器，直接執行單一命令並返回結果。這裡檢查 <code>/srv</code> 是 FileBrowser 預設的根目錄（可視為「檔案櫃」），確認裡面有沒有檔案、權限是否正確。
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三節：重點詳解 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">
+                    重點詳解
+                    <span>Deep Dive</span>
+                </h2>
+            </div>
+
+            <div class="command-featured">
+                <div class="command-header">
+                    <span class="command-tag">Featured Command · 01</span>
+                    <span class="command-risk safe">高頻使用</span>
+                </div>
+                <pre>docker logs &lt;container_name&gt; --tail &lt;n&gt;</pre>
+                <div class="command-detail-grid">
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">何時使用</div>
+                        <p>服務看似運行卻行為異常、頁面報錯、容器重啟循環、任何「明明開著卻不對勁」的時候。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">關鍵參數</div>
+                        <p><code>--tail N</code>：只看最後 N 行；<code>-f</code>：持續追蹤（像看直播）；<code>--since 10m</code>：只看近 10 分鐘。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">排查心法</div>
+                        <p>日誌不會說謊。若日誌說「Listening on port 80」，代表程式層沒問題；若之後出現 404，問題在請求路徑或前端。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">常見陷阱</div>
+                        <p>容器名稱打錯、用了 <code>docker logs</code> 但容器根本沒運行（先用 <code>docker ps</code> 確認）、日誌太多淹沒重點（務必加 <code>--tail</code>）。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="command-featured">
+                <div class="command-header">
+                    <span class="command-tag">Featured Command · 02</span>
+                    <span class="command-risk safe">核心診斷</span>
+                </div>
+                <pre>curl -I http://localhost:&lt;port&gt;</pre>
+                <div class="command-detail-grid">
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">分層測試思維</div>
+                        <p>網路問題分多層：瀏覽器 → 網路 → 防火牆 → 伺服器 → 服務本身。<code>localhost</code> 繞過前三層，直接測最後一層。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">-I vs 普通 curl</div>
+                        <p><code>-I</code> 只看標頭，快；普通 curl 看內容。本次排查的關鍵：<code>-I</code> 回 404，普通 curl 卻回 HTML——揭露了 HEAD 與 GET 請求行為不一致。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">狀態碼速查</div>
+                        <p>200 OK｜301/302 重定向｜400 請求格式錯｜401/403 權限不足｜404 找不到｜500 伺服器內部錯誤｜502/503/504 反向代理出錯</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">延伸技巧</div>
+                        <p><code>curl -v</code> 顯示完整交過程；<code>curl -L</code> 跟隨重定向；<code>curl -H "Host: example.com"</code> 模擬域名訪問。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="command-featured">
+                <div class="command-header">
+                    <span class="command-tag">Featured Concept · 03</span>
+                    <span class="command-risk warn">理解關鍵</span>
+                </div>
+                <pre>Docker 容器 ≠ 宿主機 ≠ 其他容器</pre>
+                <div class="command-detail-grid">
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">隔離性</div>
+                        <p>每個容器是獨立王國。Hermes 容器見不到 FileBrowser 容器，反之亦然。它們共享宿主機的 Linux 核心，但檔案系統、進程、網路（原則上）彼此隔離。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">端口映射</div>
+                        <p><code>0.0.0.0:8085->80/tcp</code> 的意思是：「宿主機的 8085 號門，通向容器的 80 號門。」外部訪問 8085，Docker 會轉發到容器內的 80。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">權限問題</div>
+                        <p>本次排查發現 Hermes 容器內的 <code>hermes</code> 用戶（uid=10000）沒有 docker.sock 存取權，因此無法執行 <code>docker</code> 命令管理其他容器。</p>
+                    </div>
+                    <div class="command-detail-item">
+                        <div class="command-detail-label">為何要 SSH</div>
+                        <p>要管理 Docker，必須「站在宿主機的角度」——即通過 SSH 登入 root，才能看見所有容器、所有設定、所有日誌。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四節：解決邏輯 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">
+                    解決邏輯
+                    <span>Problem-Solving Logic</span>
+                </h2>
+            </div>
+
+            <div class="logic-flow">
+                <div class="logic-step">
+                    <div class="logic-step-title">現象觀察：頁面 loading 轉不停</div>
+                    <div class="logic-step-desc">不急着猜原因，先確認「服務到底有沒有在跑」。</div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-step-title">確認容器狀態：docker ps</div>
+                    <div class="logic-step-desc">FileBrowser 容器顯示 Up (healthy)，端口映射正確。初步排除「服務死掉了」。</div>
+                    <div class="logic-step-result">結論：服務活着，問題在「為什麼活着卻不回應」。</div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-step-title">讀取日誌：docker logs</div>
+                    <div class="logic-step-desc">日誌顯示 Listening on port 80，但歷史記錄有 <code>/: 404</code>。這是一個矛盾：服務說它在聽，但訪問根路徑卻找不到。</div>
+                    <div class="logic-step-result">結論：程式層正常，但請求處理有異常。</div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-step-title">分層測試：curl localhost</div>
+                    <div class="logic-step-desc">在宿主機執行 curl，繞過網路與防火牆，直接測試服務本身。發現 GET 請求返回完整 HTML，但 HEAD 請求返回 404。</div>
+                    <div class="logic-step-result">結論：服務確實能回應，但前端載入後可能因某些 API 失敗而卡住。</div>
+                </div>
+
+                <div class="logic-step false-track">
+                    <div class="logic-step-title">誤入歧途：懷疑 baseURL 設定錯誤</div>
+                    <div class="logic-step-desc">由於日誌有 404，第一時間懷疑是 FileBrowser 的 baseURL 設定問題（這是常見病因）。進入容器檢查 settings.json，發現 baseURL 是空字串，完全正確。</div>
+                    <div class="logic-step-result false-track">假設錯誤。排除 baseURL 問題，繼續追查。</div>
+                </div>
+
+                <div class="logic-step">
+                    <div class="logic-step-title">深入測試 API 端點</div>
+                    <div class="logic-step-desc">測試 <code>/api/resources</code> 返回 403 Forbidden，<code>/api/login</code> 正常。這說明 FileBrowser 需要登入才能使用 API，但前端應該自動跳轉登入頁。</div>
+                    <div class="logic-step-result">結論：服務邏輯正確（要登入），但前端載入流程卡住了。</div>
+                </div>
+
+                <div class="logic-step resolved">
+                    <div class="logic-step-title">突破：直接訪問 /login</div>
+                    <div class="logic-step-desc">既然首頁卡住，嘗試繞過首頁直接訪問登入路徑。結果成功載入登入頁面。</div>
+                    <div class="logic-step-result">最終診斷：瀏覽器快取或前端路由處理問題，導致首頁 JavaScript 執行異常，卡在 loading。直接訪問 /login 即可繞過。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五節：附帶收穫 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">
+                    附帶收穫
+                    <span>Collateral Learning</span>
+                </h2>
+            </div>
+
+            <div class="value-grid">
+                <div class="value-item">
+                    <h4>SSH 連線的現實</h4>
+                    <p>防火牆規則改完後，有時需要等待數分鐘才會生效。第一次 timeout 不要慌，確認規則正確後，等一陣再試。</p>
+                </div>
+                <div class="value-item">
+                    <h4>瀏覽器快取的欺騙性</h4>
+                    <p>開發者工具的 Network tab 全部顯示 200，不代表真的沒問題——可能是快取騙了你。永遠用「無痕模式」或「Ctrl + Shift + R」作對照測試。</p>
+                </div>
+                <div class="value-item">
+                    <h4>日誌裡的 404 不一定是錯</h4>
+                    <p>FileBrowser 的 <code>/api/resources</code> 對未登入者回 403，這是正確行為。要學會分辨「錯誤的 404」和「預期中的拒絕」。</p>
+                </div>
+                <div class="value-item">
+                    <h4>Hermes 瀏覽器是「用完即棄」</h4>
+                    <p>Agent 的 browser_navigate 預設使用臨時 Chromium session，不會永久保存 cookies。但 /tmp 裡會遺留通訊目錄殘骸，定期重啟容器即可清理。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第六節：今日價值 -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title">
+                    今日價值
+                    <span>The Value of Today</span>
+                </h2>
+            </div>
+
+            <div class="value-quote">
+                搞咗幾個鐘，原來只係瀏覽器快取。<br>
+                但呢幾個鐘唔係浪費——<br>
+                若果唔逐個排除 Docker、防火牆、設定檔、日誌，<br>
+                根本唔會知道「原來可以咁簡單」。<br><br>
+                就好似醫生驗血、照 X-ray、做心電圖，<br>
+                最後發現你只係飲少咗水。<br>
+                排除咗大病，先至確定係小事。<br><br>
+                而家你識得 SSH 登入、識得睇 Docker、識得讀日誌。<br>
+                呢啟係真正屬於你嘅能力，唔會再溜走。
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="colophon">
+        <p>Generated by Hermes Agent · Designed for print & review</p>
+        <p style="margin-top: 8px; opacity: 0.6;">From complexity, simplicity emerges.</p>
+    </footer>
+
+</body>
+</html>

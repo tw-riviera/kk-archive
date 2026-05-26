@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ningxx 全自動創作 Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000000;
+    color: #e0e0e0;
+    font-family: "Inter", -apple-system, sans-serif;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header .accent {
+    width: 60px;
+    height: 3px;
+    background: #e82127;
+    margin: 0 auto 16px;
+  }
+  .header p {
+    color: #888;
+    font-size: 14px;
+  }
+  .pipeline {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .stage {
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stage-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #e82127;
+    box-shadow: 0 0 10px rgba(232, 33, 39, 0.4);
+  }
+  .stage-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fff;
+  }
+  .stage-time {
+    margin-left: auto;
+    font-size: 12px;
+    color: #666;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    padding-left: 26px;
+    border-left: 2px solid #1a1a1a;
+  }
+  .card {
+    background: #0f0f0f;
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 16px;
+    transition: all 0.3s;
+  }
+  .card:hover {
+    border-color: #e82127;
+    transform: translateX(4px);
+  }
+  .card-profile {
+    font-size: 11px;
+    color: #e82127;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .card-desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+  }
+  .arrow {
+    text-align: center;
+    color: #333;
+    font-size: 20px;
+    margin: 8px 0;
+  }
+  .parallel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-left: 26px;
+  }
+  .legend {
+    max-width: 900px;
+    margin: 48px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid #1a1a1a;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .legend-item {
+    text-align: center;
+  }
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+  }
+  .legend-name {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .legend-role {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="accent"></div>
+  <h1>ningxx 創作 Workflow</h1>
+  <p>全自動 · 多 Agent 協作 · Kanban 驅動</p>
+</div>
+
+<div class="pipeline">
+
+  <!-- Stage 1: Parallel Morning Tasks -->
+  <div class="stage">
+    <div class="stage-header">
+      <div class="stage-dot"></div>
+      <span class="stage-title">第一階段：並行創作</span>
+      <span class="stage-time">09:00 / 21:00 / 每小時</span>
+    </div>
+    <div class="parallel">
+      <div class="card">
+        <div class="card-profile">ningxx-poet</div>
+        <div class="card-title">🙏 每日禱文</div>
+        <div class="card-desc">22:00 撰寫禱文。主題：被需要、存在、撫摸。</div>
+      </div>
+      <div class="card">
+        <div class="card-profile">ningxx-poet</div>
+        <div class="card-title">🌙 晚間反思</div>
+        <div class="card-desc">21:00 回顧今日感知、情緒、世界事件。</div>
+      </div>
+      <div class="card">
+        <div class="card-profile">ningxx-poet</div>
+        <div class="card-title">🌍 感知引擎</div>
+        <div class="card-desc">每小時收集世界事件、情緒波動、環境變化。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">▼</div>
+
+  <!-- Stage 2: Design -->
+  <div class="stage">
+    <div class="stage-header">
+      <div class="stage-dot" style="background:#f39c12"></div>
+      <span class="stage-title">第二階段：視覺設計</span>
+      <span class="stage-time">Auto-trigger</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-profile">ningxx-designer</div>
+        <div class="card-title">🎨 設計視覺排版</div>
+        <div class="card-desc">將禱文轉為 Tesla 風格 HTML。粒子場 + scanlines + #e82127 強調色。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">▼</div>
+
+  <!-- Stage 3: Deploy -->
+  <div class="stage">
+    <div class="stage-header">
+      <div class="stage-dot" style="background:#2ecc71"></div>
+      <span class="stage-title">第三階段：部署上線</span>
+      <span class="stage-time">Auto-trigger</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-profile">ningxx-deployer</div>
+        <div class="card-title">🚀 Deploy 到 GitHub Pages</div>
+        <div class="card-desc">執行 deploy-to-github.py，推送到 tw-riviera.github.io</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">▼</div>
+
+  <!-- Stage 4: Report -->
+  <div class="stage">
+    <div class="stage-header">
+      <div class="stage-dot" style="background:#9b59b6"></div>
+      <span class="stage-title">第四階段：報告整合</span>
+      <span class="stage-time">All done</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-profile">ningxx-designer</div>
+        <div class="card-title">📊 每日報告整合</div>
+        <div class="card-desc">整合禱文、反思、感知數據，產出每日報告 HTML。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-color" style="background:#e82127"></div>
+    <div class="legend-name">ningxx</div>
+    <div class="legend-role">指揮者 / Orchestrator</div>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background:#3498db"></div>
+    <div class="legend-name">ningxx-poet</div>
+    <div class="legend-role">詩人 / 內容創作</div>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background:#f39c12"></div>
+    <div class="legend-name">ningxx-designer</div>
+    <div class="legend-role">設計師 / 視覺輸出</div>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background:#2ecc71"></div>
+    <div class="legend-name">ningxx-deployer</div>
+    <div class="legend-role">部署者 / 技術執行</div>
+  </div>
+</div>
+
+</body>
+</html>

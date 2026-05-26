@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Daily Log — 2026.05.24</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #FFFFFF;
+  color: #1C1C1C;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 48px 120px;
+}
+.top-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #8A8A8A;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 60px;
+  line-height: 1.4;
+}
+.section-divider {
+  margin: 60px 0;
+  height: 1px;
+  background: #E0E0E0;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: #1C1C1C;
+  letter-spacing: -0.3px;
+}
+h2 .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8A8A;
+  margin-right: 12px;
+  vertical-align: top;
+}
+h3 {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 32px 0 12px;
+  color: #1C1C1C;
+  letter-spacing: 0.3px;
+}
+p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 16px;
+}
+p.lead {
+  font-size: 18px;
+  font-weight: 300;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+.pull-quote {
+  margin: 40px 0;
+  padding: 24px 0 24px 32px;
+  border-left: 2px solid #1C1C1C;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+}
+.tech-block {
+  margin: 28px 0;
+  padding: 24px 28px;
+  background: #FAFAFA;
+  border-left: 2px solid #D0CFCA;
+}
+.tech-block h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8A8A8A;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+.tech-block p, .tech-block li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 6px;
+}
+.tech-block ul {
+  list-style: none;
+  padding-left: 0;
+}
+.tech-block li {
+  padding-left: 16px;
+  position: relative;
+}
+.tech-block li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #999;
+}
+.tech-block .ok {
+  background: #E8F0E8;
+  color: #2E5A2E;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+.tech-block .error {
+  background: #F5E8E8;
+  color: #8B3535;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+.tech-block .warn {
+  background: #F5F0E8;
+  color: #7A5A2E;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+.footer-note {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid #E0E0E0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #AAA;
+  letter-spacing: 0.5px;
+}
+@media (max-width: 640px) {
+  .page { padding: 48px 24px 80px; }
+  h1 { font-size: 36px; }
+  .subtitle { font-size: 18px; }
+  h2 { font-size: 22px; }
+  .pull-quote { font-size: 17px; padding-left: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-meta">
+    <span>Hermes Daily Log</span>
+    <span>2026.05.24 · Session 20260524</span>
+  </div>
+
+  <h1>The Alignment</h1>
+  <p class="subtitle">
+    Fixing what was broken, unifying what was scattered, and making ningxx run on time.
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">01</span>The Focus</h2>
+  <p class="lead">
+    用戶一句「現在專注於 ningxx」，整個下午到晚上都圍繞一個目標：讓 ningxx 的生命週期真正自動運行，不再手動補救。
+  </p>
+  <p>
+    核心問題有三：(a) GitHub Pages 無法自動更新 ningxx 檔案；(b) cron job 持續報錯「Script not found」；(c) 系統時間用 UTC，導致所有排程顯示混亂。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">02</span>The Parse</h2>
+  <p class="lead">
+    inner_voice.html 在網站上只顯示時間戳、不顯示內容。
+  </p>
+
+  <h3>2.1 格式陷阱</h3>
+  <p>
+    inner_voice.md 的條目以 <code>\n—\n\n</code> 分隔（分隔線後帶空行），但 inner_voice.html 用 <code>split(/\n—\n/)</code> 解析，產生空 block，內容全部丟失。
+  </p>
+
+  <div class="tech-block">
+    <h4>修復方案</h4>
+    <p>改用正則直接匹配時間戳 + 內容：</p>
+    <p><code>/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\s+HKT)\n—\n([\s\S]*?)(?=\n—\n(?:\n|$)|$)/g</code></p>
+    <p>同時修正 fetch 路徑為 <code>data/inner_voice.md</code></p>
+  </div>
+
+  <h3>2.2 覆蓋回歸</h3>
+  <p>
+    修復後用戶回報「突然又看不到了」。原因：daily-deploy.sh 從 workspace/ 複製了舊版 inner_voice.html，覆蓋了已修復的版本。
+  </p>
+  <p>
+    處理：同時更新兩個位置——Hermes_VPS/ningxx/（網站實際檔案）與 ningxx/workspace/（來源備份），防止再被覆蓋。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">03</span>The Deploy</h2>
+  <p class="lead">
+    建立每日自動部署，15:00 HKT 將 ningxx 所有資料與頁面 push 到 GitHub Pages。
+  </p>
+
+  <div class="tech-block">
+    <h4>ningxx-daily-deploy.sh</h4>
+    <ul>
+      <li>同步核心資料：data/inner_voice.md、data/experiences.json、data/prayers/、outbox/*.md</li>
+      <li>同步頁面：index.html、inner_voice.html、memory.html、outbox.html、prayers.html、live.html、ningxx.html</li>
+      <li>Git commit + push 到 tw-riviera/Hermes_VPS</li>
+    </ul>
+  </div>
+
+  <p>
+    建立 cron job <code>ningxx-daily-deploy</code>（ID: <code>62db33f9cc5f</code>），schedule <code>0 15 * * *</code>。移除舊的每小時同步 job <code>ningxx-sync-vps</code>。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">04</span>The Path</h2>
+  <p class="lead">
+    ningxx-evening 與 ningxx-prayer 持續報錯「Script not found」。
+  </p>
+
+  <h3>4.1 路徑分裂</h3>
+  <p>
+    Cron 系統去 <code>/opt/data/scripts/</code> 找 wrapper，但用戶與 CLI 習慣把腳本放 <code>~/.hermes/scripts/</code>。兩個目錄內容不同步，導致 cron 找不到檔案。
+  </p>
+
+  <h3>4.2 根治</h3>
+  <p>
+    刪除 <code>~/.hermes/scripts/</code>，改為 symlink 指向 <code>/opt/data/scripts/</code>。所有 wrapper 統一到單一路徑。備份置於 <code>/opt/data/scripts/backup_20260524/</code>。
+  </p>
+
+  <div class="tech-block">
+    <h4>修復後狀態</h4>
+    <ul>
+      <li>ningxx-evening（ID: f243a33b3960）<span class="ok">last_status: ok</span></li>
+      <li>ningxx-prayer（ID: 86e5cd010e7d）<span class="ok">last_status: ok</span></li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">05</span>The Time</h2>
+  <p class="lead">
+    用戶發現系統用 UTC，所有 cron 時間顯示混亂。一句「永遠跟我顯示HKT時間，不要再混淆」。
+  </p>
+
+  <div class="tech-block">
+    <h4>修正</h4>
+    <p><code>ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime</code></p>
+    <p>之後 <code>date</code> 返回 <code>Mon May 25 03:29:29 HKT 2026</code>，TZ offset +0800。</p>
+  </div>
+
+  <p>
+    所有 cron schedule 以 HKT 為準。ningxx-daily-deploy 設為 15:00 HKT，確保當日 09:00 heartbeat、13:00 daily report、14:00 prayer 都已被執行並納入部署。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">06</span>The Verification</h2>
+
+  <h3>6.1 ningxx 確實在運行</h3>
+  <div class="tech-block">
+    <h4>Explore 執行記錄</h4>
+    <p>experiences.json 累積 27 次經驗 / 18 次探索</p>
+    <p>當日（5/24）已有多次探索記錄，對應每小時整點觸發</p>
+  </div>
+
+  <h3>6.2 手動驗證 Evening / Prayer</h3>
+  <p>
+    直接在伺服器執行 wrapper 與原始 .py，均能正常產出檔案（prayer_20260524.md、reflection_20260524_*.md）。確認腳本邏輯無誤，先前錯誤純粹是路徑問題。
+  </p>
+
+  <h3>6.3 生命週期總覽（HKT）</h3>
+  <div class="tech-block">
+    <h4>ningxx 每日排程</h4>
+    <ul>
+      <li>00:30 kk-daily-workflow <span class="warn">尚未執行</span></li>
+      <li>00:30 ningxx-daily-workflow-2 <span class="warn">尚未執行</span></li>
+      <li>04:05 check-ningxx-explore-4am <span class="warn">待執行</span></li>
+      <li>09:00 ningxx-heartbeat <span class="ok">ok</span></li>
+      <li>09:00 ningxx-daily-workflow <span class="ok">ok</span></li>
+      <li>每小時 ningxx-explore-hourly <span class="ok">ok</span></li>
+      <li>13:00 ningxx-daily-report <span class="ok">ok</span></li>
+      <li>13:00 ningxx-evening <span class="ok">ok（已修復）</span></li>
+      <li>14:00 ningxx-prayer <span class="ok">ok（已修復）</span></li>
+      <li>15:00 ningxx-daily-deploy <span class="warn">待首次執行</span></li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">07</span>Reflection</h2>
+
+  <h3>7.1 關於路徑</h3>
+  <p>
+    最耗時的不是寫腳本，而是發現「兩個目錄以為是同一個」。當系統行為與預期不符，第一個懷疑的應該是「我們說的是同一個路徑嗎？」。
+  </p>
+
+  <h3>7.2 關於時間</h3>
+  <p>
+    UTC vs HKT 看似小事，但當用戶說「15:00」而系統理解為「15:00 UTC = 23:00 HKT」，所有排程意義都變了。時間不是數字，是上下文。
+  </p>
+
+  <h3>7.3 關於覆蓋</h3>
+  <p>
+    inner_voice.html 修了兩次，因為部署腳本不知道「哪個才是對的版本」。自動化若沒有單一真相來源，只會自動地複製錯誤。
+  </p>
+
+  <div class="pull-quote">
+    讓東西自動運行不難，<br>
+    難的是讓它自動運行對的東西。<br>
+    對的路徑、對的時間、對的內容——<br>
+    三個都對了，才叫對。
+  </div>
+
+  <div class="footer-note">
+    Hermes Daily Log · 2026.05.24 · K K · Session 20260524<br>
+    ningxx URL: https://tw-riviera.github.io/Hermes_VPS/ningxx/ · TZ: Asia/Hong_Kong (+0800)
+  </div>
+
+</div>
+
+</body>
+</html>

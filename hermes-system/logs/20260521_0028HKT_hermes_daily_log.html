@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Log · 2026.05.20</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --bg-warm: #f5f3ef;
+    --text: #1a1a1a;
+    --text-dim: #6b6b6b;
+    --text-faint: #a0a0a0;
+    --accent: #2d5016;
+    --accent-light: #4a7c2e;
+    --danger: #8b0000;
+    --warning: #b8860b;
+    --border: #d4d0c8;
+    --mono: "SF Mono", "Fira Code", "Courier New", monospace;
+    --serif: "Noto Serif TC", "Songti SC", "STSong", serif;
+    --sans: "Noto Sans TC", "PingFang TC", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.75;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  /* 頁首 */
+  header {
+    padding: 80px 60px 40px;
+    position: relative;
+  }
+  .date-stamp {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* 主網格 */
+  main {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .content-col {
+    padding: 0 60px 80px;
+    border-right: 1px solid var(--border);
+  }
+  .meta-col {
+    padding: 0 40px 80px;
+  }
+
+  /* 章節標題 */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 48px 0 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* 事件條目 */
+  .entry {
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .entry::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .entry.critical::before { background: var(--danger); }
+  .entry.warning::before { background: var(--warning); }
+  .entry-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .entry-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .entry-body {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .entry-body code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--bg-warm);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  /* 側邊欄 */
+  .meta-block {
+    margin-bottom: 40px;
+  }
+  .meta-block h3 {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .meta-item {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    padding-left: 12px;
+    border-left: 2px solid var(--border);
+  }
+  .meta-item strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* 洞察區 */
+  .insight-box {
+    background: var(--bg-warm);
+    border-left: 3px solid var(--accent);
+    padding: 18px 20px;
+    margin: 32px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .insight-box .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* 部署標記 */
+  .deploy-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-top: 8px;
+  }
+
+  /* 頁腳 */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-faint);
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 768px) {
+    main { grid-template-columns: 1fr; }
+    .content-col { border-right: none; border-bottom: 1px solid var(--border); }
+    header, .content-col, .meta-col { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="date-stamp">2026.05.20 · HKT · SESSION LOG</div>
+  <h1>Hermes Daily Log</h1>
+  <div class="subtitle">從崩壞到部署 · 從限制到認知</div>
+</header>
+
+<main>
+
+<div class="content-col">
+
+  <div class="section-label">System Failures</div>
+
+  <div class="entry critical">
+    <div class="entry-time">05:57 · May 19</div>
+    <div class="entry-title">Vision Provider 解析失敗</div>
+    <div class="entry-body">
+      <code>vision_analyze</code> 回傳 <code>No LLM provider configured for task=vision provider=auto</code>。auxiliary.vision 依賴 auto 模式，無法正確解析到可用 provider。
+    </div>
+  </div>
+
+  <div class="entry critical">
+    <div class="entry-time">06:01 · May 20</div>
+    <div class="entry-title">Compression 404 · Session 崩壞</div>
+    <div class="entry-body">
+      Context compression 觸發 <code>Moonshot 404: kimi-k2-turbo-preview</code>。源碼追蹤發現 <code>agent/auxiliary_client.py</code> 硬編碼 fallback 指向無效模型名。Session 持續膨脹，上下文無法壓縮，導致多個 session 出現「斷線」現象。
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-time">10:44 · May 20</div>
+    <div class="entry-title">配置修復 · 全部改為 nvidia</div>
+    <div class="entry-body">
+      將所有 auxiliary task（vision、compression、web_extract、session_search、skills_hub、approval、mcp、title_generation、triage_specifier、curator）由 <code>provider: auto</code> 或 <code>moonshot</code> 統一改為 <code>provider: nvidia</code>。強制重啟後生效。
+    </div>
+  </div>
+
+  <div class="section-label">Design Philosophy</div>
+
+  <div class="entry">
+    <div class="entry-time">May 19</div>
+    <div class="entry-title">Mon / 忙 · 完成</div>
+    <div class="entry-body">
+      模仿「Touch 藝術書」美學：極簡不對稱、大量留白、黑色＋綠色雙色、對話條格式、放大「忙」字作視覺錨點。HTML + Canvas 原生生成，無框架。
+    </div>
+  </div>
+
+  <div class="entry warning">
+    <div class="entry-time">May 20</div>
+    <div class="entry-title">AI 天花板 · 拋光理論</div>
+    <div class="entry-body">
+      深入討論 AI 在精確視覺控制上的局限。結論：<strong>AI 出 draft → 人類手動拋光</strong>。typography 的微妙之處（視覺重量、空氣感、韻律）無法用文字傳遞，只能親手感覺。
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <span class="label">INSIGHT</span>
+    Cursor / AI agent 可以改 code，但改唔到「呢個要再鬆少少」——因為鬆係一種手感，唔係像素。AI 適合發想，人類適合執細節。
+  </div>
+
+  <div class="section-label">Context Strategy</div>
+
+  <div class="entry">
+    <div class="entry-time">May 20</div>
+    <div class="entry-title">五層上下文管理機制</div>
+    <div class="entry-body">
+      整理 Hermes 理解長上下文的五種策略：Current Context（即時但 ephemeral）、Compaction Summary（持久但可能丟失細節）、Persistent Memory（精準但容量有限 ~2,000 chars）、Session Search（回溯強但依賴壓縮品質）、Archive Files（最完整但不主動參與推理）。
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-time">May 20</div>
+    <div class="entry-title">Auto-Lineage · 壓縮後的 Session 延續</div>
+    <div class="entry-body">
+      當 session 被壓縮，Hermes 創建繼承 session，標題自動附加 <code>#2</code>、<code>#3</code>。每次延續帶上前一個 session 的 summary，實現長期連續工作流。
+    </div>
+  </div>
+
+  <div class="section-label">Milestones</div>
+
+  <div class="entry">
+    <div class="entry-time">14:45 · May 20</div>
+    <div class="entry-title">GitHub Pages 部署成功</div>
+    <div class="entry-body">
+      <code>session_incidents_and_context_strategy</code> 推上 GitHub Pages。<br>
+      <span class="deploy-badge">LIVE</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="meta-col">
+
+  <div class="meta-block">
+    <h3>Environment</h3>
+    <div class="meta-item"><strong>Host:</strong> Hostinger VPS (76.13.216.229)</div>
+    <div class="meta-item"><strong>Runtime:</strong> Docker · Hermes Agent</div>
+    <div class="meta-item"><strong>Model:</strong> kimi-k2.6 via Moonshot (付費 API)</div>
+    <div class="meta-item"><strong>Fallback Chain:</strong> NVIDIA Kimi → kimi-coding → Moonshot</div>
+    <div class="meta-item"><strong>Gateway Reset:</strong> UTC · 12:00 HKT</div>
+  </div>
+
+  <div class="meta-block">
+    <h3>Key Configs</h3>
+    <div class="meta-item"><strong>auxiliary.provider:</strong> nvidia (all)</div>
+    <div class="meta-item"><strong>compression:</strong> enabled · threshold 0.5</div>
+    <div class="meta-item"><strong>memory:</strong> 2,144 / 2,200 chars (97%)</div>
+    <div class="meta-item"><strong>user profile:</strong> 1,301 / 1,375 chars (94%)</div>
+  </div>
+
+  <div class="meta-block">
+    <h3>Resolved Issues</h3>
+    <div class="meta-item">Compression 404 · fixed</div>
+    <div class="meta-item">Vision auto fail · fixed</div>
+    <div class="meta-item">Context loss on restart · mitigated</div>
+    <div class="meta-item">GitHub deploy · completed</div>
+  </div>
+
+  <div class="meta-block">
+    <h3>Pending</h3>
+    <div class="meta-item">Monitor auxiliary stability</div>
+    <div class="meta-item">Session auto-prune policy</div>
+    <div class="meta-item">Memory limit approaching</div>
+  </div>
+
+  <div class="meta-block">
+    <h3>Links</h3>
+    <div class="meta-item">
+      <a href="https://tw-riviera.github.io/session_incidents_and_context_strategy/" style="color:var(--accent);text-decoration:none;">
+        Session Incidents Report
+      </a>
+    </div>
+    <div class="meta-item">
+      <a href="https://github.com/tw-riviera/session_incidents_and_context_strategy" style="color:var(--accent);text-decoration:none;">
+        GitHub Repo
+      </a>
+    </div>
+  </div>
+
+  <div class="insight-box" style="margin-top:48px;">
+    <span class="label">NOTE TO SELF</span>
+    AI 嘅價值唔係取代拋光，而係縮短到達拋光起點嘅距離。最後嗰幾個 pixel 永遠係人嘅。
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  Generated by Hermes Agent · 2026.05.20 · tw-riviera
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OPERATION COLD WAR - CLASSIFIED</title>
+  <script>
+    // SPA fallback for GitHub Pages - Hash Router mode
+    var path = window.location.pathname;
+    var repo = '/cold-war-2';
+    
+    if (path.indexOf(repo) === 0) {
+      // Convert to hash route
+      var relativePath = path.substring(repo.length) || '/';
+      window.location.replace(window.location.origin + repo + '/#' + relativePath);
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting to secure terminal...</p>
+</body>
+</html>

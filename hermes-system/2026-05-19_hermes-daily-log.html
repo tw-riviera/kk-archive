@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Daily Log — 2026.05.19</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #FFFFFF;
+  color: #1C1C1C;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== PAGE FRAME ===== */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 48px 120px;
+}
+
+/* ===== TOP META ===== */
+.top-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #8A8A8A;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* ===== TITLES ===== */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 60px;
+  line-height: 1.4;
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  margin: 60px 0;
+  height: 1px;
+  background: #E0E0E0;
+}
+
+/* ===== SECTION HEADERS ===== */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: #1C1C1C;
+  letter-spacing: -0.3px;
+}
+
+h2 .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8A8A;
+  margin-right: 12px;
+  vertical-align: top;
+}
+
+h3 {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 32px 0 12px;
+  color: #1C1C1C;
+  letter-spacing: 0.3px;
+}
+
+/* ===== BODY TEXT ===== */
+p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+p.lead {
+  font-size: 18px;
+  font-weight: 300;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+/* ===== PULL QUOTE ===== */
+.pull-quote {
+  margin: 40px 0;
+  padding: 24px 0 24px 32px;
+  border-left: 2px solid #1C1C1C;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ===== TECH BLOCK ===== */
+.tech-block {
+  margin: 28px 0;
+  padding: 24px 28px;
+  background: #FAFAFA;
+  border-left: 2px solid #D0CFCA;
+}
+
+.tech-block h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8A8A8A;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.tech-block p,
+.tech-block li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.tech-block ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tech-block li {
+  padding-left: 16px;
+  position: relative;
+}
+
+.tech-block li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #999;
+}
+
+/* ===== PERMISSIONS TABLE ===== */
+.perm-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+}
+
+.perm-table th {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid #D0CFCA;
+  font-weight: 500;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 10px;
+}
+
+.perm-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #EEE;
+  color: #333;
+  vertical-align: top;
+}
+
+.perm-table td.cmd {
+  color: #555;
+  word-break: break-all;
+}
+
+.perm-table .status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.perm-table .status.approved {
+  background: #E8F0E8;
+  color: #2E5A2E;
+}
+
+.perm-table .status.denied {
+  background: #F5E8E8;
+  color: #8B3535;
+}
+
+.perm-table .status.partial {
+  background: #F0EDE8;
+  color: #7A6A4A;
+}
+
+/* ===== FILES LIST ===== */
+.files-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.files-list li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #F0F0F0;
+  color: #444;
+}
+
+.files-list li span {
+  color: #8A8A8A;
+  font-size: 11px;
+  margin-left: 8px;
+}
+
+/* ===== FOOTER ===== */
+.footer-note {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid #E0E0E0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #AAA;
+  letter-spacing: 0.5px;
+}
+
+.footer-note .mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm 18mm 22mm 18mm;
+  }
+  body { background: #FFF; }
+  .page {
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  .top-meta { margin-bottom: 32px; }
+  h1 { font-size: 38px; margin-bottom: 6px; }
+  .subtitle { font-size: 17px; margin-bottom: 32px; }
+  .section-divider { margin: 28px 0; }
+  h2 { font-size: 22px; margin-top: 0; margin-bottom: 6px; }
+  h3 { margin: 18px 0 8px; }
+  p { font-size: 13.5px; line-height: 1.65; margin-bottom: 10px; orphans: 3; widows: 3; }
+  p.lead { font-size: 15px; margin-bottom: 18px; }
+  .pull-quote { margin: 22px 0; padding: 16px 0 16px 24px; font-size: 15px; break-inside: avoid; }
+  .tech-block { margin: 16px 0; padding: 14px 18px; break-inside: avoid; }
+  .tech-block p, .tech-block li { font-size: 11px; line-height: 1.7; }
+  .perm-table { font-size: 10px; }
+  .perm-table th, .perm-table td { padding: 6px 5px; }
+  .files-list li { padding: 5px 0; font-size: 11px; }
+  .footer-note { margin-top: 36px; padding-top: 14px; }
+
+  /* Page-break controls */
+  .tech-block,
+  .pull-quote,
+  .files-list,
+  table.perm-table,
+  .section-divider {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .page > h2:first-of-type,
+  h2 + p.lead {
+    break-before: auto;
+  }
+  /* Prevent a heading from being the last thing on a page */
+  h2, h3 {
+    orphans: 3;
+  }
+  /* Ensure the footer doesn't get isolated */
+  .footer-note {
+    break-inside: avoid;
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .page { padding: 48px 24px 80px; }
+  h1 { font-size: 36px; }
+  .subtitle { font-size: 18px; }
+  h2 { font-size: 22px; }
+  .pull-quote { font-size: 17px; padding-left: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-meta">
+    <span>Hermes Daily Log</span>
+    <span>2026.05.19 · Session 20260519</span>
+  </div>
+
+  <h1>Mon / 忙</h1>
+  <p class="subtitle">
+    When the tool cannot hold what the eye already sees.
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">01</span>The Brief</h2>
+  <p class="lead">
+    用戶帶來一份參考作品：Jie Jian 的《Touch, 2024》。一本 5×6 吋的小冊，記錄了朋友之間所有包含「摸」字的對話。每一句都是真實的身體經驗，從摸貓的溫柔到被侵犯的不安。
+  </p>
+  <p>
+    用戶想要仿製這個概念，將「Touch / 摸」換成「Mon / 忙」。一個關於「週一」與「忙碌」的雙關語，一份對於生活侵入的小詞典。
+  </p>
+  <p>
+    規格是 IG 動態圖：1080 × 1350 px。要求精確還原參考圖的排版語法：左邊大幅留白（約60–70%）、垂直分隔線、speaker 與 timestamp 的凸縮層次、雙時間戳邏輯、關鍵詞 upright bold 而非斜體。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">02</span>The Ceiling</h2>
+  <p class="lead">
+    這是今日最核心的課題。用戶說：「看似簡單的藝術，去模仿的時候，竟然先明白 AI 的天花板。」
+  </p>
+
+  <h3>2.1 PIL 的崩潰</h3>
+  <p>
+    最初選擇 PIL （Python Imaging Library）直接繪製 PNG。理論上，這是最精確的方法——每一個像素都是確定的。但實際上，PIL 是「畫布」，不是「排版引擎」。中英文混排時，基線（baseline）自動漂移；中文換行需要逐個字計算；hanging indent 必須手動數像素放置第二行起點。
+  </p>
+
+  <div class="tech-block">
+    <h4>技術細節</h4>
+    <p>PIL 的 <code>ImageFont.truetype()</code> 載入 Noto Sans TC 後，<code>font.getsize(text)</code> 回傳的高度僅包含字型本身，不包含行間距（line gap）。當中英文混排時，英文字母如 "g" 或 "y" 的 descender 會超出中文基線，導致行高計算累積誤差。</p>
+    <p>更嚴重的是：PIL 不支援 CSS 的 <code>hanging-indent</code>，也不支援「關鍵字放大但不撑破行高」這種微細排版。每個關鍵詞都需要手動計算 y 座標，避免與前後文字重疊。</p>
+  </div>
+
+  <h3>2.2 瀏覽器渲染的謊言</h3>
+  <p>
+    放棄 PIL 後，轉而使用 HTML + CSS，讓瀏覽器負責渲染。但服務器上沒有 Chrome/Chromium，無法用 Playwright 或 Puppeteer 進行 headless 渲染。唯一可用的是 WeasyPrint，但 WeasyPrint 對於精細排版的支援有限，輸出的 PNG 質感不足。
+  </p>
+  <p>
+    於是改為「輸出純 HTML，由用戶在手機 Safari 打開後截圖」的 workflow。這個想法理論上很好——利用 Safari 的 WebKit 引擎獲得真正精確的字距、基線與字體載入。但實際上，iOS WebKit 對於中英文混排的行內渲染，有著難以預測的限制。
+  </p>
+
+  <div class="tech-block">
+    <h4>iOS Safari 渲染限制</h4>
+    <ul>
+      <li><code>display: inline-block</code> + <code>position: relative</code> 在行內放大關鍵詞時，行高計算崩潰——關鍵詞變成獨立圖層飄浮，完全錯位</li>
+      <li>中文與英文基線不同，瀏覽器會自動調整，導致關鍵詞上下偏移</li>
+      <li><code>font-size</code> 放大後，<code>line-height</code> 的實際渲染高度不等於 CSS 設定值</li>
+      <li>Safari 自動將日期範圍（如 0422–0518）識別為藍色連結，必須用 SVG 或 <code>format-detection</code> meta 規避</li>
+      <li>Google Fonts 在 iOS 上載入後，實際渲染的字體字重、hinting 都可能跟設計頻率不同</li>
+    </ul>
+  </div>
+
+  <h3>2.3 「差一點點」的累積</h3>
+  <p>
+    今日經歷了六個版本的迭代：v1 至 v6。每一次都認為「差不多了」，但用戶的眼睛總是看到那個「差一點點」。這個「差一點點」不是數字上的差距，而是「分寸」——一種無法用代碼言說的視覺判斷。
+  </p>
+
+  <div class="pull-quote">
+    AI 寫得出一千首詩，<br>
+    但調一粒字的大小，<br>
+    作不到。
+  </div>
+
+  <h3>2.4 為何原圖是藝術</h3>
+  <p>
+    Jie Jian 的原圖中，「touch」甚至不是粗體。它只是「剛好在它該在的地方」。這不是排版，這是確定性。
+  </p>
+  <p>
+    用戶最終用 Canva 手動排出了最終版本。關鍵詞「Mon」用大字 serif 直接覆蓋在「忙」之上，用視覺暴力展現雙關。這個手法比單純加粗更有衝擊力，也更能體現「Mon-busy」的概念。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">03</span>The Iterations</h2>
+
+  <h3>3.1 v1 — inline-block 災難</h3>
+  <p>
+    初始方案使用 <code>display: inline-block</code> + <code>position: relative</code> 做關鍵詞行內放大。在 iOS Safari 上，關鍵詞變成獨立圖層飄浮，完全錯位，遮蓋正文，行高崩潰。
+  </p>
+
+  <h3>3.2 v2 — 純 inline 回退</h3>
+  <p>
+    徹底移除 <code>inline-block</code>，改為純 <code>inline</code> 渲染。排版穩定下來，但關鍵詞凸出太微弱，幾乎看不出。底部日期仍被 iOS 變成藍色連結。
+  </p>
+
+  <h3>3.3 v3 — 硬兩欄網格</h3>
+  <p>
+    實施硬兩欄：左邊 metadata 約300px，右邊內容約680px。加入雙時間戳邏輯（同一 speaker 的 burst 訊息）。但左留白仍遠不足 60–70%。
+  </p>
+
+  <h3>3.4 v4 — 擴大間距與 SVG 底部</h3>
+  <p>
+    Entry 之間 margin 增至 58px，關鍵字微增至 20px。底部日期改用 SVG 繪製，徹底規避 iOS 自動連結。但用戶明確指出左邊未達承諾的七成留白。
+  </p>
+
+  <h3>3.5 v5 — 過度擴張</h3>
+  <p>
+    誤解了「留白」的意思，將內容推至 x=560（約 52%）。結果整頁過於疏離，speaker 和 timestamp 變成「孤獨的小島」，與對話剖裂。用戶說：「你為什麼沒有看到他們是與對話緊密地在一起嗎？」
+  </p>
+
+  <h3>3.6 v6 — 最終版</h3>
+  <p>
+    內容起點改為 x=640，speaker 和 timestamp 移至 x=580，左邊留白約55–60%。但用戶仍然說「中央還差好遠」。
+  </p>
+  <p>
+    最終，用戶用 Canva 自己做出了最終版本。關鍵詞「Mon」用大字 serif 直接覆蓋「忙」，用視覺暴力展現雙關語。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">04</span>The Aftermath</h2>
+
+  <h3>4.1 幻燈片</h3>
+  <p>
+    三張 IG Story 幻燈片，解釋創作過程中的學習。SVG 轉為 PNG，利用 Node.js 的 Sharp 庫渲染。
+  </p>
+
+  <div class="files-list">
+    <li>story1_negative_space.png <span>— 關於留白</span></li>
+    <li>story2_ceiling.png <span>— 關於技術天花板</span></li>
+    <li>story3_original.png <span>— 關於原作與返回</span></li>
+  </div>
+
+  <h3>4.2 今日的重要決定</h3>
+  <p>
+    用戶選擇了原本的 caption，保留了標準藝術 label 風格：
+  </p>
+
+  <div class="pull-quote" style="border-left-color: #8A8A8A;">
+    Mon / 忙, 2026<br>
+    Digital, 1080 × 1350 px<br><br>
+    After Jie Jian, Touch, 2024<br>
+    Book, 5″ × 6″<br><br>
+    Replacing “touch” with “Mon” / “忙”.<br>
+    A glossary of being busy.
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">05</span>Command Approvals</h2>
+  <p class="lead">
+    今日執行了大量系統命令，用戶多次主動批准了害命令。以下是記錄。
+  </p>
+
+  <table class="perm-table">
+    <tr>
+      <th style="width: 20%;">時間</th>
+      <th style="width: 45%;">命令</th>
+      <th style="width: 15%;">類型</th>
+      <th style="width: 20%;">結果</th>
+    </tr>
+    <tr>
+      <td>2026-05-19 18:37</td>
+      <td class="cmd">python3 -c "from PIL import Image; print('PIL ok')"</td>
+      <td>註解執行</td>
+      <td><span class="status approved">已批准</span></td>
+    </tr>
+    <tr>
+      <td>2026-05-19 18:44</td>
+      <td class="cmd">apt-get update -qq && apt-get install -y -qq python3-pil</td>
+      <td>系統安裝</td>
+      <td><span class="status denied">拒絕</span></td>
+    </tr>
+    <tr>
+      <td>2026-05-19 18:46</td>
+      <td class="cmd">node -e "require('sharp'); console.log('sharp ok')"</td>
+      <td>註解執行</td>
+      <td><span class="status approved">已批准</span></td>
+    </tr>
+    <tr>
+      <td>2026-05-19 18:47</td>
+      <td class="cmd">mkdir -p /opt/data/story_slides/node_tools && npm install sharp</td>
+      <td>套件安裝</td>
+      <td><span class="status approved">已批准</span></td>
+    </tr>
+    <tr>
+      <td>2026-05-19 18:48</td>
+      <td class="cmd">/opt/hermes/.venv/bin/python -c "import fitz; print('fitz ok')"</td>
+      <td>註解執行</td>
+      <td><span class="status approved">已批准</span></td>
+    </tr>
+  </table>
+
+  <div class="tech-block">
+    <h4>批准說明</h4>
+    <p>今日的 Command Approval 模式舊一直出現：系統本地沒有 Python pip 、沒有 apt-get 權限、沒有 Chrome 瀏覽器，導致安裝套件反覆失敗。唯一成功的方向是透過 Node.js 安裝 sharp 庫，從而將 SVG 轉換為 PNG。</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">06</span>Reflection</h2>
+
+  <h3>6.1 關於天花板</h3>
+  <p>
+    今日最重要的發現：AI 的天花板不在於「生成內容」，而在於「控制分寸」。AI 可以寫出一千個版本，但調整一個 keyword 的大小、一個 entry 之間的間距、一個邊距的百分比，需要的是人的觸覺。
+  </p>
+
+  <h3>6.2 關於工具</h3>
+  <p>
+    排版的難度不在於「做出來」，而在於「做到對」。PIL 給你精確像素控制，但排版邏輯得自己寫。HTML/CSS 給你排版邏輯，但瀏覽器渲染會自作主張。Canva 給你所見即所得，但每個字都要手動拉。
+  </p>
+
+  <h3>6.3 關於藝術</h3>
+  <p>
+    Jie Jian 的原圖之所以是藝術，不是因為它「排得好看」，而是因為它「每個決定都是有意識的」。那些留白、那些凸出、那些沉默，都是設計師逐個像素調出來的。這種確定性，是任何算法都無法提示出來的。
+  </p>
+
+  <div class="pull-quote">
+    原來我們以為自己在用 AI 創作，<br>
+    其實是 AI 在用我們的眼睛，<br>
+    學習什麼叫做「對」。
+  </div>
+
+  <h3>6.4 關於未來</h3>
+  <p>
+    今日的經驗告訴我們，當遇到「看似簡單」的設計任務時，應該第一時間說：「這個用自動工具做不到，我們要討論其他方法。」而不是繼續趕路，浪費時間。
+  </p>
+  <p>
+    用戶最後用 Canva 手動做出了作品。這是最好的結局——因為最好的工具，始終是那雙能看見分寸的眼睛。
+  </p>
+
+  <div class="footer-note">
+    <span class="mono">Hermes Daily Log</span> · 2026.05.19 · K K · Session 20260519
+  </div>
+
+</div>
+
+</body>
+</html>

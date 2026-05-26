@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚨 Session 崩壞事件紀錄 | Hermes Agent 上下文管理深度解析</title>
+<style>
+  /* === 全局排版 === */
+  :root {
+    --bg: #0d0d0d;
+    --bg-card: #141414;
+    --bg-raised: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #e8e6e3;
+    --text-dim: #888;
+    --accent: #c9a96e;
+    --accent-light: #e8d5a8;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --success: #2ecc71;
+    --info: #3498db;
+    --code-bg: #0f0f0f;
+    --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Courier New", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* === 導航欄 === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  nav .brand {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* === 主容器 === */
+  main { max-width: 860px; margin: 0 auto; padding: 80px 24px 40px; }
+
+  /* === 字體層級 === */
+  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 16px; line-height: 1.3; }
+  h2 { font-size: 1.35rem; font-weight: 600; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 1.05rem; font-weight: 600; margin: 28px 0 12px; color: var(--accent-light); }
+  h4 { font-size: 0.95rem; font-weight: 600; margin: 20px 0 10px; color: var(--text-dim); }
+  p { margin-bottom: 14px; }
+
+  /* === 標籤 === */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .badge-danger { background: rgba(231,76,60,0.15); color: var(--danger); border: 1px solid rgba(231,76,60,0.3); }
+  .badge-warning { background: rgba(243,156,18,0.15); color: var(--warning); border: 1px solid rgba(243,156,18,0.3); }
+  .badge-success { background: rgba(46,204,113,0.15); color: var(--success); border: 1px solid rgba(46,204,113,0.3); }
+  .badge-info { background: rgba(52,152,219,0.15); color: var(--info); border: 1px solid rgba(52,152,219,0.3); }
+
+  /* === 卡片 === */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+
+  /* === 時間線 === */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--danger), var(--warning), var(--success), var(--info));
+    border-radius: 1px;
+  }
+  .timeline-event { position: relative; margin-bottom: 28px; }
+  .timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .timeline-event.critical::before { background: var(--danger); box-shadow: 0 0 0 4px rgba(231,76,60,0.2); }
+  .timeline-event.warning::before { background: var(--warning); box-shadow: 0 0 0 4px rgba(243,156,18,0.2); }
+  .timeline-event.fix::before { background: var(--success); box-shadow: 0 0 0 4px rgba(46,204,113,0.2); }
+  .timeline-event.info::before { background: var(--info); box-shadow: 0 0 0 4px rgba(52,152,219,0.2); }
+  .timeline-date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); margin-bottom: 4px; }
+  .timeline-title { font-weight: 600; font-size: 1.05rem; margin-bottom: 6px; }
+  .timeline-desc { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+
+  /* === 故障卡 === */
+  .incident-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  .incident-header h3 { margin: 0; }
+  .impact-box {
+    background: var(--code-bg);
+    border-left: 3px solid var(--danger);
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .solution-box {
+    background: var(--code-bg);
+    border-left: 3px solid var(--success);
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* === 策略圖 === */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .strategy-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .strategy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .strategy-card.infocard::before { background: var(--info); }
+  .strategy-card.successcard::before { background: var(--success); }
+  .strategy-card.warningcard::before { background: var(--warning); }
+  .strategy-card.dangercard::before { background: var(--danger); }
+  .strategy-card h4 { margin: 0 0 8px; font-size: 0.95rem; }
+  .strategy-card p { margin: 0; font-size: 0.85rem; color: var(--text-dim); line-height: 1.55; }
+
+  /* === 代碼塊 === */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 14px 0;
+  }
+  code { font-family: var(--font-mono); font-size: 0.9em; }
+  .code-inline { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+
+  /* === 表格 === */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-dim); font-weight: 500; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* === 比較表 === */
+  .compare-row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+  .compare-label { min-width: 120px; font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent); font-weight: 500; padding-top: 2px; }
+  .compare-content { flex: 1; }
+
+  /* === 滾動補充 === */
+  .scroll-container { overflow-x: auto; }
+  .scroll-container table { min-width: 600px; }
+
+  /* === 頁腳 === */
+  footer { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 0.82rem; border-top: 1px solid var(--border); margin-top: 40px; }
+
+  /* === 錨點偏移 === */
+  section[id] { scroll-margin-top: 72px; }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 1.5rem; }
+    nav .nav-links { gap: 10px; }
+    .compare-row { flex-direction: column; gap: 4px; }
+    .compare-label { min-width: auto; }
+    main { padding: 80px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">🚨 Session 崩壞事件紀錄</div>
+  <div class="nav-links">
+    <a href="#incidents">崩壞事件</a>
+    <a href="#strategy">上下文策略</a>
+    <a href="#mechanism">運作機制</a>
+    <a href="#lessons">教訓總結</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ======================= 標題 ======================= -->
+<h1>Session 崩壞事件紀錄與 Hermes 上下文管理策略</h1>
+<p style="color:var(--text-dim);margin-bottom:32px;">記錄自架 Hermes Agent 在 2025 年 5 月遭遇的多次 session 故障，拆解成因、修復過程，以及 Hermes 如何多層次處理長對話上下文。</p>
+
+<!-- ======================= 事件概覽 ======================= -->
+<section id="incidents">
+<h2>📋 崩壞事件概覽</h2>
+
+<div class="card">
+  <div class="scroll-container">
+  <table>
+    <tr><th>發生時間</th><th>類型</th><th>症狀</th><th>根因</th><th>狀態</th></tr>
+    <tr>
+      <td>2026-05-20 06:01</td>
+      <td><span class="badge badge-danger">404</span></td>
+      <td>Context compression 失敗，出現 <code>404 Not Found</code></td>
+      <td>Auto 模式揀錯模型 (kimi-k2-turbo-preview)</td>
+      <td>✅ 已修復</td>
+    </tr>
+    <tr>
+      <td>2026-05-20 05:57</td>
+      <td><span class="badge badge-warning">Vision</span></td>
+      <td>Vision 分析失敗：<code>No LLM provider configured for task=vision</code></td>
+      <td>auxiliary.vision.provider 為 auto，未正確解析</td>
+      <td>✅ 已修復</td>
+    </tr>
+    <tr>
+      <td>2026-05-20 全天</td>
+      <td><span class="badge badge-info">Context Loss</span></td>
+      <td>多個 session 在重啟後失去上下文，用戶需重複說明</td>
+      <td>Session 壓縮/重啟後 summary 生成失敗</td>
+      <td>⚠️ 局部緩解</td>
+    </tr>
+  </table>
+  </div>
+</div>
+
+<!-- ======================= 詳細事件 ======================= -->
+<h3 style="color:var(--danger);margin-top:36px;">🔴 事件一：Context Compression 404 錯誤 (2026-05-20)</h3>
+
+<div class="card" style="border-left: 3px solid var(--danger);">
+  <div class="incident-header">
+    <h3>錯誤症狀</h3>
+    <span class="badge badge-danger">CRITICAL</span>
+  </div>
+  <div class="impact-box">
+    <strong>用戶端看到：</strong><br>
+    <code>Moonshot 404: kimi-k2-turbo-preview...</code><br>
+    在对话过程中突然出现，导致上下文压缩完全失败。<br>
+    <strong>後果：</strong>對話無法自動摘要，session 越來越長，最終可能觸發 token limit。
+  </div>
+
+  <h4 style="margin-top:20px;">🔍 調查過程</h4>
+  <p>1. 讀取 <code class="code-inline">/opt/data/config.yaml</code>，發現 <code class="code-inline">auxiliary.compression.provider</code> 設為 <code class="code-inline">auto</code></p>
+  <p>2. 深入原始碼 <code class="code-inline">agent/auxiliary_client.py</code>，追蹤 auto 解析邏輯</p>
+  <p>3. 發現關鍵 hardcoded fallback：</p>
+  <pre>_API_KEY_PROVIDER_AUX_MODELS_FALLBACK = {
+    "kimi-coding": "kimi-k2-turbo-preview",
+    # ... 其他 provider
+}</pre>
+  <p>4. 確認 <code class="code-inline">kimi-k2-turbo-preview</code> 是無效/不存在的模型名，API 回傳 404</p>
+
+  <h4>🛠 解決方案</h4>
+  <div class="solution-box">
+    在 <code class="code-inline">config.yaml</code> 明確指定 auxiliary 任務的 provider 與模型，<strong>禁止依賴 auto</strong>：
+  </div>
+  <pre>auxiliary:
+  vision:
+    provider: moonshot
+    model: kimi-k2.6
+  compression:
+    provider: moonshot
+    model: kimi-k2.6
+  # ... 其他 auxiliary 任務同樣設置</pre>
+  <p><strong>重啟指令：</strong><code class="code-inline">/restart</code> 或 <code class="code-inline">hermes gateway restart</code>（config 在啟動時 snapshot，熱更新無效）</p>
+</div>
+
+<h3 style="color:var(--warning);margin-top:36px;">🟡 事件二：Vision 分析 Provider 未配置 (2026-05-19)</h3>
+
+<div class="card" style="border-left: 3px solid var(--warning);">
+  <div class="incident-header">
+    <h3>錯誤症狀</h3>
+    <span class="badge badge-warning">VISION</span>
+  </div>
+  <p>用戶嘗試分析圖片時出現：</p>
+  <pre>vision_analyze failed:
+No LLM provider configured for task=vision provider=auto.
+Run: hermes setup</pre>
+  <p><strong>根因：</strong>與 Compression 404 同源——<code class="code-inline">auxiliary.vision.provider: auto</code> 無法正確解析到可用的 Moonshot provider，系統提示需要執行 <code class="code-inline">hermes setup</code>。</p>
+
+  <h4>🛠 解決方案</h4>
+  <div class="solution-box">
+    直接 patch config 明確指定，無需重新 setup：
+  </div>
+  <pre>auxiliary:
+  vision:
+    provider: moonshot
+    model: kimi-k2.6</pre>
+  <p> </p>
+</div>
+
+</section>
+
+<!-- ======================= 策略解析 ======================= -->
+<section id="strategy">
+
+<h2>🧠 Hermes 理解長上下文的五大策略</h2>
+
+<p>當對話愈來愈長，Hermes 不會無限制塞滿 context window。它透過以下五層機制，在「記住一切」與「不超限」之間取得平衡。</p>
+
+<div class="strategy-grid">
+  <div class="strategy-card infocard">
+    <h4>1. Current Context</h4>
+    <p>當前對話的即時記錄，包含最近數輪用戶與 AI 的完整對話。這是最精確、最即時的記憶層。</p>
+  </div>
+  <div class="strategy-card successcard">
+    <h4>2. Compaction Summary</h4>
+    <p>當對話過長時，系統調用輔助模型將歷史對話壓縮為摘要，騰出空間繼續對話。</p>
+  </div>
+  <div class="strategy-card warningcard">
+    <h4>3. Persistent Memory</h4>
+    <p>用戶主動保存到 memory 的關鍵資訊，跨 session 永久保留。分 user 記憶與 memory 筆記。</p>
+  </div>
+  <div class="strategy-card dangercard">
+    <h4>4. Session Search</h4>
+    <p>當前 session 缺少上下文時，自動搜尋過往 sessions 的摘要，將相關內容注入當前對話。</p>
+  </div>
+  <div class="strategy-card infocard">
+    <h4>5. Archive Files</h4>
+    <p>所有歷史對話的原始記錄（.jsonl），供深度檢索或調試使用，是最完整的備份層。</p>
+  </div>
+</div>
+
+<!-- ======================= 機制詳解 ======================= -->
+<h3 style="margin-top:40px;">各策略的工作方式與局限性</h3>
+
+<div class="card">
+  <h4>Current Context（當前上下文）</h4>
+  <div class="compare-row">
+    <div class="compare-label">運作</div>
+    <div class="compare-content">每條訊息即時追加到當前 session 的 context window 中，包含完整對話內容與 tool 調用結果。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">局限</div>
+    <div class="compare-content">受模型 token limit 限制（kimi-k2.6 約 64K~256K）。當對話過長，最早內容會被遺忘或需壓縮。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Compaction Summary（上下文壓縮摘要）</h4>
+  <div class="compare-row">
+    <div class="compare-label">觸發條件</div>
+    <div class="compare-content"><code class="code-inline">compression.threshold</code>（預設 0.5）達標時，或手動執行 <code class="code-inline">/compress</code> 時觸發。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">運作流程</div>
+    <div class="compare-content">1. 調用 auxiliary model 讀取整個對話歷史<br>2. 生成濃縮摘要，保留關鍵決策、程式碼、結論<br>3. 用摘要替換原始對話，騰出 token 空間</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">我們的教訓</div>
+    <div class="compare-content">當 <code class="code-inline">auxiliary.compression.provider: auto</code> 解析到無效模型 <code class="code-inline">kimi-k2-turbo-preview</code> 時，整個壓縮機制癱瘓，session 持續膨脹直至無法回應。<strong>務必明確指定 auxiliary provider。</strong></div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Persistent Memory（持久化記憶）</h4>
+  <div class="compare-row">
+    <div class="compare-label">運作</div>
+    <div class="compare-content">每次對話開頭，系統讀取 <code class="code-inline">/opt/data/memory.json</code>，將 user profile 與 memory notes 注入 system prompt，確保個人偏好跨 session 保留。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">局限</div>
+    <div class="compare-content">容量有限（約 ~2,000 chars），只適合存「用戶偏好、程式碼風格、專案設定」等精簡事實，不能存對話歷史或任務進度。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">使用方式</div>
+    <div class="compare-content">調用 <code class="code-inline">memory(action="add")</code> 或 <code class="code-inline">memory(action="replace")</code>。永遠優先儲存「會多次影響未來互動」的資訊。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Session Search（會話搜索）</h4>
+  <div class="compare-row">
+    <div class="compare-label">運作</div>
+    <div class="compare-content">當用戶提及「上次」、「之前」或系統偵測到語義缺口時，呼叫 <code class="code-inline">session_search(query="..."</code>，從所有歷史 sessions 中檢索相關對話摘要。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">局限</div>
+    <div class="compare-content">摘要品質取決於 compaction 是否成功。如果壓縮失敗（如本事件），session search 的回溯能力大受影響。此外，它是<strong>被動觸發</strong>而非主動關聯。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">我們的教訓</div>
+    <div class="compare-content">Daily session reset 後（UTC 12:00 HKT），如果 compaction 在前一晚失敗，次日 session search 可能找不到關鍵上下文，導致用戶感到「斷線」。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Archive Files（歸檔文件）</h4>
+  <div class="compare-row">
+    <div class="compare-label">運作</div>
+    <div class="compare-content">每個 session 完整記錄在 <code class="code-inline">/opt/data/sessions/YYYYMMDD_HHMMSS_xxxx.jsonl</code> 中，包含時間戳、工具調用、模型回應等原始數據。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">局限</div>
+    <div class="compare-content">純存儲，<strong>不主動參與推理</strong>。需要用戶或系統主動調用 <code class="code-inline">session_search</code> 或讀取檔案才能利用。</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">清理建議</div>
+    <div class="compare-content">保留 <code class="code-inline">request_dump_*.json</code>（網路請求調試）可安全刪除以釋放空間，但 <code class="code-inline">*.jsonl</code> 是對話歷史，刪除後無法回溯。</div>
+  </div>
+</div>
+
+</section>
+<!-- ======================= 運作機制 ======================= -->
+<section id="mechanism">
+
+<h2>⚙️ 上下文流轉機制圖解</h2>
+
+<p>當一次對話進行時，訊息從「用戶輸入」到「模型回應」，經歷以下路徑：</p>
+
+<div class="card" style="background:none;border:1px dashed var(--border);">
+  <pre style="background:none;border:none;margin:0;padding:0;line-height:2.2;">
+用戶輸入
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  1. 載入系統提示 (system prompt)                              │
+│     · 基本人設 + 工具定義 + Persistent Memory (user profile)  │
+│     · memory 中的 key-value 對                                │
+└─────────────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  2. 拼接當前上下文 (current context)                           │
+│     · 最近 N 輪對話 (full turns)                              │
+│     · 如果過長 → 觸發 Compaction                             │
+│     · 壓縮後保留 Summary + 最近幾輪完整對話                  │
+└─────────────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  3. [可選] Session Search 檢索                                │
+│     · 如果用戶提到過往 session 內容                           │
+│     · 從歷史 sessions 中檢索相關摘要注入                    │
+└─────────────────────────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  4. 模型生成回應                                            │
+│     · 基於上述所有上下文進行推理                               │
+│     · 可選調用 tools (browser, terminal, memory...)         │
+└─────────────────────────────────────────────────────────────┘
+    │
+    ▼
+回覆用戶 + 存檔至 .jsonl
+</pre>
+</div>
+
+<h3>Compaction 何時觸發？</h3>
+
+<div class="scroll-container">
+<table>
+  <tr><th>觸發條件</th><th>說明</th><th>結果</th></tr>
+  <tr>
+    <td>自動觸發</td>
+    <td>當 <code class="code-inline">context_length / max_length &gt; threshold</code>（預設 0.5）</td>
+    <td>無縫壓縮，用戶無感知</td>
+  </tr>
+  <tr>
+    <td>手動觸發</td>
+    <td>用戶輸入 <code class="code-inline">/compress</code></td>
+    <td>立即壓縮，可用於主動控制</td>
+  </tr>
+  <tr>
+    <td>Session 重啟</td>
+    <td>Daily reset 或 <code class="code-inline">/restart</code> 後</td>
+    <td>新 session 讀取舊 session 的 summary</td>
+  </tr>
+  <tr>
+    <td>壓縮失敗</td>
+    <td>auxiliary provider 出現 404 或其他錯誤</td>
+    <td><strong>Context 持續膨脹，最終可能超限</strong></td>
+  </tr>
+</table>
+</div>
+
+<h3>Auto-Lineage：壓縮後的 Session 延續</h3>
+
+<p>當一個 session 被壓縮後，Hermes 創建一個「繼承 session」，標題自動附加 <code class="code-inline">#2</code>、<code class="code-inline">#3</code>：</p>
+
+<pre>原始 session: "Void Mathematics 設計討論"
+    │
+    ▼ 壓縮後
+新 session: "Void Mathematics 設計討論 #2"
+    │
+    ▼ 再壓縮
+新 session: "Void Mathematics 設計討論 #3"</pre>
+
+<p>每次延續都帶上前一個 session 的 summary，實現<strong>長期連續工作流</strong>。</p>
+
+</section>
+<!-- ======================= 教訓總結 ======================= -->
+<section id="lessons">
+
+<h2>📝 教訓總結與最佳實踐</h2>
+
+<div class="card" style="border-left: 3px solid var(--success);">
+  <h4>✅ 修復後的正確配置</h4>
+  <pre style="margin-top:12px;">model:
+  provider: moonshot
+  model: kimi-k2.6
+
+auxiliary:
+  vision:
+    provider: moonshot
+    model: kimi-k2.6
+  compression:
+    provider: moonshot
+    model: kimi-k2.6
+  # 其他 auxiliary 任務同樣明確指定
+  # 永遠不要依賴 auto</pre>
+</div>
+
+<h3>關鍵教訓</h3>
+
+<div class="timeline">
+  <div class="timeline-event critical">
+    <div class="timeline-date">2026-05-20</div>
+    <div class="timeline-title">Auto 模式不可靠</div>
+    <div class="timeline-desc"><code class="code-inline">provider: auto</code> 的 hardcoded fallback 可能指向無效模型。使用自架/非主流 provider 時務必明確指定。</div>
+  </div>
+  <div class="timeline-event warning">
+    <div class="timeline-date">2026-05-20</div>
+    <div class="timeline-title">Config 需重啟生效</div>
+    <div class="timeline-desc">修改 <code class="code-inline">config.yaml</code> 後必須 <code class="code-inline">/restart</code>，因為 auxiliary client 在啟動時 snapshot 配置，不接受熱更新。</div>
+  </div>
+  <div class="timeline-event fix">
+    <div class="timeline-date">持續</div>
+    <div class="timeline-title">監控所有 auxiliary 任務</div>
+    <div class="timeline-desc">除了 compression 和 vision，還有 session_search、web_extract、title_generation 等。建議一次性全部明確配置。</div>
+  </div>
+  <div class="timeline-event info">
+    <div class="timeline-date">長期</div>
+    <div class="timeline-title">理解 Context 層級的取捨</div>
+    <div class="timeline-desc">
+      · <strong>Current Context</strong>：最準確但 ephemeral<br>
+      · <strong>Compaction Summary</strong>：持久但可能丟失細節<br>
+      · <strong>Persistent Memory</strong>：精準但容量小<br>
+      · <strong>Session Search</strong>：回溯強但依賴壓縮品質<br>
+      · <strong>Archive</strong>：最完整但不主動參與推理
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top:40px;">快速診斷 Checklist</h3>
+
+<div class="card">
+  <p>⚠️ 如果再次遇到「對話突然斷線」或「AI 好像忘了之前說的」：</p>
+  <ol style="margin-left:20px; color:var(--text-dim);">
+    <li>檢查 <code class="code-inline">/opt/data/config.yaml</code> 的 auxiliary provider 是否為 auto → 改為明確指定</li>
+    <li>重啟 gateway：<code class="code-inline">hermes gateway restart</code></li>
+    <li>檢查 <code class="code-inline">/opt/data/sessions/</code> 是否有異常大的 .jsonl 檔案（表示壓縮失敗）</li>
+    <li>檢查 archive 目錄確保歷史對話有正常存檔</li>
+    <li>定期清理 <code class="code-inline">request_dump_*.json</code> 釋放空間</li>
+  </ol>
+</div>
+
+</section>
+
+</main>
+
+<footer>
+  Generated by Hermes Agent · 2026-05-20<br>
+  Based on actual incident investigation and source code analysis
+</footer>
+
+</body>
+</html>
