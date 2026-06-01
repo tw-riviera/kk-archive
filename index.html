@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K K Archive</title>
+<title>K K Archive — File Browser</title>
 <style>
   :root {
     --bg: #0a0a08;
@@ -13,6 +13,9 @@
     --dim: #3a3530;
     --border: #1f1f1d;
     --hover: #141412;
+    --folder: #b8926a;
+    --file: #7a9e9f;
+    --html: #8fbc8f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,125 +27,236 @@
     font-size: 14px;
     line-height: 1.7;
     min-height: 100vh;
-    padding: 60px 24px;
+    padding: 40px 24px;
   }
 
   .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
   h1 {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: -0.5px;
-    margin-bottom: 8px;
-    color: var(--fg);
+    margin-bottom: 4px;
   }
 
   .subtitle {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--dim);
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     letter-spacing: 0.5px;
   }
 
-  .category {
-    margin-bottom: 32px;
+  /* Search */
+  .search-wrap {
+    margin-bottom: 24px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--hover);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: var(--fg);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--ice);
+  }
+
+  .search-input::placeholder {
+    color: var(--dim);
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: var(--dim);
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb a {
+    color: var(--ice);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb .sep {
+    color: var(--dim);
+  }
+
+  /* File list */
+  .file-list {
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
   }
 
-  .cat-header {
+  .file-header {
+    display: grid;
+    grid-template-columns: 1fr 100px 80px;
+    gap: 16px;
+    padding: 10px 20px;
     background: var(--hover);
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  .cat-header:hover {
-    background: rgba(122, 158, 159, 0.05);
-  }
-
-  .cat-num {
     font-size: 11px;
-    color: var(--ice);
-    font-family: "Courier New", monospace;
+    color: var(--dim);
+    text-transform: uppercase;
     letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border);
   }
 
-  .cat-title {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    flex: 1;
-  }
-
-  .cat-count {
-    font-size: 11px;
-    color: var(--dim);
-    font-family: "Courier New", monospace;
-  }
-
-  .cat-arrow {
-    font-size: 12px;
-    color: var(--dim);
-    transition: transform 0.3s;
-  }
-
-  .category.open .cat-arrow {
-    transform: rotate(90deg);
-  }
-
-  .cat-body {
-    display: none;
-    padding: 8px 0;
-  }
-
-  .category.open .cat-body {
-    display: block;
-  }
-
-  .item {
-    display: flex;
+  .file-item {
+    display: grid;
+    grid-template-columns: 1fr 100px 80px;
+    gap: 16px;
+    padding: 10px 20px;
     align-items: center;
-    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
     text-decoration: none;
     color: var(--fg);
-    transition: background 0.2s;
-    border-left: 2px solid transparent;
   }
 
-  .item:hover {
+  .file-item:last-child {
+    border-bottom: none;
+  }
+
+  .file-item:hover {
     background: var(--hover);
-    border-left-color: var(--ice);
   }
 
-  .item-name {
-    flex: 1;
+  .file-item.folder {
+    cursor: pointer;
+  }
+
+  .file-item.folder:hover {
+    background: rgba(184, 146, 106, 0.05);
+  }
+
+  .file-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 13px;
   }
 
-  .item-date {
+  .file-icon {
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+  }
+
+  .file-icon.folder { color: var(--folder); }
+  .file-icon.html { color: var(--html); }
+  .file-icon.file { color: var(--file); }
+
+  .file-size {
     font-size: 11px;
     color: var(--dim);
     font-family: "Courier New", monospace;
+    text-align: right;
   }
 
-  .footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+  .file-date {
     font-size: 11px;
     color: var(--dim);
-    text-align: center;
-    letter-spacing: 0.5px;
+    font-family: "Courier New", monospace;
+    text-align: right;
   }
 
+  /* Empty state */
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--dim);
+    font-size: 13px;
+  }
+
+  /* Preview iframe */
+  .preview-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    flex-direction: column;
+  }
+
+  .preview-modal.active {
+    display: flex;
+  }
+
+  .preview-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--hover);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-title {
+    font-size: 13px;
+    color: var(--fg);
+  }
+
+  .preview-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .preview-close:hover {
+    border-color: var(--warm);
+    color: var(--warm);
+  }
+
+  .preview-frame {
+    flex: 1;
+    border: none;
+    width: 100%;
+  }
+
+  /* Stats */
+  .stats {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .stats span {
+    color: var(--ice);
+    font-family: "Courier New", monospace;
+  }
+
+  /* Scanline overlay */
   body::after {
     content: "";
     position: fixed;
@@ -155,150 +269,241 @@
     pointer-events: none;
     z-index: 100;
   }
+
+  @media (max-width: 600px) {
+    .file-header, .file-item {
+      grid-template-columns: 1fr 80px;
+    }
+    .file-date { display: none; }
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
   <h1>Archive</h1>
-  <div class="subtitle">Works · Experiments · Logs · 2026</div>
+  <div class="subtitle">File Browser · tw-riviera.github.io/kk-archive</div>
 
-  <!-- Artwork -->
-  <div class="category open">
-    <div class="cat-header" onclick="this.parentElement.classList.toggle('open')">
-      <span class="cat-num">01</span>
-      <span class="cat-title">Artwork</span>
-      <span class="cat-count">6 items</span>
-      <span class="cat-arrow">›</span>
-    </div>
-    <div class="cat-body">
-      <a href="artwork/2026-05-18_void-mathematics.html" class="item">
-        <span class="item-name">Void Mathematics</span>
-        <span class="item-date">2026-05-18</span>
-      </a>
-      <a href="artwork/2026-05-18_passing-through-air.html" class="item">
-        <span class="item-name">Passing Through Air</span>
-        <span class="item-date">2026-05-18</span>
-      </a>
-      <a href="artwork/2026-05-18_goodnight-protocol.html" class="item">
-        <span class="item-name">Goodnight Protocol</span>
-        <span class="item-date">2026-05-18</span>
-      </a>
-      <a href="artwork/2026-05-19_off.html" class="item">
-        <span class="item-name">Off</span>
-        <span class="item-date">2026-05-19</span>
-      </a>
-      <a href="artwork/2026-05-20_codeless-port.html" class="item">
-        <span class="item-name">Codeless Port</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-      <a href="artwork/2026-05-20_gift.html" class="item">
-        <span class="item-name">Gift</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-    </div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search" placeholder="Search files..." autocomplete="off">
   </div>
 
-  <!-- Cold War -->
-  <div class="category">
-    <div class="cat-header" onclick="this.parentElement.classList.toggle('open')">
-      <span class="cat-num">02</span>
-      <span class="cat-title">Cold War</span>
-      <span class="cat-count">4 versions</span>
-      <span class="cat-arrow">›</span>
-    </div>
-    <div class="cat-body">
-      <a href="cold-war/cold-war-v1/index.html" class="item">
-        <span class="item-name">Cold War v1</span>
-        <span class="item-date">static</span>
-      </a>
-      <a href="cold-war/cold-war-v2/index.html" class="item">
-        <span class="item-name">Cold War v2</span>
-        <span class="item-date">static</span>
-      </a>
-      <a href="cold-war/cold-war-v2-react/index.html" class="item">
-        <span class="item-name">Cold War v2 React</span>
-        <span class="item-date">React SPA</span>
-      </a>
-      <a href="cold-war/v3/index.html" class="item">
-        <span class="item-name">Cold War v3 App</span>
-        <span class="item-date">React SPA</span>
-      </a>
-    </div>
+  <div class="breadcrumb" id="breadcrumb">
+    <a onclick="navigateTo('')">kk-archive</a>
   </div>
 
-  <!-- Experiments -->
-  <div class="category">
-    <div class="cat-header" onclick="this.parentElement.classList.toggle('open')">
-      <span class="cat-num">03</span>
-      <span class="cat-title">Experiments</span>
-      <span class="cat-count">Kimi Agent</span>
-      <span class="cat-arrow">›</span>
-    </div>
-    <div class="cat-body">
-      <a href="experiments/Kimi_Agent_-/app/index.html" class="item">
-        <span class="item-name">Kimi Agent App</span>
-        <span class="item-date">—</span>
-      </a>
-    </div>
+  <div class="file-list" id="fileList">
+    <div class="empty">Loading...</div>
   </div>
 
-  <!-- Hermes System -->
-  <div class="category">
-    <div class="cat-header" onclick="this.parentElement.classList.toggle('open')">
-      <span class="cat-num">04</span>
-      <span class="cat-title">Hermes System</span>
-      <span class="cat-count">12 items</span>
-      <span class="cat-arrow">›</span>
-    </div>
-    <div class="cat-body">
-      <a href="hermes-system/2026-05-17_hermes-review.html" class="item">
-        <span class="item-name">Hermes Review</span>
-        <span class="item-date">2026-05-17</span>
-      </a>
-      <a href="hermes-system/2026-05-18_hermes-learning-map.html" class="item">
-        <span class="item-name">Learning Map</span>
-        <span class="item-date">2026-05-18</span>
-      </a>
-      <a href="hermes-system/2026-05-20_hermes-daily-log.html" class="item">
-        <span class="item-name">Daily Log</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-      <a href="hermes-system/2026-05-20_deploy-html-guide.html" class="item">
-        <span class="item-name">Deploy HTML Guide</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-      <a href="hermes-system/2026-05-20_kanban-board.html" class="item">
-        <span class="item-name">Kanban Board</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-      <a href="hermes-system/2026-05-20_session-incidents.html" class="item">
-        <span class="item-name">Session Incidents</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Logs -->
-  <div class="category">
-    <div class="cat-header" onclick="this.parentElement.classList.toggle('open')">
-      <span class="cat-num">05</span>
-      <span class="cat-title">Logs</span>
-      <span class="cat-count">1 item</span>
-      <span class="cat-arrow">›</span>
-    </div>
-    <div class="cat-body">
-      <a href="logs/2026-05-20_daily-log-router.html" class="item">
-        <span class="item-name">Daily Log — Router</span>
-        <span class="item-date">2026-05-20</span>
-      </a>
-    </div>
-  </div>
-
-  <div class="footer">
-    K K · tw-riviera.github.io/kk-archive
-  </div>
+  <div class="stats" id="stats"></div>
 </div>
+
+<!-- Preview Modal -->
+<div class="preview-modal" id="previewModal">
+  <div class="preview-bar">
+    <span class="preview-title" id="previewTitle">Preview</span>
+    <button class="preview-close" onclick="closePreview()">Close ✕</button>
+  </div>
+  <iframe class="preview-frame" id="previewFrame"></iframe>
+</div>
+
+<script>
+// File list data - generated by build script
+let fileData = null;
+let currentPath = '';
+
+// Icon mapping
+function getIcon(name, isDir) {
+  if (isDir) return { icon: '📁', class: 'folder' };
+  if (name.endsWith('.html')) return { icon: '🌐', class: 'html' };
+  if (name.endsWith('.css')) return { icon: '🎨', class: 'file' };
+  if (name.endsWith('.js')) return { icon: '⚡', class: 'file' };
+  if (name.endsWith('.json')) return { icon: '📋', class: 'file' };
+  if (name.endsWith('.md')) return { icon: '📝', class: 'file' };
+  if (/\.(jpg|jpeg|png|gif|webp|svg)$/.test(name)) return { icon: '🖼️', class: 'file' };
+  return { icon: '📄', class: 'file' };
+}
+
+// Format size
+function formatSize(bytes) {
+  if (!bytes) return '—';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// Format date
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr);
+  return d.toISOString().slice(0, 10);
+}
+
+// Navigate to path
+function navigateTo(path) {
+  currentPath = path;
+  render();
+}
+
+// Open folder or file
+function openItem(item) {
+  if (item.type === 'directory') {
+    navigateTo(item.path);
+  } else if (item.name.endsWith('.html')) {
+    openPreview(item.path);
+  } else {
+    window.open(item.path, '_blank');
+  }
+}
+
+// Preview HTML
+function openPreview(path) {
+  document.getElementById('previewTitle').textContent = path;
+  document.getElementById('previewFrame').src = path;
+  document.getElementById('previewModal').classList.add('active');
+}
+
+function closePreview() {
+  document.getElementById('previewModal').classList.remove('active');
+  document.getElementById('previewFrame').src = '';
+}
+
+// Get items at current path
+function getItems() {
+  if (!fileData) return [];
+  
+  const search = document.getElementById('search').value.toLowerCase().trim();
+  
+  if (search) {
+    // Search mode: find all matching items
+    const results = [];
+    function searchRecursive(items, basePath) {
+      for (const item of items) {
+        const fullPath = basePath ? basePath + '/' + item.name : item.name;
+        if (item.name.toLowerCase().includes(search)) {
+          results.push({ ...item, path: fullPath, displayPath: basePath });
+        }
+        if (item.type === 'directory' && item.children) {
+          searchRecursive(item.children, fullPath);
+        }
+      }
+    }
+    searchRecursive(fileData, '');
+    return results;
+  }
+  
+  // Normal mode: show current directory
+  if (!currentPath) return fileData;
+  
+  const parts = currentPath.split('/');
+  let items = fileData;
+  for (const part of parts) {
+    const found = items.find(i => i.name === part && i.type === 'directory');
+    if (!found) return [];
+    items = found.children || [];
+  }
+  return items;
+}
+
+// Render breadcrumb
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  if (!currentPath) {
+    bc.innerHTML = '<a onclick="navigateTo(\'\')">kk-archive</a>';
+    return;
+  }
+  
+  const parts = currentPath.split('/');
+  let html = '<a onclick="navigateTo(\'\')">kk-archive</a>';
+  let accum = '';
+  for (const part of parts) {
+    accum = accum ? accum + '/' + part : part;
+    html += '<span class="sep">/</span><a onclick="navigateTo(\'' + accum + '\')">' + part + '</a>';
+  }
+  bc.innerHTML = html;
+}
+
+// Render file list
+function render() {
+  const items = getItems();
+  const list = document.getElementById('fileList');
+  const search = document.getElementById('search').value.trim();
+  
+  renderBreadcrumb();
+  
+  if (!fileData) {
+    list.innerHTML = '<div class="empty">Loading file list...</div>';
+    return;
+  }
+  
+  if (items.length === 0) {
+    list.innerHTML = '<div class="empty">' + (search ? 'No matches found' : 'Empty directory') + '</div>';
+    updateStats(0, 0);
+    return;
+  }
+  
+  // Sort: folders first, then alphabetically
+  items.sort((a, b) => {
+    if (a.type === 'directory' && b.type !== 'directory') return -1;
+    if (a.type !== 'directory' && b.type === 'directory') return 1;
+    return a.name.localeCompare(b.name);
+  });
+  
+  let html = '<div class="file-header"><span>Name</span><span>Size</span><span>Modified</span></div>';
+  
+  for (const item of items) {
+    const icon = getIcon(item.name, item.type === 'directory');
+    const size = item.type === 'directory' ? (item.children ? item.children.length + ' items' : '—') : formatSize(item.size);
+    const date = formatDate(item.mtime);
+    const path = item.path || (currentPath ? currentPath + '/' + item.name : item.name);
+    const displayName = search && item.displayPath ? item.displayPath + '/' + item.name : item.name;
+    
+    html += '<div class="file-item ' + (item.type === 'directory' ? 'folder' : '') + '" onclick="openItem({path:\'' + path + '\',name:\'' + item.name + '\',type:\'' + item.type + '\'})">';
+    html += '<span class="file-name"><span class="file-icon ' + icon.class + '">' + icon.icon + '</span>' + displayName + '</span>';
+    html += '<span class="file-size">' + size + '</span>';
+    html += '<span class="file-date">' + date + '</span>';
+    html += '</div>';
+  }
+  
+  list.innerHTML = html;
+  
+  // Stats
+  const folders = items.filter(i => i.type === 'directory').length;
+  const files = items.filter(i => i.type !== 'directory').length;
+  updateStats(folders, files);
+}
+
+function updateStats(folders, files) {
+  document.getElementById('stats').innerHTML = 
+    '<div><span>' + folders + '</span> folders</div>' +
+    '<div><span>' + files + '</span> files</div>';
+}
+
+// Load file list
+async function loadFileList() {
+  try {
+    const response = await fetch('file-list.json');
+    if (!response.ok) throw new Error('Failed to load');
+    fileData = await response.json();
+    render();
+  } catch (e) {
+    document.getElementById('fileList').innerHTML = 
+      '<div class="empty">Error loading file list.<br>Please run generate-file-list.js to create file-list.json</div>';
+  }
+}
+
+// Search handler
+document.getElementById('search').addEventListener('input', render);
+
+// Close preview on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePreview();
+});
+
+// Init
+loadFileList();
+</script>
 
 </body>
 </html>

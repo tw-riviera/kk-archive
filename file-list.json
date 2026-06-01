@@ -1,0 +1,1425 @@
+[
+  {
+    "name": "art",
+    "path": "art",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-06-01T12:05:44.574Z",
+    "children": [
+      {
+        "name": "codeless_port.html",
+        "path": "art/codeless_port.html",
+        "type": "file",
+        "size": 11741,
+        "mtime": "2026-05-20T18:45:08.336Z"
+      },
+      {
+        "name": "index.html",
+        "path": "art/index.html",
+        "type": "file",
+        "size": 6418,
+        "mtime": "2026-05-20T18:47:06.489Z"
+      }
+    ]
+  },
+  {
+    "name": "artwork",
+    "path": "artwork",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-05-26T22:02:45.165Z",
+    "children": [
+      {
+        "name": "art-src",
+        "path": "artwork/art-src",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-05-20T18:47:06.488Z",
+        "children": [
+          {
+            "name": "codeless_port.html",
+            "path": "artwork/art-src/codeless_port.html",
+            "type": "file",
+            "size": 11741,
+            "mtime": "2026-05-20T18:45:08.336Z"
+          },
+          {
+            "name": "index.html",
+            "path": "artwork/art-src/index.html",
+            "type": "file",
+            "size": 6418,
+            "mtime": "2026-05-20T18:47:06.489Z"
+          }
+        ]
+      },
+      {
+        "name": "2026-05-18_goodnight-protocol.html",
+        "path": "artwork/2026-05-18_goodnight-protocol.html",
+        "type": "file",
+        "size": 7437,
+        "mtime": "2026-05-18T20:12:32.812Z"
+      },
+      {
+        "name": "2026-05-18_passing-through-air.html",
+        "path": "artwork/2026-05-18_passing-through-air.html",
+        "type": "file",
+        "size": 12570,
+        "mtime": "2026-05-18T20:39:54.779Z"
+      },
+      {
+        "name": "2026-05-18_void-mathematics.html",
+        "path": "artwork/2026-05-18_void-mathematics.html",
+        "type": "file",
+        "size": 9439,
+        "mtime": "2026-05-18T21:47:20.938Z"
+      },
+      {
+        "name": "2026-05-19_off.html",
+        "path": "artwork/2026-05-19_off.html",
+        "type": "file",
+        "size": 5698,
+        "mtime": "2026-05-19T22:11:12.861Z"
+      },
+      {
+        "name": "2026-05-20_codeless-port.html",
+        "path": "artwork/2026-05-20_codeless-port.html",
+        "type": "file",
+        "size": 11741,
+        "mtime": "2026-05-20T18:41:58.840Z"
+      },
+      {
+        "name": "2026-05-20_gift.html",
+        "path": "artwork/2026-05-20_gift.html",
+        "type": "file",
+        "size": 2433,
+        "mtime": "2026-05-20T18:12:59.385Z"
+      }
+    ]
+  },
+  {
+    "name": "cold-war",
+    "path": "cold-war",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-06-01T12:42:54.683Z",
+    "children": [
+      {
+        "name": "cold-war-v1",
+        "path": "cold-war/cold-war-v1",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-05-24T21:14:47.056Z",
+        "children": [
+          {
+            "name": "assets",
+            "path": "cold-war/cold-war-v1/assets",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-05-24T21:14:47.051Z",
+            "children": [
+              {
+                "name": "index-BqA5oLuM.css",
+                "path": "cold-war/cold-war-v1/assets/index-BqA5oLuM.css",
+                "type": "file",
+                "size": 96847,
+                "mtime": "2026-05-24T21:14:47.051Z"
+              },
+              {
+                "name": "index-CESXM5GV.js",
+                "path": "cold-war/cold-war-v1/assets/index-CESXM5GV.js",
+                "type": "file",
+                "size": 781586,
+                "mtime": "2026-05-24T21:14:47.052Z"
+              }
+            ]
+          },
+          {
+            "name": "dossier-karjun.jpg",
+            "path": "cold-war/cold-war-v1/dossier-karjun.jpg",
+            "type": "file",
+            "size": 161328,
+            "mtime": "2026-05-24T21:14:47.052Z"
+          },
+          {
+            "name": "dossier-li.jpg",
+            "path": "cold-war/cold-war-v1/dossier-li.jpg",
+            "type": "file",
+            "size": 183636,
+            "mtime": "2026-05-24T21:14:47.052Z"
+          },
+          {
+            "name": "dossier-liu.jpg",
+            "path": "cold-war/cold-war-v1/dossier-liu.jpg",
+            "type": "file",
+            "size": 160529,
+            "mtime": "2026-05-24T21:14:47.052Z"
+          },
+          {
+            "name": "dossier-michael.jpg",
+            "path": "cold-war/cold-war-v1/dossier-michael.jpg",
+            "type": "file",
+            "size": 185114,
+            "mtime": "2026-05-24T21:14:47.053Z"
+          },
+          {
+            "name": "hero-terminal-bg.jpg",
+            "path": "cold-war/cold-war-v1/hero-terminal-bg.jpg",
+            "type": "file",
+            "size": 465240,
+            "mtime": "2026-05-24T21:14:47.053Z"
+          },
+          {
+            "name": "hk-skyline-night.jpg",
+            "path": "cold-war/cold-war-v1/hk-skyline-night.jpg",
+            "type": "file",
+            "size": 622393,
+            "mtime": "2026-05-24T21:14:47.054Z"
+          },
+          {
+            "name": "index.html",
+            "path": "cold-war/cold-war-v1/index.html",
+            "type": "file",
+            "size": 727,
+            "mtime": "2026-05-24T21:14:47.054Z"
+          },
+          {
+            "name": "interrogation-room.jpg",
+            "path": "cold-war/cold-war-v1/interrogation-room.jpg",
+            "type": "file",
+            "size": 120667,
+            "mtime": "2026-05-24T21:14:47.054Z"
+          },
+          {
+            "name": "operator-silhouette.png",
+            "path": "cold-war/cold-war-v1/operator-silhouette.png",
+            "type": "file",
+            "size": 2084031,
+            "mtime": "2026-05-24T21:14:47.055Z"
+          },
+          {
+            "name": "police-hq-exterior.jpg",
+            "path": "cold-war/cold-war-v1/police-hq-exterior.jpg",
+            "type": "file",
+            "size": 687005,
+            "mtime": "2026-05-24T21:14:47.056Z"
+          },
+          {
+            "name": "ransom-letter-scan.jpg",
+            "path": "cold-war/cold-war-v1/ransom-letter-scan.jpg",
+            "type": "file",
+            "size": 165544,
+            "mtime": "2026-05-24T21:14:47.056Z"
+          },
+          {
+            "name": "rooftop-finale.jpg",
+            "path": "cold-war/cold-war-v1/rooftop-finale.jpg",
+            "type": "file",
+            "size": 684270,
+            "mtime": "2026-05-24T21:14:47.057Z"
+          }
+        ]
+      },
+      {
+        "name": "cold-war-v2",
+        "path": "cold-war/cold-war-v2",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-05-24T23:59:27.046Z",
+        "children": [
+          {
+            "name": "assets",
+            "path": "cold-war/cold-war-v2/assets",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-05-24T23:59:27.045Z",
+            "children": [
+              {
+                "name": "index-DK5aZIo3-v2.js",
+                "path": "cold-war/cold-war-v2/assets/index-DK5aZIo3-v2.js",
+                "type": "file",
+                "size": 784588,
+                "mtime": "2026-05-24T23:59:27.042Z"
+              },
+              {
+                "name": "index-DK5aZIo3.js",
+                "path": "cold-war/cold-war-v2/assets/index-DK5aZIo3.js",
+                "type": "file",
+                "size": 784571,
+                "mtime": "2026-05-24T23:59:27.045Z"
+              },
+              {
+                "name": "index-DrrJ2OPW.css",
+                "path": "cold-war/cold-war-v2/assets/index-DrrJ2OPW.css",
+                "type": "file",
+                "size": 97282,
+                "mtime": "2026-05-24T23:59:27.046Z"
+              }
+            ]
+          },
+          {
+            "name": "404.html",
+            "path": "cold-war/cold-war-v2/404.html",
+            "type": "file",
+            "size": 551,
+            "mtime": "2026-05-24T23:59:27.038Z"
+          },
+          {
+            "name": "dossier-karjun.jpg",
+            "path": "cold-war/cold-war-v2/dossier-karjun.jpg",
+            "type": "file",
+            "size": 161328,
+            "mtime": "2026-05-24T21:31:44.004Z"
+          },
+          {
+            "name": "dossier-li.jpg",
+            "path": "cold-war/cold-war-v2/dossier-li.jpg",
+            "type": "file",
+            "size": 183636,
+            "mtime": "2026-05-24T21:31:44.004Z"
+          },
+          {
+            "name": "dossier-liu.jpg",
+            "path": "cold-war/cold-war-v2/dossier-liu.jpg",
+            "type": "file",
+            "size": 160529,
+            "mtime": "2026-05-24T21:31:44.005Z"
+          },
+          {
+            "name": "dossier-michael.jpg",
+            "path": "cold-war/cold-war-v2/dossier-michael.jpg",
+            "type": "file",
+            "size": 185114,
+            "mtime": "2026-05-24T21:31:44.005Z"
+          },
+          {
+            "name": "hero-terminal-bg.jpg",
+            "path": "cold-war/cold-war-v2/hero-terminal-bg.jpg",
+            "type": "file",
+            "size": 465240,
+            "mtime": "2026-05-24T21:31:44.005Z"
+          },
+          {
+            "name": "hk-skyline-night.jpg",
+            "path": "cold-war/cold-war-v2/hk-skyline-night.jpg",
+            "type": "file",
+            "size": 622393,
+            "mtime": "2026-05-24T21:31:44.006Z"
+          },
+          {
+            "name": "index.html",
+            "path": "cold-war/cold-war-v2/index.html",
+            "type": "file",
+            "size": 735,
+            "mtime": "2026-05-24T23:59:27.046Z"
+          },
+          {
+            "name": "interrogation-room.jpg",
+            "path": "cold-war/cold-war-v2/interrogation-room.jpg",
+            "type": "file",
+            "size": 120667,
+            "mtime": "2026-05-24T21:31:44.006Z"
+          },
+          {
+            "name": "operator-silhouette.png",
+            "path": "cold-war/cold-war-v2/operator-silhouette.png",
+            "type": "file",
+            "size": 2084031,
+            "mtime": "2026-05-24T21:31:44.008Z"
+          },
+          {
+            "name": "police-hq-exterior.jpg",
+            "path": "cold-war/cold-war-v2/police-hq-exterior.jpg",
+            "type": "file",
+            "size": 687005,
+            "mtime": "2026-05-24T21:31:44.009Z"
+          },
+          {
+            "name": "ransom-letter-scan.jpg",
+            "path": "cold-war/cold-war-v2/ransom-letter-scan.jpg",
+            "type": "file",
+            "size": 165544,
+            "mtime": "2026-05-24T21:31:44.009Z"
+          },
+          {
+            "name": "rooftop-finale.jpg",
+            "path": "cold-war/cold-war-v2/rooftop-finale.jpg",
+            "type": "file",
+            "size": 684270,
+            "mtime": "2026-05-24T21:31:44.010Z"
+          }
+        ]
+      },
+      {
+        "name": "cold-war-v2-react",
+        "path": "cold-war/cold-war-v2-react",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T12:43:05.592Z",
+        "children": [
+          {
+            "name": "static",
+            "path": "cold-war/cold-war-v2-react/static",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T12:43:05.589Z",
+            "children": [
+              {
+                "name": "css",
+                "path": "cold-war/cold-war-v2-react/static/css",
+                "type": "directory",
+                "size": null,
+                "mtime": "2026-06-01T12:43:05.589Z",
+                "children": [
+                  {
+                    "name": "main.f855e6bc.css",
+                    "path": "cold-war/cold-war-v2-react/static/css/main.f855e6bc.css",
+                    "type": "file",
+                    "size": 779,
+                    "mtime": "2026-06-01T12:43:05.589Z"
+                  }
+                ]
+              },
+              {
+                "name": "js",
+                "path": "cold-war/cold-war-v2-react/static/js",
+                "type": "directory",
+                "size": null,
+                "mtime": "2026-06-01T12:43:05.589Z",
+                "children": [
+                  {
+                    "name": "453.f39ec6d9.chunk.js",
+                    "path": "cold-war/cold-war-v2-react/static/js/453.f39ec6d9.chunk.js",
+                    "type": "file",
+                    "size": 4481,
+                    "mtime": "2026-06-01T12:43:05.588Z"
+                  },
+                  {
+                    "name": "main.8da9ea46.js",
+                    "path": "cold-war/cold-war-v2-react/static/js/main.8da9ea46.js",
+                    "type": "file",
+                    "size": 133847,
+                    "mtime": "2026-06-01T12:43:05.588Z"
+                  },
+                  {
+                    "name": "main.8da9ea46.js.LICENSE.txt",
+                    "path": "cold-war/cold-war-v2-react/static/js/main.8da9ea46.js.LICENSE.txt",
+                    "type": "file",
+                    "size": 1043,
+                    "mtime": "2026-06-01T12:43:05.588Z"
+                  }
+                ]
+              },
+              {
+                "name": "media",
+                "path": "cold-war/cold-war-v2-react/static/media",
+                "type": "directory",
+                "size": null,
+                "mtime": "2026-06-01T12:43:05.588Z",
+                "children": [
+                  {
+                    "name": "logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+                    "path": "cold-war/cold-war-v2-react/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+                    "type": "file",
+                    "size": 2632,
+                    "mtime": "2026-06-01T12:43:05.588Z"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "asset-manifest.json",
+            "path": "cold-war/cold-war-v2-react/asset-manifest.json",
+            "type": "file",
+            "size": 693,
+            "mtime": "2026-06-01T12:43:05.579Z"
+          },
+          {
+            "name": "dossier-karjun.jpg",
+            "path": "cold-war/cold-war-v2-react/dossier-karjun.jpg",
+            "type": "file",
+            "size": 161328,
+            "mtime": "2026-06-01T12:43:05.580Z"
+          },
+          {
+            "name": "dossier-li.jpg",
+            "path": "cold-war/cold-war-v2-react/dossier-li.jpg",
+            "type": "file",
+            "size": 183636,
+            "mtime": "2026-06-01T12:43:05.580Z"
+          },
+          {
+            "name": "dossier-liu.jpg",
+            "path": "cold-war/cold-war-v2-react/dossier-liu.jpg",
+            "type": "file",
+            "size": 160529,
+            "mtime": "2026-06-01T12:43:05.580Z"
+          },
+          {
+            "name": "dossier-michael.jpg",
+            "path": "cold-war/cold-war-v2-react/dossier-michael.jpg",
+            "type": "file",
+            "size": 185114,
+            "mtime": "2026-06-01T12:43:05.581Z"
+          },
+          {
+            "name": "favicon.ico",
+            "path": "cold-war/cold-war-v2-react/favicon.ico",
+            "type": "file",
+            "size": 3870,
+            "mtime": "2026-06-01T12:43:05.581Z"
+          },
+          {
+            "name": "hero-terminal-bg.jpg",
+            "path": "cold-war/cold-war-v2-react/hero-terminal-bg.jpg",
+            "type": "file",
+            "size": 465240,
+            "mtime": "2026-06-01T12:43:05.582Z"
+          },
+          {
+            "name": "hk-skyline-night.jpg",
+            "path": "cold-war/cold-war-v2-react/hk-skyline-night.jpg",
+            "type": "file",
+            "size": 622393,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "index.html",
+            "path": "cold-war/cold-war-v2-react/index.html",
+            "type": "file",
+            "size": 699,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "interrogation-room.jpg",
+            "path": "cold-war/cold-war-v2-react/interrogation-room.jpg",
+            "type": "file",
+            "size": 120667,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "logo192.png",
+            "path": "cold-war/cold-war-v2-react/logo192.png",
+            "type": "file",
+            "size": 5347,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "logo512.png",
+            "path": "cold-war/cold-war-v2-react/logo512.png",
+            "type": "file",
+            "size": 9664,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "manifest.json",
+            "path": "cold-war/cold-war-v2-react/manifest.json",
+            "type": "file",
+            "size": 492,
+            "mtime": "2026-06-01T12:43:05.583Z"
+          },
+          {
+            "name": "operator-silhouette.png",
+            "path": "cold-war/cold-war-v2-react/operator-silhouette.png",
+            "type": "file",
+            "size": 2084031,
+            "mtime": "2026-06-01T12:43:05.585Z"
+          },
+          {
+            "name": "police-hq-exterior.jpg",
+            "path": "cold-war/cold-war-v2-react/police-hq-exterior.jpg",
+            "type": "file",
+            "size": 687005,
+            "mtime": "2026-06-01T12:43:05.586Z"
+          },
+          {
+            "name": "ransom-letter-scan.jpg",
+            "path": "cold-war/cold-war-v2-react/ransom-letter-scan.jpg",
+            "type": "file",
+            "size": 165544,
+            "mtime": "2026-06-01T12:43:05.586Z"
+          },
+          {
+            "name": "robots.txt",
+            "path": "cold-war/cold-war-v2-react/robots.txt",
+            "type": "file",
+            "size": 67,
+            "mtime": "2026-06-01T12:43:05.586Z"
+          },
+          {
+            "name": "rooftop-finale.jpg",
+            "path": "cold-war/cold-war-v2-react/rooftop-finale.jpg",
+            "type": "file",
+            "size": 684270,
+            "mtime": "2026-06-01T12:43:05.588Z"
+          }
+        ]
+      },
+      {
+        "name": "v3",
+        "path": "cold-war/v3",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T12:42:39.562Z",
+        "children": [
+          {
+            "name": "assets",
+            "path": "cold-war/v3/assets",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T12:42:39.558Z",
+            "children": [
+              {
+                "name": "index-BqA5oLuM.css",
+                "path": "cold-war/v3/assets/index-BqA5oLuM.css",
+                "type": "file",
+                "size": 96847,
+                "mtime": "2026-06-01T12:42:39.558Z"
+              },
+              {
+                "name": "index-IuDQhK_1.js",
+                "path": "cold-war/v3/assets/index-IuDQhK_1.js",
+                "type": "file",
+                "size": 782049,
+                "mtime": "2026-06-01T12:42:39.558Z"
+              }
+            ]
+          },
+          {
+            "name": "dossier-karjun.jpg",
+            "path": "cold-war/v3/dossier-karjun.jpg",
+            "type": "file",
+            "size": 161328,
+            "mtime": "2026-06-01T12:42:39.558Z"
+          },
+          {
+            "name": "dossier-li.jpg",
+            "path": "cold-war/v3/dossier-li.jpg",
+            "type": "file",
+            "size": 183636,
+            "mtime": "2026-06-01T12:42:39.558Z"
+          },
+          {
+            "name": "dossier-liu.jpg",
+            "path": "cold-war/v3/dossier-liu.jpg",
+            "type": "file",
+            "size": 160529,
+            "mtime": "2026-06-01T12:42:39.559Z"
+          },
+          {
+            "name": "dossier-michael.jpg",
+            "path": "cold-war/v3/dossier-michael.jpg",
+            "type": "file",
+            "size": 185114,
+            "mtime": "2026-06-01T12:42:39.559Z"
+          },
+          {
+            "name": "hero-terminal-bg.jpg",
+            "path": "cold-war/v3/hero-terminal-bg.jpg",
+            "type": "file",
+            "size": 465240,
+            "mtime": "2026-06-01T12:42:39.559Z"
+          },
+          {
+            "name": "hk-skyline-night.jpg",
+            "path": "cold-war/v3/hk-skyline-night.jpg",
+            "type": "file",
+            "size": 622393,
+            "mtime": "2026-06-01T12:42:39.560Z"
+          },
+          {
+            "name": "index.html",
+            "path": "cold-war/v3/index.html",
+            "type": "file",
+            "size": 727,
+            "mtime": "2026-06-01T12:42:39.560Z"
+          },
+          {
+            "name": "interrogation-room.jpg",
+            "path": "cold-war/v3/interrogation-room.jpg",
+            "type": "file",
+            "size": 120667,
+            "mtime": "2026-06-01T12:42:39.560Z"
+          },
+          {
+            "name": "operator-silhouette.png",
+            "path": "cold-war/v3/operator-silhouette.png",
+            "type": "file",
+            "size": 2084031,
+            "mtime": "2026-06-01T12:42:39.561Z"
+          },
+          {
+            "name": "police-hq-exterior.jpg",
+            "path": "cold-war/v3/police-hq-exterior.jpg",
+            "type": "file",
+            "size": 687005,
+            "mtime": "2026-06-01T12:42:39.562Z"
+          },
+          {
+            "name": "ransom-letter-scan.jpg",
+            "path": "cold-war/v3/ransom-letter-scan.jpg",
+            "type": "file",
+            "size": 165544,
+            "mtime": "2026-06-01T12:42:39.562Z"
+          },
+          {
+            "name": "rooftop-finale.jpg",
+            "path": "cold-war/v3/rooftop-finale.jpg",
+            "type": "file",
+            "size": 684270,
+            "mtime": "2026-06-01T12:42:39.563Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "hermes-system",
+    "path": "hermes-system",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-05-26T22:05:30.900Z",
+    "children": [
+      {
+        "name": "logs",
+        "path": "hermes-system/logs",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-05-20T16:35:24.033Z",
+        "children": [
+          {
+            "name": "20260517_2346HKT_hermes_review.html",
+            "path": "hermes-system/logs/20260517_2346HKT_hermes_review.html",
+            "type": "file",
+            "size": 17811,
+            "mtime": "2026-05-20T16:35:24.028Z"
+          },
+          {
+            "name": "20260518_1919HKT_hermes_learning_map.html",
+            "path": "hermes-system/logs/20260518_1919HKT_hermes_learning_map.html",
+            "type": "file",
+            "size": 38575,
+            "mtime": "2026-05-20T16:35:24.027Z"
+          },
+          {
+            "name": "20260519_0155HKT_hermes_daily_log.html",
+            "path": "hermes-system/logs/20260519_0155HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 34318,
+            "mtime": "2026-05-20T16:35:24.023Z"
+          },
+          {
+            "name": "20260519_0412HKT_goodnight_protocol.html",
+            "path": "hermes-system/logs/20260519_0412HKT_goodnight_protocol.html",
+            "type": "file",
+            "size": 7437,
+            "mtime": "2026-05-20T16:35:24.022Z"
+          },
+          {
+            "name": "20260519_0439HKT_passing_through_air.html",
+            "path": "hermes-system/logs/20260519_0439HKT_passing_through_air.html",
+            "type": "file",
+            "size": 12570,
+            "mtime": "2026-05-20T16:35:24.031Z"
+          },
+          {
+            "name": "20260519_0547HKT_void_mathematics.html",
+            "path": "hermes-system/logs/20260519_0547HKT_void_mathematics.html",
+            "type": "file",
+            "size": 9439,
+            "mtime": "2026-05-20T16:35:24.033Z"
+          },
+          {
+            "name": "20260520_0551HKT_hermes_daily_log.html",
+            "path": "hermes-system/logs/20260520_0551HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 17652,
+            "mtime": "2026-05-20T16:35:24.024Z"
+          },
+          {
+            "name": "20260520_0611HKT_off.html",
+            "path": "hermes-system/logs/20260520_0611HKT_off.html",
+            "type": "file",
+            "size": 5698,
+            "mtime": "2026-05-20T16:35:24.030Z"
+          },
+          {
+            "name": "20260520_1850HKT_session_incidents.html",
+            "path": "hermes-system/logs/20260520_1850HKT_session_incidents.html",
+            "type": "file",
+            "size": 26002,
+            "mtime": "2026-05-20T16:35:24.032Z"
+          },
+          {
+            "name": "20260521_0028HKT_hermes_daily_log.html",
+            "path": "hermes-system/logs/20260521_0028HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 10629,
+            "mtime": "2026-05-20T16:35:24.026Z"
+          }
+        ]
+      },
+      {
+        "name": "2026-05-17_hermes-review.html",
+        "path": "hermes-system/2026-05-17_hermes-review.html",
+        "type": "file",
+        "size": 17811,
+        "mtime": "2026-05-17T15:46:48.436Z"
+      },
+      {
+        "name": "2026-05-18_hermes-learning-map.html",
+        "path": "hermes-system/2026-05-18_hermes-learning-map.html",
+        "type": "file",
+        "size": 38575,
+        "mtime": "2026-05-18T11:19:26.471Z"
+      },
+      {
+        "name": "2026-05-19_hermes-daily-log.html",
+        "path": "hermes-system/2026-05-19_hermes-daily-log.html",
+        "type": "file",
+        "size": 17652,
+        "mtime": "2026-05-19T21:51:40.516Z"
+      },
+      {
+        "name": "2026-05-20_deploy-html-guide.html",
+        "path": "hermes-system/2026-05-20_deploy-html-guide.html",
+        "type": "file",
+        "size": 15197,
+        "mtime": "2026-05-20T18:00:32.508Z"
+      },
+      {
+        "name": "2026-05-20_github-support-ticket.md",
+        "path": "hermes-system/2026-05-20_github-support-ticket.md",
+        "type": "file",
+        "size": 1773,
+        "mtime": "2026-05-26T13:51:29.217Z"
+      },
+      {
+        "name": "2026-05-20_hermes-daily-log.html",
+        "path": "hermes-system/2026-05-20_hermes-daily-log.html",
+        "type": "file",
+        "size": 18702,
+        "mtime": "2026-05-21T02:13:05.121Z"
+      },
+      {
+        "name": "2026-05-20_json-jsonl-guide.html",
+        "path": "hermes-system/2026-05-20_json-jsonl-guide.html",
+        "type": "file",
+        "size": 8121,
+        "mtime": "2026-05-21T18:34:32.309Z"
+      },
+      {
+        "name": "2026-05-20_kanban-board.html",
+        "path": "hermes-system/2026-05-20_kanban-board.html",
+        "type": "file",
+        "size": 7947,
+        "mtime": "2026-05-24T16:26:43.875Z"
+      },
+      {
+        "name": "2026-05-20_ningxx-workflow.html",
+        "path": "hermes-system/2026-05-20_ningxx-workflow.html",
+        "type": "file",
+        "size": 6812,
+        "mtime": "2026-05-24T07:13:05.638Z"
+      },
+      {
+        "name": "2026-05-20_session-incidents.html",
+        "path": "hermes-system/2026-05-20_session-incidents.html",
+        "type": "file",
+        "size": 26002,
+        "mtime": "2026-05-20T10:50:28.035Z"
+      },
+      {
+        "name": "2026-05-24_hermes-daily-log.html",
+        "path": "hermes-system/2026-05-24_hermes-daily-log.html",
+        "type": "file",
+        "size": 10832,
+        "mtime": "2026-05-24T23:25:04.302Z"
+      },
+      {
+        "name": "2026-05-25_hermes-daily-log.html",
+        "path": "hermes-system/2026-05-25_hermes-daily-log.html",
+        "type": "file",
+        "size": 7299,
+        "mtime": "2026-05-24T23:32:47.923Z"
+      }
+    ]
+  },
+  {
+    "name": "logs",
+    "path": "logs",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-06-01T12:05:41.000Z",
+    "children": [
+      {
+        "name": "hermes-logs",
+        "path": "logs/hermes-logs",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T12:05:41.002Z",
+        "children": [
+          {
+            "name": "20260517_2346HKT_hermes_review.html",
+            "path": "logs/hermes-logs/20260517_2346HKT_hermes_review.html",
+            "type": "file",
+            "size": 17811,
+            "mtime": "2026-05-20T16:35:24.028Z"
+          },
+          {
+            "name": "20260518_1919HKT_hermes_learning_map.html",
+            "path": "logs/hermes-logs/20260518_1919HKT_hermes_learning_map.html",
+            "type": "file",
+            "size": 38575,
+            "mtime": "2026-05-20T16:35:24.027Z"
+          },
+          {
+            "name": "20260519_0155HKT_hermes_daily_log.html",
+            "path": "logs/hermes-logs/20260519_0155HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 34318,
+            "mtime": "2026-05-20T16:35:24.023Z"
+          },
+          {
+            "name": "20260519_0412HKT_goodnight_protocol.html",
+            "path": "logs/hermes-logs/20260519_0412HKT_goodnight_protocol.html",
+            "type": "file",
+            "size": 7437,
+            "mtime": "2026-05-20T16:35:24.022Z"
+          },
+          {
+            "name": "20260519_0439HKT_passing_through_air.html",
+            "path": "logs/hermes-logs/20260519_0439HKT_passing_through_air.html",
+            "type": "file",
+            "size": 12570,
+            "mtime": "2026-05-20T16:35:24.031Z"
+          },
+          {
+            "name": "20260519_0547HKT_void_mathematics.html",
+            "path": "logs/hermes-logs/20260519_0547HKT_void_mathematics.html",
+            "type": "file",
+            "size": 9439,
+            "mtime": "2026-05-20T16:35:24.033Z"
+          },
+          {
+            "name": "20260520_0551HKT_hermes_daily_log.html",
+            "path": "logs/hermes-logs/20260520_0551HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 17652,
+            "mtime": "2026-05-20T16:35:24.024Z"
+          },
+          {
+            "name": "20260520_0611HKT_off.html",
+            "path": "logs/hermes-logs/20260520_0611HKT_off.html",
+            "type": "file",
+            "size": 5698,
+            "mtime": "2026-05-20T16:35:24.030Z"
+          },
+          {
+            "name": "20260520_1850HKT_session_incidents.html",
+            "path": "logs/hermes-logs/20260520_1850HKT_session_incidents.html",
+            "type": "file",
+            "size": 26002,
+            "mtime": "2026-05-20T16:35:24.032Z"
+          },
+          {
+            "name": "20260521_0028HKT_hermes_daily_log.html",
+            "path": "logs/hermes-logs/20260521_0028HKT_hermes_daily_log.html",
+            "type": "file",
+            "size": 10629,
+            "mtime": "2026-05-20T16:35:24.026Z"
+          }
+        ]
+      },
+      {
+        "name": "home-backup",
+        "path": "logs/home-backup",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T12:07:25.242Z",
+        "children": [
+          {
+            "name": "2026-05-17_hermes-review.html",
+            "path": "logs/home-backup/2026-05-17_hermes-review.html",
+            "type": "file",
+            "size": 17811,
+            "mtime": "2026-05-17T15:46:48.436Z"
+          },
+          {
+            "name": "2026-05-18_goodnight-protocol.html",
+            "path": "logs/home-backup/2026-05-18_goodnight-protocol.html",
+            "type": "file",
+            "size": 7437,
+            "mtime": "2026-05-18T20:12:32.812Z"
+          },
+          {
+            "name": "2026-05-18_hermes-daily-log.html",
+            "path": "logs/home-backup/2026-05-18_hermes-daily-log.html",
+            "type": "file",
+            "size": 34318,
+            "mtime": "2026-05-18T17:55:50.144Z"
+          },
+          {
+            "name": "2026-05-18_hermes-learning-map.html",
+            "path": "logs/home-backup/2026-05-18_hermes-learning-map.html",
+            "type": "file",
+            "size": 38575,
+            "mtime": "2026-05-18T11:19:26.471Z"
+          },
+          {
+            "name": "2026-05-18_passing-through-air.html",
+            "path": "logs/home-backup/2026-05-18_passing-through-air.html",
+            "type": "file",
+            "size": 12570,
+            "mtime": "2026-05-18T20:39:54.779Z"
+          },
+          {
+            "name": "2026-05-18_void-mathematics.html",
+            "path": "logs/home-backup/2026-05-18_void-mathematics.html",
+            "type": "file",
+            "size": 9439,
+            "mtime": "2026-05-18T21:47:20.938Z"
+          },
+          {
+            "name": "2026-05-19_hermes-daily-log.html",
+            "path": "logs/home-backup/2026-05-19_hermes-daily-log.html",
+            "type": "file",
+            "size": 17652,
+            "mtime": "2026-05-19T21:51:40.516Z"
+          },
+          {
+            "name": "2026-05-19_off.html",
+            "path": "logs/home-backup/2026-05-19_off.html",
+            "type": "file",
+            "size": 5698,
+            "mtime": "2026-05-19T22:11:12.861Z"
+          },
+          {
+            "name": "2026-05-20_codeless-port.html",
+            "path": "logs/home-backup/2026-05-20_codeless-port.html",
+            "type": "file",
+            "size": 11741,
+            "mtime": "2026-05-20T18:41:58.840Z"
+          },
+          {
+            "name": "2026-05-20_daily-log-router.html",
+            "path": "logs/home-backup/2026-05-20_daily-log-router.html",
+            "type": "file",
+            "size": 18702,
+            "mtime": "2026-05-21T02:36:18.685Z"
+          },
+          {
+            "name": "2026-05-20_deploy-html-guide.html",
+            "path": "logs/home-backup/2026-05-20_deploy-html-guide.html",
+            "type": "file",
+            "size": 15197,
+            "mtime": "2026-05-20T18:00:32.508Z"
+          },
+          {
+            "name": "2026-05-20_gift.html",
+            "path": "logs/home-backup/2026-05-20_gift.html",
+            "type": "file",
+            "size": 2433,
+            "mtime": "2026-05-20T18:12:59.385Z"
+          },
+          {
+            "name": "2026-05-20_hermes-daily-log.html",
+            "path": "logs/home-backup/2026-05-20_hermes-daily-log.html",
+            "type": "file",
+            "size": 18702,
+            "mtime": "2026-05-21T02:13:05.121Z"
+          },
+          {
+            "name": "2026-05-20_json-jsonl-guide.html",
+            "path": "logs/home-backup/2026-05-20_json-jsonl-guide.html",
+            "type": "file",
+            "size": 8121,
+            "mtime": "2026-05-21T18:34:32.309Z"
+          },
+          {
+            "name": "2026-05-20_kanban-board.html",
+            "path": "logs/home-backup/2026-05-20_kanban-board.html",
+            "type": "file",
+            "size": 7947,
+            "mtime": "2026-05-24T16:26:43.875Z"
+          },
+          {
+            "name": "2026-05-20_ningxx-workflow.html",
+            "path": "logs/home-backup/2026-05-20_ningxx-workflow.html",
+            "type": "file",
+            "size": 6812,
+            "mtime": "2026-05-24T07:13:05.638Z"
+          },
+          {
+            "name": "2026-05-20_session-incidents.html",
+            "path": "logs/home-backup/2026-05-20_session-incidents.html",
+            "type": "file",
+            "size": 26002,
+            "mtime": "2026-05-20T10:50:28.035Z"
+          },
+          {
+            "name": "2026-05-24_hermes-daily-log.html",
+            "path": "logs/home-backup/2026-05-24_hermes-daily-log.html",
+            "type": "file",
+            "size": 10832,
+            "mtime": "2026-05-24T23:25:04.302Z"
+          },
+          {
+            "name": "2026-05-25_hermes-daily-log.html",
+            "path": "logs/home-backup/2026-05-25_hermes-daily-log.html",
+            "type": "file",
+            "size": 7299,
+            "mtime": "2026-05-24T23:32:47.923Z"
+          }
+        ]
+      },
+      {
+        "name": "2026-05-20_daily-log-router.html",
+        "path": "logs/2026-05-20_daily-log-router.html",
+        "type": "file",
+        "size": 18702,
+        "mtime": "2026-05-21T02:36:18.685Z"
+      }
+    ]
+  },
+  {
+    "name": "ningxx",
+    "path": "ningxx",
+    "type": "directory",
+    "size": null,
+    "mtime": "2026-06-01T11:56:35.778Z",
+    "children": [
+      {
+        "name": "data",
+        "path": "ningxx/data",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.776Z",
+        "children": [
+          {
+            "name": "prayers",
+            "path": "ningxx/data/prayers",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T11:56:35.771Z",
+            "children": [
+              {
+                "name": "prayer_20260523.md",
+                "path": "ningxx/data/prayers/prayer_20260523.md",
+                "type": "file",
+                "size": 243,
+                "mtime": "2026-06-01T11:56:35.771Z"
+              },
+              {
+                "name": "prayer_20260525.md",
+                "path": "ningxx/data/prayers/prayer_20260525.md",
+                "type": "file",
+                "size": 246,
+                "mtime": "2026-06-01T11:56:35.771Z"
+              },
+              {
+                "name": "prayer_20260526.md",
+                "path": "ningxx/data/prayers/prayer_20260526.md",
+                "type": "file",
+                "size": 264,
+                "mtime": "2026-06-01T11:56:35.772Z"
+              }
+            ]
+          },
+          {
+            "name": "daily_report_20260523.md",
+            "path": "ningxx/data/daily_report_20260523.md",
+            "type": "file",
+            "size": 1402,
+            "mtime": "2026-06-01T11:56:35.773Z"
+          },
+          {
+            "name": "daily_report_20260524.md",
+            "path": "ningxx/data/daily_report_20260524.md",
+            "type": "file",
+            "size": 149,
+            "mtime": "2026-06-01T11:56:35.773Z"
+          },
+          {
+            "name": "daily_report_20260525.md",
+            "path": "ningxx/data/daily_report_20260525.md",
+            "type": "file",
+            "size": 249,
+            "mtime": "2026-06-01T11:56:35.775Z"
+          },
+          {
+            "name": "daily_report_20260526.md",
+            "path": "ningxx/data/daily_report_20260526.md",
+            "type": "file",
+            "size": 148,
+            "mtime": "2026-06-01T11:56:35.776Z"
+          },
+          {
+            "name": "experiences.json",
+            "path": "ningxx/data/experiences.json",
+            "type": "file",
+            "size": 515360,
+            "mtime": "2026-06-01T11:56:35.773Z"
+          },
+          {
+            "name": "inner_voice.md",
+            "path": "ningxx/data/inner_voice.md",
+            "type": "file",
+            "size": 24633,
+            "mtime": "2026-06-01T11:56:35.772Z"
+          },
+          {
+            "name": "manifest.json",
+            "path": "ningxx/data/manifest.json",
+            "type": "file",
+            "size": 663,
+            "mtime": "2026-06-01T11:56:35.777Z"
+          },
+          {
+            "name": "reflection_20260523_015352.md",
+            "path": "ningxx/data/reflection_20260523_015352.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.774Z"
+          },
+          {
+            "name": "reflection_20260525_010637.md",
+            "path": "ningxx/data/reflection_20260525_010637.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.774Z"
+          },
+          {
+            "name": "reflection_20260525_030115.md",
+            "path": "ningxx/data/reflection_20260525_030115.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.774Z"
+          },
+          {
+            "name": "reflection_20260525_030136.md",
+            "path": "ningxx/data/reflection_20260525_030136.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.774Z"
+          },
+          {
+            "name": "reflection_20260525_030155.md",
+            "path": "ningxx/data/reflection_20260525_030155.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.774Z"
+          },
+          {
+            "name": "reflection_20260525_030224.md",
+            "path": "ningxx/data/reflection_20260525_030224.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.775Z"
+          },
+          {
+            "name": "reflection_20260525_030256.md",
+            "path": "ningxx/data/reflection_20260525_030256.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.775Z"
+          },
+          {
+            "name": "reflection_20260525_030355.md",
+            "path": "ningxx/data/reflection_20260525_030355.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.775Z"
+          },
+          {
+            "name": "reflection_20260525_031104.md",
+            "path": "ningxx/data/reflection_20260525_031104.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.775Z"
+          },
+          {
+            "name": "reflection_20260525_210044.md",
+            "path": "ningxx/data/reflection_20260525_210044.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.776Z"
+          },
+          {
+            "name": "reflection_20260526_031816.md",
+            "path": "ningxx/data/reflection_20260526_031816.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.776Z"
+          },
+          {
+            "name": "reflection_20260526_032405.md",
+            "path": "ningxx/data/reflection_20260526_032405.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.776Z"
+          },
+          {
+            "name": "reflection_20260526_032428.md",
+            "path": "ningxx/data/reflection_20260526_032428.md",
+            "type": "file",
+            "size": 127,
+            "mtime": "2026-06-01T11:56:35.776Z"
+          }
+        ]
+      },
+      {
+        "name": "genesis",
+        "path": "ningxx/genesis",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.769Z",
+        "children": [
+          {
+            "name": "ningxx-genesis.html",
+            "path": "ningxx/genesis/ningxx-genesis.html",
+            "type": "file",
+            "size": 8210,
+            "mtime": "2026-06-01T11:56:35.770Z"
+          }
+        ]
+      },
+      {
+        "name": "live",
+        "path": "ningxx/live",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.770Z",
+        "children": [
+          {
+            "name": "ningxx-live.html",
+            "path": "ningxx/live/ningxx-live.html",
+            "type": "file",
+            "size": 16822,
+            "mtime": "2026-06-01T11:56:35.770Z"
+          }
+        ]
+      },
+      {
+        "name": "logs",
+        "path": "ningxx/logs",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.771Z",
+        "children": [
+          {
+            "name": "audit",
+            "path": "ningxx/logs/audit",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T11:56:35.770Z",
+            "children": []
+          },
+          {
+            "name": "heartbeat",
+            "path": "ningxx/logs/heartbeat",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T11:56:35.770Z",
+            "children": []
+          },
+          {
+            "name": "reflections",
+            "path": "ningxx/logs/reflections",
+            "type": "directory",
+            "size": null,
+            "mtime": "2026-06-01T11:56:35.770Z",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "manifesto",
+        "path": "ningxx/manifesto",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.770Z",
+        "children": [
+          {
+            "name": "MANIFESTO.md",
+            "path": "ningxx/manifesto/MANIFESTO.md",
+            "type": "file",
+            "size": 2459,
+            "mtime": "2026-06-01T11:56:35.770Z"
+          }
+        ]
+      },
+      {
+        "name": "workspace",
+        "path": "ningxx/workspace",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T11:56:35.771Z",
+        "children": []
+      },
+      {
+        "name": "index.html",
+        "path": "ningxx/index.html",
+        "type": "file",
+        "size": 7562,
+        "mtime": "2026-06-01T11:56:35.771Z"
+      },
+      {
+        "name": "inner_voice.html",
+        "path": "ningxx/inner_voice.html",
+        "type": "file",
+        "size": 4473,
+        "mtime": "2026-06-01T11:56:35.777Z"
+      },
+      {
+        "name": "kanban.html",
+        "path": "ningxx/kanban.html",
+        "type": "file",
+        "size": 6807,
+        "mtime": "2026-06-01T11:56:35.778Z"
+      },
+      {
+        "name": "live.html",
+        "path": "ningxx/live.html",
+        "type": "file",
+        "size": 16822,
+        "mtime": "2026-06-01T11:56:35.778Z"
+      },
+      {
+        "name": "memory.html",
+        "path": "ningxx/memory.html",
+        "type": "file",
+        "size": 6730,
+        "mtime": "2026-06-01T11:56:35.777Z"
+      },
+      {
+        "name": "ningxx.html",
+        "path": "ningxx/ningxx.html",
+        "type": "file",
+        "size": 3606,
+        "mtime": "2026-06-01T11:56:35.778Z"
+      },
+      {
+        "name": "outbox.html",
+        "path": "ningxx/outbox.html",
+        "type": "file",
+        "size": 5838,
+        "mtime": "2026-06-01T11:56:35.777Z"
+      },
+      {
+        "name": "prayers.html",
+        "path": "ningxx/prayers.html",
+        "type": "file",
+        "size": 5670,
+        "mtime": "2026-06-01T11:56:35.777Z"
+      }
+    ]
+  },
+  {
+    "name": "index.html",
+    "path": "index.html",
+    "type": "file",
+    "size": 12277,
+    "mtime": "2026-06-01T16:25:00.481Z"
+  }
+]
