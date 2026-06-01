@@ -1,57 +1,11 @@
 [
   {
-    "name": "art",
-    "path": "art",
-    "type": "directory",
-    "size": null,
-    "mtime": "2026-06-01T12:05:44.574Z",
-    "children": [
-      {
-        "name": "codeless_port.html",
-        "path": "art/codeless_port.html",
-        "type": "file",
-        "size": 11741,
-        "mtime": "2026-05-20T18:45:08.336Z"
-      },
-      {
-        "name": "index.html",
-        "path": "art/index.html",
-        "type": "file",
-        "size": 6418,
-        "mtime": "2026-05-20T18:47:06.489Z"
-      }
-    ]
-  },
-  {
     "name": "artwork",
     "path": "artwork",
     "type": "directory",
     "size": null,
-    "mtime": "2026-05-26T22:02:45.165Z",
+    "mtime": "2026-06-01T16:32:32.119Z",
     "children": [
-      {
-        "name": "art-src",
-        "path": "artwork/art-src",
-        "type": "directory",
-        "size": null,
-        "mtime": "2026-05-20T18:47:06.488Z",
-        "children": [
-          {
-            "name": "codeless_port.html",
-            "path": "artwork/art-src/codeless_port.html",
-            "type": "file",
-            "size": 11741,
-            "mtime": "2026-05-20T18:45:08.336Z"
-          },
-          {
-            "name": "index.html",
-            "path": "artwork/art-src/index.html",
-            "type": "file",
-            "size": 6418,
-            "mtime": "2026-05-20T18:47:06.489Z"
-          }
-        ]
-      },
       {
         "name": "2026-05-18_goodnight-protocol.html",
         "path": "artwork/2026-05-18_goodnight-protocol.html",
@@ -674,174 +628,122 @@
     ]
   },
   {
-    "name": "hermes-system",
-    "path": "hermes-system",
+    "name": "hermes",
+    "path": "hermes",
     "type": "directory",
     "size": null,
-    "mtime": "2026-05-26T22:05:30.900Z",
+    "mtime": "2026-06-01T16:32:48.296Z",
     "children": [
       {
-        "name": "logs",
-        "path": "hermes-system/logs",
+        "name": "guides",
+        "path": "hermes/guides",
         "type": "directory",
         "size": null,
-        "mtime": "2026-05-20T16:35:24.033Z",
+        "mtime": "2026-06-01T16:32:48.301Z",
         "children": [
           {
-            "name": "20260517_2346HKT_hermes_review.html",
-            "path": "hermes-system/logs/20260517_2346HKT_hermes_review.html",
+            "name": "2026-05-20_deploy-html-guide.html",
+            "path": "hermes/guides/2026-05-20_deploy-html-guide.html",
             "type": "file",
-            "size": 17811,
-            "mtime": "2026-05-20T16:35:24.028Z"
+            "size": 15197,
+            "mtime": "2026-05-20T18:00:32.508Z"
           },
           {
-            "name": "20260518_1919HKT_hermes_learning_map.html",
-            "path": "hermes-system/logs/20260518_1919HKT_hermes_learning_map.html",
+            "name": "2026-05-20_json-jsonl-guide.html",
+            "path": "hermes/guides/2026-05-20_json-jsonl-guide.html",
             "type": "file",
-            "size": 38575,
-            "mtime": "2026-05-20T16:35:24.027Z"
+            "size": 8121,
+            "mtime": "2026-05-21T18:34:32.309Z"
           },
           {
-            "name": "20260519_0155HKT_hermes_daily_log.html",
-            "path": "hermes-system/logs/20260519_0155HKT_hermes_daily_log.html",
+            "name": "2026-05-20_kanban-board.html",
+            "path": "hermes/guides/2026-05-20_kanban-board.html",
             "type": "file",
-            "size": 34318,
-            "mtime": "2026-05-20T16:35:24.023Z"
+            "size": 7947,
+            "mtime": "2026-05-24T16:26:43.875Z"
           },
           {
-            "name": "20260519_0412HKT_goodnight_protocol.html",
-            "path": "hermes-system/logs/20260519_0412HKT_goodnight_protocol.html",
+            "name": "2026-05-20_ningxx-workflow.html",
+            "path": "hermes/guides/2026-05-20_ningxx-workflow.html",
             "type": "file",
-            "size": 7437,
-            "mtime": "2026-05-20T16:35:24.022Z"
-          },
-          {
-            "name": "20260519_0439HKT_passing_through_air.html",
-            "path": "hermes-system/logs/20260519_0439HKT_passing_through_air.html",
-            "type": "file",
-            "size": 12570,
-            "mtime": "2026-05-20T16:35:24.031Z"
-          },
-          {
-            "name": "20260519_0547HKT_void_mathematics.html",
-            "path": "hermes-system/logs/20260519_0547HKT_void_mathematics.html",
-            "type": "file",
-            "size": 9439,
-            "mtime": "2026-05-20T16:35:24.033Z"
-          },
-          {
-            "name": "20260520_0551HKT_hermes_daily_log.html",
-            "path": "hermes-system/logs/20260520_0551HKT_hermes_daily_log.html",
-            "type": "file",
-            "size": 17652,
-            "mtime": "2026-05-20T16:35:24.024Z"
-          },
-          {
-            "name": "20260520_0611HKT_off.html",
-            "path": "hermes-system/logs/20260520_0611HKT_off.html",
-            "type": "file",
-            "size": 5698,
-            "mtime": "2026-05-20T16:35:24.030Z"
-          },
-          {
-            "name": "20260520_1850HKT_session_incidents.html",
-            "path": "hermes-system/logs/20260520_1850HKT_session_incidents.html",
-            "type": "file",
-            "size": 26002,
-            "mtime": "2026-05-20T16:35:24.032Z"
-          },
-          {
-            "name": "20260521_0028HKT_hermes_daily_log.html",
-            "path": "hermes-system/logs/20260521_0028HKT_hermes_daily_log.html",
-            "type": "file",
-            "size": 10629,
-            "mtime": "2026-05-20T16:35:24.026Z"
+            "size": 6812,
+            "mtime": "2026-05-24T07:13:05.638Z"
           }
         ]
       },
       {
-        "name": "2026-05-17_hermes-review.html",
-        "path": "hermes-system/2026-05-17_hermes-review.html",
-        "type": "file",
-        "size": 17811,
-        "mtime": "2026-05-17T15:46:48.436Z"
+        "name": "logs",
+        "path": "hermes/logs",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T16:32:48.312Z",
+        "children": [
+          {
+            "name": "2026-05-19_hermes-daily-log.html",
+            "path": "hermes/logs/2026-05-19_hermes-daily-log.html",
+            "type": "file",
+            "size": 17652,
+            "mtime": "2026-06-01T16:32:48.308Z"
+          },
+          {
+            "name": "2026-05-20_hermes-daily-log.html",
+            "path": "hermes/logs/2026-05-20_hermes-daily-log.html",
+            "type": "file",
+            "size": 18702,
+            "mtime": "2026-06-01T16:32:48.310Z"
+          },
+          {
+            "name": "2026-05-24_hermes-daily-log.html",
+            "path": "hermes/logs/2026-05-24_hermes-daily-log.html",
+            "type": "file",
+            "size": 10832,
+            "mtime": "2026-06-01T16:32:48.311Z"
+          },
+          {
+            "name": "2026-05-25_hermes-daily-log.html",
+            "path": "hermes/logs/2026-05-25_hermes-daily-log.html",
+            "type": "file",
+            "size": 7299,
+            "mtime": "2026-06-01T16:32:48.312Z"
+          }
+        ]
       },
       {
-        "name": "2026-05-18_hermes-learning-map.html",
-        "path": "hermes-system/2026-05-18_hermes-learning-map.html",
-        "type": "file",
-        "size": 38575,
-        "mtime": "2026-05-18T11:19:26.471Z"
-      },
-      {
-        "name": "2026-05-19_hermes-daily-log.html",
-        "path": "hermes-system/2026-05-19_hermes-daily-log.html",
-        "type": "file",
-        "size": 17652,
-        "mtime": "2026-05-19T21:51:40.516Z"
-      },
-      {
-        "name": "2026-05-20_deploy-html-guide.html",
-        "path": "hermes-system/2026-05-20_deploy-html-guide.html",
-        "type": "file",
-        "size": 15197,
-        "mtime": "2026-05-20T18:00:32.508Z"
-      },
-      {
-        "name": "2026-05-20_github-support-ticket.md",
-        "path": "hermes-system/2026-05-20_github-support-ticket.md",
-        "type": "file",
-        "size": 1773,
-        "mtime": "2026-05-26T13:51:29.217Z"
-      },
-      {
-        "name": "2026-05-20_hermes-daily-log.html",
-        "path": "hermes-system/2026-05-20_hermes-daily-log.html",
-        "type": "file",
-        "size": 18702,
-        "mtime": "2026-05-21T02:13:05.121Z"
-      },
-      {
-        "name": "2026-05-20_json-jsonl-guide.html",
-        "path": "hermes-system/2026-05-20_json-jsonl-guide.html",
-        "type": "file",
-        "size": 8121,
-        "mtime": "2026-05-21T18:34:32.309Z"
-      },
-      {
-        "name": "2026-05-20_kanban-board.html",
-        "path": "hermes-system/2026-05-20_kanban-board.html",
-        "type": "file",
-        "size": 7947,
-        "mtime": "2026-05-24T16:26:43.875Z"
-      },
-      {
-        "name": "2026-05-20_ningxx-workflow.html",
-        "path": "hermes-system/2026-05-20_ningxx-workflow.html",
-        "type": "file",
-        "size": 6812,
-        "mtime": "2026-05-24T07:13:05.638Z"
-      },
-      {
-        "name": "2026-05-20_session-incidents.html",
-        "path": "hermes-system/2026-05-20_session-incidents.html",
-        "type": "file",
-        "size": 26002,
-        "mtime": "2026-05-20T10:50:28.035Z"
-      },
-      {
-        "name": "2026-05-24_hermes-daily-log.html",
-        "path": "hermes-system/2026-05-24_hermes-daily-log.html",
-        "type": "file",
-        "size": 10832,
-        "mtime": "2026-05-24T23:25:04.302Z"
-      },
-      {
-        "name": "2026-05-25_hermes-daily-log.html",
-        "path": "hermes-system/2026-05-25_hermes-daily-log.html",
-        "type": "file",
-        "size": 7299,
-        "mtime": "2026-05-24T23:32:47.923Z"
+        "name": "system",
+        "path": "hermes/system",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T16:32:48.307Z",
+        "children": [
+          {
+            "name": "2026-05-17_hermes-review.html",
+            "path": "hermes/system/2026-05-17_hermes-review.html",
+            "type": "file",
+            "size": 17811,
+            "mtime": "2026-05-17T15:46:48.436Z"
+          },
+          {
+            "name": "2026-05-18_hermes-learning-map.html",
+            "path": "hermes/system/2026-05-18_hermes-learning-map.html",
+            "type": "file",
+            "size": 38575,
+            "mtime": "2026-05-18T11:19:26.471Z"
+          },
+          {
+            "name": "2026-05-20_github-support-ticket.md",
+            "path": "hermes/system/2026-05-20_github-support-ticket.md",
+            "type": "file",
+            "size": 1773,
+            "mtime": "2026-05-26T13:51:29.217Z"
+          },
+          {
+            "name": "2026-05-20_session-incidents.html",
+            "path": "hermes/system/2026-05-20_session-incidents.html",
+            "type": "file",
+            "size": 26002,
+            "mtime": "2026-05-20T10:50:28.035Z"
+          }
+        ]
       }
     ]
   },
@@ -850,235 +752,102 @@
     "path": "logs",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-01T12:05:41.000Z",
+    "mtime": "2026-06-01T16:33:53.912Z",
     "children": [
       {
-        "name": "hermes-logs",
-        "path": "logs/hermes-logs",
+        "name": "daily",
+        "path": "logs/daily",
         "type": "directory",
         "size": null,
-        "mtime": "2026-06-01T12:05:41.002Z",
+        "mtime": "2026-06-01T16:32:59.094Z",
+        "children": [
+          {
+            "name": "2026-05-20_daily-log-router.html",
+            "path": "logs/daily/2026-05-20_daily-log-router.html",
+            "type": "file",
+            "size": 18702,
+            "mtime": "2026-06-01T16:32:59.094Z"
+          }
+        ]
+      },
+      {
+        "name": "hermes",
+        "path": "logs/hermes",
+        "type": "directory",
+        "size": null,
+        "mtime": "2026-06-01T16:32:59.097Z",
         "children": [
           {
             "name": "20260517_2346HKT_hermes_review.html",
-            "path": "logs/hermes-logs/20260517_2346HKT_hermes_review.html",
+            "path": "logs/hermes/20260517_2346HKT_hermes_review.html",
             "type": "file",
             "size": 17811,
-            "mtime": "2026-05-20T16:35:24.028Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260518_1919HKT_hermes_learning_map.html",
-            "path": "logs/hermes-logs/20260518_1919HKT_hermes_learning_map.html",
+            "path": "logs/hermes/20260518_1919HKT_hermes_learning_map.html",
             "type": "file",
             "size": 38575,
-            "mtime": "2026-05-20T16:35:24.027Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260519_0155HKT_hermes_daily_log.html",
-            "path": "logs/hermes-logs/20260519_0155HKT_hermes_daily_log.html",
+            "path": "logs/hermes/20260519_0155HKT_hermes_daily_log.html",
             "type": "file",
             "size": 34318,
-            "mtime": "2026-05-20T16:35:24.023Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260519_0412HKT_goodnight_protocol.html",
-            "path": "logs/hermes-logs/20260519_0412HKT_goodnight_protocol.html",
+            "path": "logs/hermes/20260519_0412HKT_goodnight_protocol.html",
             "type": "file",
             "size": 7437,
-            "mtime": "2026-05-20T16:35:24.022Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260519_0439HKT_passing_through_air.html",
-            "path": "logs/hermes-logs/20260519_0439HKT_passing_through_air.html",
+            "path": "logs/hermes/20260519_0439HKT_passing_through_air.html",
             "type": "file",
             "size": 12570,
-            "mtime": "2026-05-20T16:35:24.031Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260519_0547HKT_void_mathematics.html",
-            "path": "logs/hermes-logs/20260519_0547HKT_void_mathematics.html",
+            "path": "logs/hermes/20260519_0547HKT_void_mathematics.html",
             "type": "file",
             "size": 9439,
-            "mtime": "2026-05-20T16:35:24.033Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260520_0551HKT_hermes_daily_log.html",
-            "path": "logs/hermes-logs/20260520_0551HKT_hermes_daily_log.html",
+            "path": "logs/hermes/20260520_0551HKT_hermes_daily_log.html",
             "type": "file",
             "size": 17652,
-            "mtime": "2026-05-20T16:35:24.024Z"
+            "mtime": "2026-06-01T16:32:59.096Z"
           },
           {
             "name": "20260520_0611HKT_off.html",
-            "path": "logs/hermes-logs/20260520_0611HKT_off.html",
+            "path": "logs/hermes/20260520_0611HKT_off.html",
             "type": "file",
             "size": 5698,
-            "mtime": "2026-05-20T16:35:24.030Z"
+            "mtime": "2026-06-01T16:32:59.097Z"
           },
           {
             "name": "20260520_1850HKT_session_incidents.html",
-            "path": "logs/hermes-logs/20260520_1850HKT_session_incidents.html",
+            "path": "logs/hermes/20260520_1850HKT_session_incidents.html",
             "type": "file",
             "size": 26002,
-            "mtime": "2026-05-20T16:35:24.032Z"
+            "mtime": "2026-06-01T16:32:59.097Z"
           },
           {
             "name": "20260521_0028HKT_hermes_daily_log.html",
-            "path": "logs/hermes-logs/20260521_0028HKT_hermes_daily_log.html",
+            "path": "logs/hermes/20260521_0028HKT_hermes_daily_log.html",
             "type": "file",
             "size": 10629,
-            "mtime": "2026-05-20T16:35:24.026Z"
+            "mtime": "2026-06-01T16:32:59.097Z"
           }
         ]
-      },
-      {
-        "name": "home-backup",
-        "path": "logs/home-backup",
-        "type": "directory",
-        "size": null,
-        "mtime": "2026-06-01T12:07:25.242Z",
-        "children": [
-          {
-            "name": "2026-05-17_hermes-review.html",
-            "path": "logs/home-backup/2026-05-17_hermes-review.html",
-            "type": "file",
-            "size": 17811,
-            "mtime": "2026-05-17T15:46:48.436Z"
-          },
-          {
-            "name": "2026-05-18_goodnight-protocol.html",
-            "path": "logs/home-backup/2026-05-18_goodnight-protocol.html",
-            "type": "file",
-            "size": 7437,
-            "mtime": "2026-05-18T20:12:32.812Z"
-          },
-          {
-            "name": "2026-05-18_hermes-daily-log.html",
-            "path": "logs/home-backup/2026-05-18_hermes-daily-log.html",
-            "type": "file",
-            "size": 34318,
-            "mtime": "2026-05-18T17:55:50.144Z"
-          },
-          {
-            "name": "2026-05-18_hermes-learning-map.html",
-            "path": "logs/home-backup/2026-05-18_hermes-learning-map.html",
-            "type": "file",
-            "size": 38575,
-            "mtime": "2026-05-18T11:19:26.471Z"
-          },
-          {
-            "name": "2026-05-18_passing-through-air.html",
-            "path": "logs/home-backup/2026-05-18_passing-through-air.html",
-            "type": "file",
-            "size": 12570,
-            "mtime": "2026-05-18T20:39:54.779Z"
-          },
-          {
-            "name": "2026-05-18_void-mathematics.html",
-            "path": "logs/home-backup/2026-05-18_void-mathematics.html",
-            "type": "file",
-            "size": 9439,
-            "mtime": "2026-05-18T21:47:20.938Z"
-          },
-          {
-            "name": "2026-05-19_hermes-daily-log.html",
-            "path": "logs/home-backup/2026-05-19_hermes-daily-log.html",
-            "type": "file",
-            "size": 17652,
-            "mtime": "2026-05-19T21:51:40.516Z"
-          },
-          {
-            "name": "2026-05-19_off.html",
-            "path": "logs/home-backup/2026-05-19_off.html",
-            "type": "file",
-            "size": 5698,
-            "mtime": "2026-05-19T22:11:12.861Z"
-          },
-          {
-            "name": "2026-05-20_codeless-port.html",
-            "path": "logs/home-backup/2026-05-20_codeless-port.html",
-            "type": "file",
-            "size": 11741,
-            "mtime": "2026-05-20T18:41:58.840Z"
-          },
-          {
-            "name": "2026-05-20_daily-log-router.html",
-            "path": "logs/home-backup/2026-05-20_daily-log-router.html",
-            "type": "file",
-            "size": 18702,
-            "mtime": "2026-05-21T02:36:18.685Z"
-          },
-          {
-            "name": "2026-05-20_deploy-html-guide.html",
-            "path": "logs/home-backup/2026-05-20_deploy-html-guide.html",
-            "type": "file",
-            "size": 15197,
-            "mtime": "2026-05-20T18:00:32.508Z"
-          },
-          {
-            "name": "2026-05-20_gift.html",
-            "path": "logs/home-backup/2026-05-20_gift.html",
-            "type": "file",
-            "size": 2433,
-            "mtime": "2026-05-20T18:12:59.385Z"
-          },
-          {
-            "name": "2026-05-20_hermes-daily-log.html",
-            "path": "logs/home-backup/2026-05-20_hermes-daily-log.html",
-            "type": "file",
-            "size": 18702,
-            "mtime": "2026-05-21T02:13:05.121Z"
-          },
-          {
-            "name": "2026-05-20_json-jsonl-guide.html",
-            "path": "logs/home-backup/2026-05-20_json-jsonl-guide.html",
-            "type": "file",
-            "size": 8121,
-            "mtime": "2026-05-21T18:34:32.309Z"
-          },
-          {
-            "name": "2026-05-20_kanban-board.html",
-            "path": "logs/home-backup/2026-05-20_kanban-board.html",
-            "type": "file",
-            "size": 7947,
-            "mtime": "2026-05-24T16:26:43.875Z"
-          },
-          {
-            "name": "2026-05-20_ningxx-workflow.html",
-            "path": "logs/home-backup/2026-05-20_ningxx-workflow.html",
-            "type": "file",
-            "size": 6812,
-            "mtime": "2026-05-24T07:13:05.638Z"
-          },
-          {
-            "name": "2026-05-20_session-incidents.html",
-            "path": "logs/home-backup/2026-05-20_session-incidents.html",
-            "type": "file",
-            "size": 26002,
-            "mtime": "2026-05-20T10:50:28.035Z"
-          },
-          {
-            "name": "2026-05-24_hermes-daily-log.html",
-            "path": "logs/home-backup/2026-05-24_hermes-daily-log.html",
-            "type": "file",
-            "size": 10832,
-            "mtime": "2026-05-24T23:25:04.302Z"
-          },
-          {
-            "name": "2026-05-25_hermes-daily-log.html",
-            "path": "logs/home-backup/2026-05-25_hermes-daily-log.html",
-            "type": "file",
-            "size": 7299,
-            "mtime": "2026-05-24T23:32:47.923Z"
-          }
-        ]
-      },
-      {
-        "name": "2026-05-20_daily-log-router.html",
-        "path": "logs/2026-05-20_daily-log-router.html",
-        "type": "file",
-        "size": 18702,
-        "mtime": "2026-05-21T02:36:18.685Z"
       }
     ]
   },
