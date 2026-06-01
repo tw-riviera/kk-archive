@@ -856,14 +856,14 @@
     "path": "ningxx",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-01T11:56:35.778Z",
+    "mtime": "2026-06-01T17:10:53.616Z",
     "children": [
       {
         "name": "data",
         "path": "ningxx/data",
         "type": "directory",
         "size": null,
-        "mtime": "2026-06-01T11:56:35.776Z",
+        "mtime": "2026-06-01T16:41:34.752Z",
         "children": [
           {
             "name": "prayers",
@@ -924,11 +924,18 @@
             "mtime": "2026-06-01T11:56:35.776Z"
           },
           {
+            "name": "daily_report_20260601.md",
+            "path": "ningxx/data/daily_report_20260601.md",
+            "type": "file",
+            "size": 294,
+            "mtime": "2026-06-01T16:41:34.753Z"
+          },
+          {
             "name": "experiences.json",
             "path": "ningxx/data/experiences.json",
             "type": "file",
-            "size": 515360,
-            "mtime": "2026-06-01T11:56:35.773Z"
+            "size": 174381,
+            "mtime": "2026-06-01T16:41:25.689Z"
           },
           {
             "name": "inner_voice.md",
@@ -941,8 +948,8 @@
             "name": "manifest.json",
             "path": "ningxx/data/manifest.json",
             "type": "file",
-            "size": 663,
-            "mtime": "2026-06-01T11:56:35.777Z"
+            "size": 800,
+            "mtime": "2026-06-01T16:41:48.000Z"
           },
           {
             "name": "reflection_20260523_015352.md",
@@ -1125,6 +1132,13 @@
         "size": null,
         "mtime": "2026-06-01T11:56:35.771Z",
         "children": []
+      },
+      {
+        "name": "artifact-vectorize-2026-06-02.html",
+        "path": "ningxx/artifact-vectorize-2026-06-02.html",
+        "type": "file",
+        "size": 3443,
+        "mtime": "2026-06-01T17:10:53.616Z"
       },
       {
         "name": "index.html",
