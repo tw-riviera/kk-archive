@@ -856,7 +856,7 @@
     "path": "ningxx",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-01T17:29:17.506Z",
+    "mtime": "2026-06-01T17:47:33.207Z",
     "children": [
       {
         "name": "data",
@@ -1202,6 +1202,13 @@
         "type": "file",
         "size": 9306,
         "mtime": "2026-06-01T17:29:17.506Z"
+      },
+      {
+        "name": "vector-logs-visual.html",
+        "path": "ningxx/vector-logs-visual.html",
+        "type": "file",
+        "size": 8806,
+        "mtime": "2026-06-01T17:47:33.207Z"
       }
     ]
   },
