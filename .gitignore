@@ -24,3 +24,9 @@ Thumbs.db
 # Environment
 .env
 .env.*
+
+# Build outputs
+dist/
+
+# But keep v3 as final product
+!cold-war/v3/
