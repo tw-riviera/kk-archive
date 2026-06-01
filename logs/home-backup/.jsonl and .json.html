@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.jsonl and .json | Session Archive TOC</title>
+<style>
+  :root {
+    --bg: #0a0a08;
+    --text: #c9c5b8;
+    --muted: #8b7d6b;
+    --accent: #6b7d6b;
+    --gold: #a68a64;
+    --grid: rgba(139, 125, 107, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "SF Mono", "Menlo", "Consolas", "Noto Sans TC", monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── 55% left sovereign space ── */
+  .container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .left-void {
+    width: 55vw;
+    position: relative;
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .left-void::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0,0,0,0.06) 2px,
+      rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+  }
+
+  .void-label {
+    position: absolute;
+    bottom: 8vh;
+    left: 4vw;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  /* ── 45% right content ── */
+  .content {
+    width: 45vw;
+    padding: 10vh 4vw 8vh 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(to right, transparent 0%, var(--bg) 8%);
+    position: relative;
+    z-index: 2;
+  }
+
+  .title-block {
+    margin-bottom: 6vh;
+  }
+
+  .title {
+    font-family: -apple-system, "Helvetica Neue", sans-serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .title .ext {
+    color: var(--gold);
+    font-size: 0.85em;
+  }
+
+  .meta-header {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+
+  /* ── TOC Sections ── */
+  .section {
+    margin-bottom: 4vh;
+  }
+
+  .section-title {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(139, 125, 107, 0.15);
+  }
+
+  .row {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.72rem;
+    line-height: 2.4;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .row .key {
+    color: var(--accent);
+    min-width: 8rem;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+
+  .row .val {
+    color: var(--text);
+  }
+
+  .row .val-muted {
+    color: var(--muted);
+  }
+
+  .divider {
+    width: 20px;
+    height: 1px;
+    background: var(--muted);
+    margin: 2vh 0;
+    opacity: 0.3;
+  }
+
+  /* ── Comparison Table ── */
+  .compare {
+    margin-top: 2vh;
+  }
+
+  .compare-header {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(139, 125, 107, 0.1);
+  }
+
+  .compare-header span {
+    min-width: 8rem;
+  }
+
+  .compare-header span:last-child {
+    color: var(--gold);
+  }
+
+  .compare-row {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.7rem;
+    line-height: 2.2;
+    color: var(--muted);
+  }
+
+  .compare-row span {
+    min-width: 8rem;
+  }
+
+  .compare-row .highlight {
+    color: var(--text);
+  }
+
+  /* ── Gallery Label ── */
+  .gallery-label {
+    margin-top: auto;
+    padding-top: 5vh;
+    border-top: 1px solid rgba(139, 125, 107, 0.2);
+    font-size: 0.58rem;
+    line-height: 2.2;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+  }
+
+  .gallery-label .row {
+    line-height: 2;
+  }
+
+  /* ── Scanlines ── */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0,0,0,0.06) 2px,
+      rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .left-void { width: 100vw; height: 30vh; }
+    .content { width: 100vw; padding: 6vh 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<div class="container">
+  <div class="left-void">
+    <div class="void-label">HERMES_HOME / sessions /</div>
+  </div>
+
+  <main class="content">
+    <div class="title-block">
+      <h1 class="title"><span class="ext">.jsonl</span> and <span class="ext">.json</span></h1>
+      <div class="meta-header">Session Archive TOC // 2026-05-21 HKT</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Archive Overview</div>
+      <div class="row"><span class="key">Location</span><span class="val">/opt/data/sessions/</span></div>
+      <div class="row"><span class="key">Total Files</span><span class="val">141</span></div>
+      <div class="row"><span class="key">Total Size</span><span class="val">47M</span></div>
+      <div class="row"><span class="key">Span</span><span class="val">2026-05-15 → 2026-05-21</span></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">File Types</div>
+      <div class="row"><span class="key">.jsonl</span><span class="val">17 files // Gateway transcripts</span></div>
+      <div class="row"><span class="key">.json</span><span class="val">105 files // Backup snapshots</span></div>
+      <div class="row"><span class="key">cron .json</span><span class="val">6 files // Scheduled jobs</span></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">Same Session Compared</div>
+      <div class="compare">
+        <div class="compare-header">
+          <span>Metric</span>
+          <span>.jsonl</span>
+          <span>.json</span>
+        </div>
+        <div class="compare-row">
+          <span>Size</span>
+          <span>159K</span>
+          <span class="highlight">209K</span>
+        </div>
+        <div class="compare-row">
+          <span>Messages</span>
+          <span>15 lines</span>
+          <span class="highlight">27 records</span>
+        </div>
+        <div class="compare-row">
+          <span>User</span>
+          <span>2</span>
+          <span class="highlight">3</span>
+        </div>
+        <div class="compare-row">
+          <span>Assistant</span>
+          <span>7</span>
+          <span class="highlight">11</span>
+        </div>
+        <div class="compare-row">
+          <span>Tool calls</span>
+          <span>5</span>
+          <span class="highlight">13</span>
+        </div>
+        <div class="compare-row">
+          <span>System prompt</span>
+          <span class="val-muted">—</span>
+          <span class="highlight">included</span>
+        </div>
+        <div class="compare-row">
+          <span>Tool schemas</span>
+          <span class="val-muted">—</span>
+          <span class="highlight">included</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">Distinction</div>
+      <div class="row"><span class="key">.jsonl</span><span class="val">Script — audience dialogue only</span></div>
+      <div class="row"><span class="key">.json</span><span class="val">Director's cut — full production log</span></div>
+    </div>
+
+    <div class="gallery-label">
+      <div class="row"><span class="key">Generated</span><span class="val">2026-05-21 04:40 HKT</span></div>
+      <div class="row"><span class="key">Source</span><span class="val">/opt/data/sessions/ live scan</span></div>
+      <div class="row"><span class="key">Session</span><span class="val">20260521_041831_eb8839d7</span></div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
