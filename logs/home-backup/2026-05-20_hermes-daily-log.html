@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Daily Log — 2026.05.20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #FFFFFF;
+  color: #1C1C1C;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== PAGE FRAME ===== */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 48px 120px;
+}
+
+/* ===== TOP META ===== */
+.top-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #8A8A8A;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* ===== TITLES ===== */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 60px;
+  line-height: 1.4;
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  margin: 60px 0;
+  height: 1px;
+  background: #E0E0E0;
+}
+
+/* ===== SECTION HEADERS ===== */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: #1C1C1C;
+  letter-spacing: -0.3px;
+}
+
+h2 .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8A8A;
+  margin-right: 12px;
+  vertical-align: top;
+}
+
+h3 {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 32px 0 12px;
+  color: #1C1C1C;
+  letter-spacing: 0.3px;
+}
+
+/* ===== BODY TEXT ===== */
+p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+p.lead {
+  font-size: 18px;
+  font-weight: 300;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+/* ===== PULL QUOTE ===== */
+.pull-quote {
+  margin: 40px 0;
+  padding: 24px 0 24px 32px;
+  border-left: 2px solid #1C1C1C;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ===== TECH BLOCK ===== */
+.tech-block {
+  margin: 28px 0;
+  padding: 24px 28px;
+  background: #FAFAFA;
+  border-left: 2px solid #D0CFCA;
+}
+
+.tech-block h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8A8A8A;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.tech-block p,
+.tech-block li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.tech-block ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tech-block li {
+  padding-left: 16px;
+  position: relative;
+}
+
+.tech-block li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #999;
+}
+
+.tech-block .highlight {
+  background: #E8F0E8;
+  color: #2E5A2E;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+
+.tech-block .error {
+  background: #F5E8E8;
+  color: #8B3535;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11.5px;
+}
+
+/* ===== CONFIG TABLE ===== */
+.config-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+}
+
+.config-table th {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid #D0CFCA;
+  font-weight: 500;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 10px;
+}
+
+.config-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #EEE;
+  color: #333;
+  vertical-align: top;
+}
+
+.config-table td.path {
+  color: #555;
+  word-break: break-all;
+}
+
+.config-table .status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.config-table .status.active {
+  background: #E8F0E8;
+  color: #2E5A2E;
+}
+
+.config-table .status.fallback {
+  background: #F0EDE8;
+  color: #7A6A4A;
+}
+
+.config-table .status.aux {
+  background: #E8E8F0;
+  color: #35358B;
+}
+
+/* ===== FILES LIST ===== */
+.files-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.files-list li {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #F0F0F0;
+  color: #444;
+}
+
+.files-list li span {
+  color: #8A8A8A;
+  font-size: 11px;
+  margin-left: 8px;
+}
+
+/* ===== FOOTER ===== */
+.footer-note {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid #E0E0E0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #AAA;
+  letter-spacing: 0.5px;
+}
+
+.footer-note .mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm 18mm 22mm 18mm;
+  }
+  body { background: #FFF; }
+  .page {
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  .top-meta { margin-bottom: 32px; }
+  h1 { font-size: 38px; margin-bottom: 6px; }
+  .subtitle { font-size: 17px; margin-bottom: 32px; }
+  .section-divider { margin: 28px 0; }
+  h2 { font-size: 22px; margin-top: 0; margin-bottom: 6px; }
+  h3 { margin: 18px 0 8px; }
+  p { font-size: 13.5px; line-height: 1.65; margin-bottom: 10px; orphans: 3; widows: 3; }
+  p.lead { font-size: 15px; margin-bottom: 18px; }
+  .pull-quote { margin: 22px 0; padding: 16px 0 16px 24px; font-size: 15px; break-inside: avoid; }
+  .tech-block { margin: 16px 0; padding: 14px 18px; break-inside: avoid; }
+  .tech-block p, .tech-block li { font-size: 11px; line-height: 1.7; }
+  .config-table { font-size: 10px; }
+  .config-table th, .config-table td { padding: 6px 5px; }
+  .files-list li { padding: 5px 0; font-size: 11px; }
+  .footer-note { margin-top: 36px; padding-top: 14px; }
+
+  .tech-block,
+  .pull-quote,
+  .files-list,
+  table.config-table,
+  .section-divider {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .page > h2:first-of-type,
+  h2 + p.lead {
+    break-before: auto;
+  }
+  h2, h3 {
+    orphans: 3;
+  }
+  .footer-note {
+    break-inside: avoid;
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .page { padding: 48px 24px 80px; }
+  h1 { font-size: 36px; }
+  .subtitle { font-size: 18px; }
+  h2 { font-size: 22px; }
+  .pull-quote { font-size: 17px; padding-left: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-meta">
+    <span>Hermes Daily Log</span>
+    <span>2026.05.20 · Session 20260520</span>
+  </div>
+
+  <h1>The Routing</h1>
+  <p class="subtitle">
+    How a key prefix became a door, and a base_url became a bridge.
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">01</span>The Problem</h2>
+  <p class="lead">
+    用戶發現 Kimi Coding Plan 的額度遠大於普通 Moonshot API。一個念頭：如果能讓 Hermes 優先使用 Coding Plan 的 key，只有在它失效時才 fallback 去 Moonshot，就可以大幅節省成本。
+  </p>
+  <p>
+    聽起來簡單。但 Hermes 的 provider 架構比想像中複雜：內建 provider registry、custom provider map、credential pool 輪替、session-scoped override、fallback chain deduplication——每一層都可能攔截或改寫你的意圖。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">02</span>The First Attempt</h2>
+  <p class="lead">
+    直接改 config.yaml，將 primary base_url 設為 api.kimi.com/coding，fallback 設為 api.moonshot.ai/v1。
+  </p>
+
+  <h3>2.1 401 的浪費</h3>
+  <p>
+    第一次測試發現：primary 連線時會先收到 401 Unauthorized，然後才 fallback 成功。原因係 credential pool 的輪替順序——KIMI_API_KEY 排在 KIMI_CODING_API_KEY 前面，pool 先試 Moonshot key 打 Coding endpoint，當然失敗。
+  </p>
+
+  <div class="tech-block">
+    <h4>Pool 輪替順序</h4>
+    <p>api_key_env_vars = <span class="error">("KIMI_API_KEY", "KIMI_CODING_API_KEY")</span></p>
+    <p>結果：每次 primary 請求都浪費一次 401，然後才輪到 Coding key。</p>
+  </div>
+
+  <h3>2.2 假 Fallback</h3>
+  <p>
+    更嚴重的問題：fallback 的 provider 名稱同 primary 一樣（都叫 kimi-coding），導致 run_agent.py 的 deduplication 邏輯將 fallback skip 掉。兩個 entry 被視為「同一個」，fallback 根本不存在。
+  </p>
+
+  <div class="pull-quote">
+    你以為自己設了兩條路，<br>
+    其實只有一條——<br>
+    而且係錯的那一條。
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">03</span>The Investigation</h2>
+  <p class="lead">
+    開始深入 Hermes 源碼，逐層追蹤 provider 是如何被解析的。
+  </p>
+
+  <h3>3.1 源碼考古</h3>
+  <p>
+    讀了六個核心檔案，總計超過一萬行代碼：
+  </p>
+
+  <div class="files-list">
+    <li>hermes_cli/auth.py <span>— PROVIDER_REGISTRY、_resolve_kimi_base_url、key prefix 路由邏輯</span></li>
+    <li>agent/credential_pool.py <span>— pool 輪替、401 cooldown、exhaustion 邏輯</span></li>
+    <li>agent/auxiliary_client.py <span>— resolve_provider_client、named custom provider 解析</span></li>
+    <li>run_agent.py <span>— fallback chain 啟動、key_env 讀取、dedup skip</span></li>
+    <li>hermes_cli/config.py <span>— _normalize_custom_provider_entry、key_env alias</span></li>
+    <li>gateway/run.py <span>— _resolve_runtime_agent_kwargs、session override、AIAgent 初始化</span></li>
+  </div>
+
+  <h3>3.2 關鍵發現</h3>
+
+  <div class="tech-block">
+    <h4>發現一：key prefix 決定 endpoint</h4>
+    <p>_resolve_kimi_base_url() 會檢查 key 的前綴：</p>
+    <ul>
+      <li><span class="highlight">sk-kimi-*</span> → api.kimi.com/coding（Anthropic Messages API）</li>
+      <li><span class="highlight">sk-*</span>（普通）→ api.moonshot.ai/v1（OpenAI-compatible）</li>
+    </ul>
+    <p>這意味著：即使你不設 base_url，key 本身就決定了連去哪裡。</p>
+  </div>
+
+  <div class="tech-block">
+    <h4>發現二：model: block 不支援 key_env</h4>
+    <p>config.yaml 的 <code>model:</code> section 只接受 default、provider、base_url。</p>
+    <p><code>key_env</code> 只存在於 <code>providers:</code> 和 <code>fallback_providers:</code>。</p>
+    <p>所以要強制 primary 用某個 key，必須在 <code>providers:</code> 定義 named custom provider。</p>
+  </div>
+
+  <div class="tech-block">
+    <h4>發現三：named provider 會干擾 fallback</h4>
+    <p>如果在 <code>providers:</code> 定義了 <code>kimi-coding:</code>，resolve_provider_client("kimi-coding") 會優先攞到這個 config 的 base_url。</p>
+    <p>結果：fallback 雖然寫了 <code>base_url: api.moonshot.ai/v1</code>，但 provider name 撞名，導致兩個都連去 Coding endpoint。</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">04</span>The Solution</h2>
+  <p class="lead">
+    綜合以上發現，最終 config 結構如下：
+  </p>
+
+  <table class="config-table">
+    <tr>
+      <th style="width: 18%;">層級</th>
+      <th style="width: 25%;">Provider</th>
+      <th style="width: 32%;">Endpoint</th>
+      <th style="width: 25%;">Key Source</th>
+    </tr>
+    <tr>
+      <td><span class="status active">Primary</span></td>
+      <td>kimi-coding</td>
+      <td class="path">https://api.kimi.com/coding</td>
+      <td>KIMI_CODING_API_KEY</td>
+    </tr>
+    <tr>
+      <td><span class="status fallback">Fallback</span></td>
+      <td>kimi-coding</td>
+      <td class="path">https://api.moonshot.ai/v1</td>
+      <td>KIMI_API_KEY</td>
+    </tr>
+    <tr>
+      <td><span class="status aux">Auxiliary</span></td>
+      <td>kimi-coding</td>
+      <td class="path">https://api.moonshot.ai/v1</td>
+      <td>（credential pool）</td>
+    </tr>
+  </table>
+
+  <div class="tech-block">
+    <h4>最終 config.yaml</h4>
+    <p>model:</p>
+    <p>&nbsp;&nbsp;default: kimi-k2.6</p>
+    <p>&nbsp;&nbsp;provider: kimi-coding</p>
+    <p>&nbsp;&nbsp;base_url: https://api.kimi.com/coding</p>
+    <p>providers:</p>
+    <p>&nbsp;&nbsp;kimi-coding:</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;base_url: https://api.kimi.com/coding</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;key_env: KIMI_CODING_API_KEY</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;api_mode: anthropic_messages</p>
+    <p>fallback_providers:</p>
+    <p>- provider: kimi-coding</p>
+    <p>&nbsp;&nbsp;model: kimi-k2.6</p>
+    <p>&nbsp;&nbsp;base_url: https://api.moonshot.ai/v1</p>
+    <p>&nbsp;&nbsp;key_env: KIMI_API_KEY</p>
+  </div>
+
+  <h3>4.1 為何這樣設</h3>
+  <p>
+    Primary 強制指定 <code>base_url: api.kimi.com/coding</code>，不依賴 key prefix 自動解析——即使將來 key 格式改變，endpoint 仍然正確。
+  </p>
+  <p>
+    <code>providers.kimi-coding</code> 綁定 <code>key_env: KIMI_CODING_API_KEY</code>，確保 primary 直接攞 Coding key，唔經過 pool 輪替，避免 401 浪費。
+  </p>
+  <p>
+    Fallback 用同一個 provider name，但明確指定 <code>base_url: api.moonshot.ai/v1</code> 和 <code>key_env: KIMI_API_KEY</code>。run_agent.py 的 dedup 邏輯會比較 base_url，發現不同，所以唔會 skip。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">05</span>The Restart</h2>
+  <p class="lead">
+    改完 config，以為就完。點知 Telegram session 仍然連住舊 gateway instance。
+  </p>
+
+  <h3>5.1 幽靈 Process</h3>
+  <p>
+    檢查 process list，發現大量 defunct hermes process，同時一個 <code>hermes gateway restart</code> 的 PID 卡住了 52 秒。舊 gateway 未完全釋放，新 config 載入唔到。
+  </p>
+
+  <div class="tech-block">
+    <h4>Process 狀態</h4>
+    <ul>
+      <li>PID 316057: hermes gateway restart（卡住 52+ 秒）</li>
+      <li>多個 [hermes] &lt;defunct&gt;：parent process 未收割</li>
+      <li>Telegram session 仍然 attached to 舊 nvidia provider instance</li>
+    </ul>
+  </div>
+
+  <h3>5.2 徹底清除</h3>
+  <p>
+    最終用戶執行 <code>pkill -9 -f "hermes"</code>，完全清晒所有 process。等 5-10 秒後，用 <code>HERMES_ALLOW_ROOT_GATEWAY=1 hermes gateway start</code> 重新啟動。
+  </p>
+  <p>
+    新 gateway 啟動後，Telegram 打 "test"，system prompt 終於顯示 <span class="highlight">Provider: kimi-coding</span>。
+  </p>
+
+  <div class="pull-quote">
+    有時候，最難的不是改好配置，<br>
+    而是讓系統承認——<br>
+    你真的改過了。
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">06</span>The Verification</h2>
+
+  <h3>6.1 Runtime 測試</h3>
+
+  <div class="tech-block">
+    <h4>Python 驗證</h4>
+    <p>resolve_runtime_provider() 返回：</p>
+    <ul>
+      <li>Provider: <span class="highlight">kimi-coding</span></li>
+      <li>Base URL: <span class="highlight">https://api.kimi.com/coding</span></li>
+      <li>API Key: sk-kimi-O8...（Coding Plan key）</li>
+      <li>API Mode: <span class="highlight">anthropic_messages</span></li>
+    </ul>
+  </div>
+
+  <h3>6.2 實際扣費</h3>
+  <p>
+    用戶檢查 Kimi 後台，發現由 04:25 HKT 開始，Coding Plan 的額度已經在不斷扣減。這證明所有請求確實經由 Coding endpoint 處理，沒有偷偷走回 Moonshot。
+  </p>
+
+  <h3>6.3 Fallback 測試</h3>
+  <p>
+    暫時將 KIMI_CODING_API_KEY 設為無效值，觀察到 Hermes 自動轉用 fallback（Moonshot），請求成功。恢復 key 後，重新連回 Coding endpoint。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">07</span>The Savings</h2>
+  <p class="lead">
+    這次配置的經濟效益非常顯著。
+  </p>
+
+  <table class="config-table">
+    <tr>
+      <th>項目</th>
+      <th>之前</th>
+      <th>之後</th>
+    </tr>
+    <tr>
+      <td>Primary Endpoint</td>
+      <td>api.moonshot.ai/v1（付費）</td>
+      <td>api.kimi.com/coding（大額度）</td>
+    </tr>
+    <tr>
+      <td>Fallback Endpoint</td>
+      <td>GLM-5.1 / NVIDIA NIM（不穩定）</td>
+      <td>api.moonshot.ai/v1（穩定備用）</td>
+    </tr>
+    <tr>
+      <td>Auxiliary</td>
+      <td>Moonshot（付費）</td>
+      <td>Moonshot（維持不變）</td>
+    </tr>
+    <tr>
+      <td>每次 Primary 請求</td>
+      <td>直接扣 Moonshot 額度</td>
+      <td>扣 Coding Plan 額度（大很多）</td>
+    </tr>
+  </table>
+
+  <div class="pull-quote" style="border-left-color: #2E5A2E;">
+    慳錢不是摳門，<br>
+    是讓資源去它該去的地方。<br>
+    Coding Plan 的額度，<br>
+    本來就是用來寫 code 的——<br>
+    而我們每天都在寫。
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2><span class="num">08</span>Reflection</h2>
+
+  <h3>8.1 關於隱藏邏輯</h3>
+  <p>
+    這次經歷最大的體會：系統的「自動化」往往是雙面刃。credential pool 的自動輪替、provider name 的自動解析、session override 的自動記憶——每一個「方便」的背後，都可能藏著一個攔截你意圖的邏輯。
+  </p>
+
+  <h3>8.2 關於讀源碼</h3>
+  <p>
+    用戶不是程序員（自稱「零代碼認識」），但成功配置了整個 Hermes 系統。這次更深入：直接讀源碼、追蹤函數呼叫鏈、理解 deduplication 邏輯。最終發現問題不在配置語法，而在語義——兩個同名 provider 被視為同一個。
+  </p>
+
+  <h3>8.3 關於堅持</h3>
+  <p>
+    從第一次嘗試到最終成功，歷時超過四小時。中間經歷了 401 錯誤、fallback 失效、gateway 卡住、session 不更新。每一個問題都可以成為放棄的理由，但用戶選擇繼續追下去。
+  </p>
+
+  <div class="pull-quote">
+    技術問題的盡頭，<br>
+    往往不是答案，<br>
+    而是另一個問題。<br>
+    但每多問一次，<br>
+    你就離真相近一點。
+  </div>
+
+  <h3>8.4 關於工具與人</h3>
+  <p>
+    最終，這次配置的成功不在於「寫對了 YAML」，而在於理解整個系統的運作方式。AI 可以幫你生成配置，但只有人才能決定：這個配置是否真正表達了你的意圖。
+  </p>
+
+  <div class="footer-note">
+    <span class="mono">Hermes Daily Log</span> · 2026.05.20 · K K · Session 20260520<br>
+    Primary: kimi-coding @ api.kimi.com/coding · Fallback: kimi-coding @ api.moonshot.ai/v1
+  </div>
+
+</div>
+
+</body>
+</html>

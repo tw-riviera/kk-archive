@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Off / 關</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+/* ===== BREATH RING ===== */
+.breath-container {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breath-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(90,122,110,0.12) 0%, rgba(90,122,110,0.03) 45%, transparent 70%);
+  animation: breathe 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.breath-ring:nth-child(2) {
+  animation-delay: -3.3s;
+  background: radial-gradient(circle, rgba(139,115,85,0.08) 0%, rgba(139,115,85,0.02) 45%, transparent 70%);
+}
+
+.breath-ring:nth-child(3) {
+  animation-delay: -6.6s;
+  background: radial-gradient(circle, rgba(90,122,110,0.06) 0%, rgba(90,122,110,0.01) 45%, transparent 70%);
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.4; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+
+/* ===== CENTER DOT ===== */
+.center-dot {
+  position: relative;
+  z-index: 2;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245,244,240,0.6);
+  box-shadow: 0 0 20px rgba(245,244,240,0.15), 0 0 60px rgba(90,122,110,0.1);
+}
+
+/* ===== TEXT ===== */
+.text-layer {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+  margin-top: 48px;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 400;
+  color: #F5F4F0;
+  letter-spacing: 6px;
+  line-height: 1;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+.sub {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: #5A7A6E;
+  letter-spacing: 14px;
+  margin-bottom: 48px;
+  opacity: 0.7;
+}
+
+.poetic {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 400;
+  color: #666;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: fadeInPoem 4s ease-out 2s forwards;
+}
+
+.poetic .line-zh {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 300;
+  color: #444;
+  display: block;
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+@keyframes fadeInPoem {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 0.6; transform: translateY(0); }
+}
+
+/* ===== TAP RIPPLE ===== */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(90,122,110,0.2) 0%, transparent 60%);
+  pointer-events: none;
+  animation: rippleExpand 2.5s ease-out forwards;
+  z-index: 1;
+}
+
+@keyframes rippleExpand {
+  0% { transform: scale(0); opacity: 0.8; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ===== BOTTOM HINT ===== */
+.hint {
+  position: absolute;
+  bottom: 48px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #222;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeHint 3s ease-out 6s forwards;
+}
+
+@keyframes fadeHint {
+  from { opacity: 0; }
+  to { opacity: 0.4; }
+}
+
+/* ===== AUTO DIM AFTER 3 MIN ===== */
+.auto-dim {
+  animation: dimDown 60s ease-in 180s forwards;
+}
+
+@keyframes dimDown {
+  to { opacity: 0.25; }
+}
+</style>
+</head>
+<body>
+
+<div class="scene auto-dim" id="scene">
+  <div class="breath-container">
+    <div class="breath-ring"></div>
+    <div class="breath-ring"></div>
+    <div class="breath-ring"></div>
+    <div class="center-dot"></div>
+  </div>
+
+  <div class="text-layer">
+    <div class="title">Off</div>
+    <div class="sub">關 / 息</div>
+    <div class="poetic">
+      Mon is just a setting.<br>
+      Let it rest here.<br>
+      <span class="line-zh">忙只是個設定。讓它在此歇下。</span>
+    </div>
+  </div>
+
+  <div class="hint" id="hint">Tap anywhere</div>
+</div>
+
+<script>
+(function() {
+  const scene = document.getElementById('scene');
+  const hint = document.getElementById('hint');
+  let tapCount = 0;
+
+  scene.addEventListener('click', function(e) {
+    tapCount++;
+    if (hint) hint.style.opacity = '0';
+
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    const size = 120 + tapCount * 20;
+    r.style.width = size + 'px';
+    r.style.height = size + 'px';
+    r.style.left = (e.clientX - size/2) + 'px';
+    r.style.top = (e.clientY - size/2) + 'px';
+    scene.appendChild(r);
+    setTimeout(() => r.remove(), 2500);
+
+    // Slow down breath on each tap
+    const rings = document.querySelectorAll('.breath-ring');
+    rings.forEach(function(ring) {
+      const current = parseFloat(getComputedStyle(ring).animationDuration) || 10;
+      ring.style.animationDuration = Math.min(current + 2, 20) + 's';
+    });
+  });
+
+  // Hide hint on first touch
+  scene.addEventListener('touchstart', function() {
+    if (hint) hint.style.opacity = '0';
+  }, {once:true});
+})();
+</script>
+
+</body>
+</html>

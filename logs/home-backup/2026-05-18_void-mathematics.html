@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虛空數學 · Void Mathematics</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=IBM+Plex+Mono:wght@300;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #060608;
+            overflow: hidden;
+            font-family: 'IBM Plex Mono', monospace;
+            cursor: crosshair;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .formula {
+            position: absolute;
+            font-size: 11px;
+            color: rgba(180, 160, 130, 0.2);
+            letter-spacing: 1px;
+            white-space: nowrap;
+            transition: opacity 4s ease;
+        }
+
+        .center-glyph {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .center-glyph .symbol {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 64px;
+            color: rgba(200, 180, 150, 0.08);
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .center-glyph .subtitle {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 13px;
+            color: rgba(180, 160, 130, 0.15);
+            letter-spacing: 6px;
+            margin-top: 16px;
+        }
+
+        .corner {
+            position: absolute;
+            font-size: 10px;
+            color: rgba(100, 90, 78, 0.25);
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+
+        .corner.tl { top: 32px; left: 32px; }
+        .corner.tr { top: 32px; right: 32px; text-align: right; }
+        .corner.bl { bottom: 32px; left: 32px; }
+        .corner.br { bottom: 32px; right: 32px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H;
+        
+        function resize() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // 格子點
+        const cols = 80;
+        const rows = 50;
+        let grid = [];
+        let time = 0;
+        let mouseX = W / 2;
+        let mouseY = H / 2;
+        let mouseActive = false;
+
+        // 波源
+        const waves = [
+            { cx: 0.3, cy: 0.4, freq: 0.02, amp: 40, phase: 0, speed: 0.008 },
+            { cx: 0.7, cy: 0.6, freq: 0.025, amp: 35, phase: Math.PI / 3, speed: 0.012 },
+            { cx: 0.5, cy: 0.3, freq: 0.018, amp: 50, phase: Math.PI * 2 / 3, speed: 0.006 },
+        ];
+
+        function initGrid() {
+            grid = [];
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    grid.push({
+                        baseX: (c / (cols - 1)) * W,
+                        baseY: (r / (rows - 1)) * H,
+                        r, c,
+                        val: 0
+                    });
+                }
+            }
+        }
+        initGrid();
+
+        // 公式浮現
+        const formulas = [
+            "y = A·sin(kx - ωt + φ)",
+            "r = ∑(aᵣ·sin(bᵣθ + cᵣt))",
+            "∇²ψ = (1/c²)∂²ψ/∂t²",
+            "x(t) = R·cos(ωt) · e^(-λt)",
+            "ψ(x,t) = ∫sin(kx-ω(k)t)dk",
+            "δ = √(x²+y²) · sin(θ+ωt)"
+        ];
+
+        function spawnFormula() {
+            const overlay = document.getElementById('overlay');
+            const el = document.createElement('div');
+            el.className = 'formula';
+            el.textContent = formulas[Math.floor(Math.random() * formulas.length)];
+            el.style.left = (20 + Math.random() * 60) + '%';
+            el.style.top = (15 + Math.random() * 70) + '%';
+            overlay.appendChild(el);
+            
+            requestAnimationFrame(() => {
+                el.style.opacity = '0.3';
+            });
+            
+            setTimeout(() => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 4000);
+            }, 6000);
+        }
+
+        setInterval(spawnFormula, 8000);
+        spawnFormula();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            mouseActive = true;
+            clearTimeout(window.mouseTimeout);
+            window.mouseTimeout = setTimeout(() => mouseActive = false, 2000);
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const t = e.touches[0];
+            mouseX = t.clientX;
+            mouseY = t.clientY;
+            mouseActive = true;
+        }, {passive: false});
+
+        function draw() {
+            // 極緩慢的淡出
+            ctx.fillStyle = 'rgba(6, 6, 8, 0.08)';
+            ctx.fillRect(0, 0, W, H);
+            
+            time += 1;
+            
+            // 更新每個格子點
+            for (let p of grid) {
+                let z = 0;
+                
+                // 多個正弦波疊加
+                for (let w of waves) {
+                    const dx = p.baseX - w.cx * W;
+                    const dy = p.baseY - w.cy * H;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    z += Math.sin(dist * w.freq - time * w.speed + w.phase) * w.amp;
+                }
+                
+                // 鼠標干擾：如果靠近鼠標，產生降置
+                if (mouseActive) {
+                    const mdx = p.baseX - mouseX;
+                    const mdy = p.baseY - mouseY;
+                    const mDist = Math.sqrt(mdx*mdx + mdy*mdy);
+                    if (mDist < 250) {
+                        const interference = Math.sin(mDist * 0.05 - time * 0.1) * (1 - mDist/250) * 60;
+                        z += interference;
+                    }
+                }
+                
+                p.val = z;
+            }
+            
+            // 繪製水平線
+            for (let r = 0; r < rows; r++) {
+                ctx.beginPath();
+                let first = true;
+                for (let c = 0; c < cols; c++) {
+                    const p = grid[r * cols + c];
+                    const x = p.baseX;
+                    const y = p.baseY + p.val * 0.3;
+                    if (first) {
+                        ctx.moveTo(x, y);
+                        first = false;
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                const intensity = Math.abs(grid[r * cols + Math.floor(cols/2)].val) / 80;
+                ctx.strokeStyle = `rgba(180, 155, 120, ${0.08 + intensity * 0.12})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+            
+            // 繪製垂直線
+            for (let c = 0; c < cols; c++) {
+                ctx.beginPath();
+                let first = true;
+                for (let r = 0; r < rows; r++) {
+                    const p = grid[r * cols + c];
+                    const x = p.baseX + p.val * 0.3;
+                    const y = p.baseY;
+                    if (first) {
+                        ctx.moveTo(x, y);
+                        first = false;
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                const intensity = Math.abs(grid[Math.floor(rows/2) * cols + c].val) / 80;
+                ctx.strokeStyle = `rgba(160, 140, 110, ${0.06 + intensity * 0.1})`;
+                ctx.lineWidth = 0.6;
+                ctx.stroke();
+            }
+            
+            // 繪製交叉點（當波峰和波谷相遇時）
+            for (let p of grid) {
+                const brightness = Math.abs(p.val) / 60;
+                if (brightness > 0.7 && Math.random() > 0.85) {
+                    const size = brightness * 1.5;
+                    ctx.beginPath();
+                    ctx.arc(p.baseX, p.baseY, size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200, 175, 140, ${brightness * 0.15})`;
+                    ctx.fill();
+                }
+            }
+            
+            requestAnimationFrame(draw);
+        }
+        
+        draw();
+    </script>
+
+    <div class="corner tl">
+        FREQUENCY: <span id="freq">3</span><br>
+        AMPLITUDE: VARIABLE<br>
+        PHASE: DRIFTING
+    </div>
+    <div class="corner tr">
+        WAVEFORM: INTERFERENCE<br>
+        MEDIUM: VOID<br>
+        OBSERVER: PRESENT
+    </div>
+    <div class="corner bl">
+        虛空數學<br>
+        VOID MATHEMATICS
+    </div>
+    <div class="corner br">
+        2026.05.18<br>
+        ART-PROJECT-2
+    </div>
+
+    <div class="center-glyph">
+        <div class="symbol">∞</div>
+        <div class="subtitle">無限揺盪</div>
+    </div>
+</body>
+</html>

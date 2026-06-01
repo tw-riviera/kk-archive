@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes 學習筆記｜2026-05-17</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-hover: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --success: #4ade80;
+      --warning: #facc15;
+      --danger: #f87171;
+      --border: #334155;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .section:hover {
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.08);
+    }
+    .section-title {
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.3);
+    }
+    .tag.green { background: rgba(74,222,128,0.15); color: var(--success); border-color: rgba(74,222,128,0.3); }
+    .tag.yellow { background: rgba(250,204,21,0.15); color: var(--warning); border-color: rgba(250,204,21,0.3); }
+    .tag.red { background: rgba(248,113,113,0.15); color: var(--danger); border-color: rgba(248,113,113,0.3); }
+
+    /* 架構圖 */
+    .arch-box {
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      position: relative;
+    }
+    .arch-box::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: var(--card);
+      padding: 0 8px;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      font-weight: bold;
+    }
+    .arch-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 0.4rem 0;
+    }
+    .arch-item {
+      flex: 1;
+      min-width: 140px;
+      background: var(--card-hover);
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      border-left: 3px solid var(--accent);
+    }
+    .arch-arrow {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      margin: 0.3rem 0;
+    }
+
+    /* 對比表格 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.7rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    td:first-child {
+      font-family: 'Courier New', monospace;
+      color: var(--accent2);
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* 風險卡片 */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .risk-card {
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .risk-card.red { border-left: 4px solid var(--danger); }
+    .risk-card.yellow { border-left: 4px solid var(--warning); }
+    .risk-card.green { border-left: 4px solid var(--success); }
+    .risk-card h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .risk-card p { font-size: 0.85rem; color: var(--text-dim); }
+
+    /* 折疊 */
+    details {
+      margin-top: 0.5rem;
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+    }
+    summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-weight: 500;
+      user-select: none;
+    }
+    details[open] summary { margin-bottom: 0.5rem; }
+
+    /* 底部 */
+    .footer {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .highlight {
+      background: rgba(56,189,248,0.1);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    code {
+      font-family: 'Courier New', monospace;
+      background: var(--bg);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: var(--accent2);
+    }
+  </style>
+</head>
+<body>
+
+<h1>📘 Hermes 學習筆記</h1>
+<div class="subtitle">2026年5月17日｜K K 的溫習材料｜零 Coding 基礎用家視角</div>
+
+<!-- 1. Hermes 是什麼 -->
+<div class="section">
+  <div class="section-title">🤖 1. Hermes 是什麼？</div>
+  <p><strong>你的「萬能數碼助手」</strong>，住在雲端（或你的電腦裡）的超級秘書。</p>
+  <ul style="margin: 0.5rem 0 0 1.2rem; color: var(--text-dim);">
+    <li>會說話、會思考（接駁 Kimi/Moonshot AI 大腦）</li>
+    <li>有「手腳」能執行動作——發訊息、整理檔案、搜尋網頁、寫文件、設定自動提醒</li>
+    <li>多平台連接（Telegram、WhatsApp、Discord、電郵等）</li>
+    <li>有記憶——記得你是誰、你的偏好、你在做什麼項目</li>
+  </ul>
+</div>
+
+<!-- 2. 架構圖 -->
+<div class="section">
+  <div class="section-title">🏗️ 2. Hermes 運作架構圖</div>
+
+  <div class="arch-box" data-label="你（用戶層）">
+    <div class="arch-row">
+      <div class="arch-item">Telegram App</div>
+      <div class="arch-item">終端機 <code>hermes chat</code></div>
+    </div>
+  </div>
+
+  <div class="arch-arrow">⬇</div>
+
+  <div class="arch-box" data-label="介面層">
+    <div class="arch-row">
+      <div class="arch-item" style="border-color: var(--accent2);">
+        <strong>Gateway</strong><br>
+        <span style="font-size:0.8rem; color:var(--text-dim);">接收 Telegram/Discord 訊息，產生 <code>.jsonl</code></span>
+      </div>
+      <div class="arch-item" style="border-color: var(--warning);">
+        <strong>CLI 模式</strong><br>
+        <span style="font-size:0.8rem; color:var(--text-dim);">終端直接對話，<strong>不產生</strong> <code>.jsonl</code></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="arch-arrow">⬇</div>
+
+  <div class="arch-box" data-label="核心引擎層 (run_agent.py)">
+    <div class="arch-row">
+      <div class="arch-item" style="border-color: var(--success);">處理對話邏輯</div>
+      <div class="arch-item" style="border-color: var(--success);">讀取記憶 Memory</div>
+      <div class="arch-item" style="border-color: var(--success);">調用 Tools</div>
+      <div class="arch-item" style="border-color: var(--success);">產生 <code>.json</code> 備份</div>
+      <div class="arch-item" style="border-color: var(--success);">寫入 SQLite</div>
+    </div>
+  </div>
+
+  <div class="arch-arrow">⬇</div>
+
+  <div class="arch-box" data-label="儲存層">
+    <div class="arch-row">
+      <div class="arch-item" style="border-color: var(--danger);"><strong>SQLite</strong><br><code>state.db</code><br>主資料庫</div>
+      <div class="arch-item" style="border-color: var(--accent);"><strong>.jsonl</strong><br>Gateway 原始記錄</div>
+      <div class="arch-item" style="border-color: var(--accent2);"><strong>.json</strong><br>引擎備份快照</div>
+      <div class="arch-item" style="border-color: var(--warning);"><strong>sessions.json</strong><br>目錄索引</div>
+    </div>
+  </div>
+
+  <div class="arch-arrow">⬇</div>
+
+  <div class="arch-box" data-label="外部連接層">
+    <div class="arch-row">
+      <div class="arch-item" style="border-color: #c084fc;"><strong>Kimi/Moonshot API</strong><br>AI 大腦</div>
+      <div class="arch-item" style="border-color: #c084fc;">其他平台<br>WhatsApp / Discord / Slack</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Session 檔案系統 -->
+<div class="section">
+  <div class="section-title">📁 3. Session 檔案系統</div>
+  <p style="margin-bottom:0.75rem; color:var(--text-dim);">Session = 聊天記錄的存檔。每次對話自動保存，讓 Hermes 記得你。</p>
+
+  <table>
+    <tr>
+      <th>檔案類型</th>
+      <th>誰產生</th>
+      <th>用途</th>
+      <th>能否刪除</th>
+    </tr>
+    <tr>
+      <td><code>.jsonl</code></td>
+      <td>Gateway 層</td>
+      <td>逐行原始對話記錄（一句一行）</td>
+      <td><span class="tag red">不能</span> 會遺失對話記憶</td>
+    </tr>
+    <tr>
+      <td><code>.json</code></td>
+      <td>run_agent.py</td>
+      <td>引擎備份快照（含 system prompt、工具定義）</td>
+      <td><span class="tag yellow">暫時可</span> 但會自動再生</td>
+    </tr>
+    <tr>
+      <td><code>sessions.json</code></td>
+      <td>系統</td>
+      <td>目錄索引（記錄目前活躍 session）</td>
+      <td><span class="tag red">不能</span> 系統會迷路</td>
+    </tr>
+    <tr>
+      <td><code>request_dump_*.json</code></td>
+      <td>除錯系統</td>
+      <td>網路請求臨時除錯記錄</td>
+      <td><span class="tag green">可以</span> 安全清理</td>
+    </tr>
+  </table>
+
+  <details>
+    <summary>🔍 展開：.json 與 .jsonl 的詳細對比</summary>
+    <table style="margin-top:0.5rem;">
+      <tr><th>比較項目</th><th>.json</th><th>.jsonl</th></tr>
+      <tr><td>格式</td><td>單一大塊 JSON</td><td>每行一個獨立 JSON</td></tr>
+      <tr><td>寫入方式</td><td>每次<strong>覆寫</strong>整個檔案</td><td><strong>追加</strong>在最後一行</td></tr>
+      <tr><td>大小</td><td>較大（含系統提示、工具清單）</td><td>較小（只含對話內容）</td></tr>
+      <tr><td>CLI 模式</td><td>✅ 有</td><td>❌ 沒有</td></tr>
+      <tr><td>Telegram 模式</td><td>✅ 有</td><td>✅ 有</td></tr>
+      <tr><td>Resume 來源</td><td>不直接使用（備份用）</td><td>不直接使用（Gateway 記錄用）</td></tr>
+      <tr><td>實際 Resume 來自</td><td colspan="2" style="text-align:center;"><strong>SQLite (state.db)</strong></td></tr>
+    </table>
+  </details>
+</div>
+
+<!-- 4. Root -->
+<div class="section">
+  <div class="section-title">🔑 4. Root 是什麼？</div>
+  <p>電腦世界裡的「萬能鑰匙持有者」。</p>
+  <div class="risk-grid" style="margin-top:0.75rem;">
+    <div class="risk-card green">
+      <h4>👤 普通用戶</h4>
+      <p>像住戶——能進自己房間、用廚房、看電視</p>
+    </div>
+    <div class="risk-card red">
+      <h4>👑 Root（超級管理員）</h4>
+      <p>像大廈業主——能進任何房間、拆牆、改電線、甚至拆掉整棟樓</p>
+    </div>
+  </div>
+  <p style="margin-top:0.75rem; color:var(--text-dim);">
+    Hermes 現在以 <code>root</code> 身份運行。在單人用戶的容器環境中風險可控，但長遠應改為普通用戶運行。
+  </p>
+</div>
+
+<!-- 5. 安全設定 -->
+<div class="section">
+  <div class="section-title">🛡️ 5. 安全權限檢查結果</div>
+  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+    <span class="tag green">安全評分：A-</span>
+    <span class="tag">Telegram 鎖定：只允許你</span>
+    <span class="tag green">PII 遮蔽：開啟</span>
+    <span class="tag green">手動審批：開啟</span>
+  </div>
+
+  <table>
+    <tr><th>設定項目</th><th>狀態</th><th>意義</th></tr>
+    <tr><td><code>allowed_chats</code></td><td><span class="tag green">5509165215</span></td><td>Telegram 只允許你一人使用</td></tr>
+    <tr><td><code>redact_pii</code></td><td><span class="tag green">true</span></td><td>自動遮蔽個人資料</td></tr>
+    <tr><td><code>redact_secrets</code></td><td><span class="tag green">true</span></td><td>API 金鑰顯示為 ***</td></tr>
+    <tr><td><code>destructive_slash_confirm</code></td><td><span class="tag green">true</span></td><td>危險操作先問你</td></tr>
+    <tr><td><code>approvals.mode</code></td><td><span class="tag green">manual</span></td><td>重要操作需批准</td></tr>
+    <tr><td><code>allow_lazy_installs</code></td><td><span class="tag green">false</span></td><td>不自動下載程式</td></tr>
+    <tr><td><code>cron_mode</code></td><td><span class="tag green">deny</span></td><td>定時任務需額外審批</td></tr>
+    <tr><td><code>allow_private_urls</code></td><td><span class="tag green">false</span></td><td>禁止存取內部網路</td></tr>
+    <tr><td><code>tirith_fail_open</code></td><td><span class="tag green">false</span></td><td>安全規則不通融</td></tr>
+    <tr><td>檔案權限</td><td><span class="tag green">rw-------</span></td><td>只有 root 能讀寫設定檔</td></tr>
+    <tr><td>運行身份</td><td><span class="tag yellow">root</span></td><td>建議改為普通用戶</td></tr>
+  </table>
+</div>
+
+<!-- 6. 使用風險 -->
+<div class="section">
+  <div class="section-title">⚠️ 6. 使用風險</div>
+  <div class="risk-grid">
+    <div class="risk-card red">
+      <h4>🔴 高：權限過大</h4>
+      <p>Hermes 能讀寫檔案、執行指令。設定錯誤或被他人控制會有危險。</p>
+      <p style="margin-top:0.3rem;"><strong>對策：</strong>已鎖定 Telegram、開啟手動審批</p>
+    </div>
+    <div class="risk-card yellow">
+      <h4>🟠 中：隱私與資料儲存</h4>
+      <p>對話記錄存在本地，含個人資訊。API 金鑰儲存在設定檔中。</p>
+      <p style="margin-top:0.3rem;"><strong>對策：</strong>已開啟 PII 遮蔽、清理舊 session</p>
+    </div>
+    <div class="risk-card yellow">
+      <h4>🟡 低：AI 幻覺</h4>
+      <p>AI 有時會「自信地胡說」，給出錯誤建議。</p>
+      <p style="margin-top:0.3rem;"><strong>對策：</strong>重要決定二次確認</p>
+    </div>
+    <div class="risk-card green">
+      <h4>🟢 可控：成本</h4>
+      <p>每次對話消耗 API Token，文字越多越貴。</p>
+      <p style="margin-top:0.3rem;"><strong>對策：</strong>留意 Moonshot 帳單</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7. 如何優化生活 -->
+<div class="section">
+  <div class="section-title">🚀 7. Hermes 如何優化生活？</div>
+  <p style="margin-bottom:0.75rem;">核心價值：<strong>「把想法變成現實，不需要寫程式」</strong></p>
+
+  <table>
+    <tr><th>生活場景</th><th>傳統方式</th><th>用 Hermes</th></tr>
+    <tr><td>每日提醒</td><td>手機鬧鐘，文字固定</td><td>說一句話，自動每天發送，還能換內容</td></tr>
+    <tr><td>整理資料</td><td>手動抄寫、開 Excel</td><td>「幫我整理這段文字成重點」</td></tr>
+    <tr><td>創作內容</td><td>自己苦思</td><td>告訴它概念，幫你寫稿、寫對白</td></tr>
+    <tr><td>學習新知</td><td>看書、看教學影片</td><td>直接問，用你懂的語言解釋</td></tr>
+    <tr><td>自動化流程</td><td>要學寫程式</td><td>用說的：「每天早上檢查郵件並摘要」</td></tr>
+  </table>
+
+  <p style="margin-top:0.75rem; color:var(--text-dim);">
+    你已經在用的：每日 8:30 提醒「擁抱生活，擁抱現在，擁抱未來」、打造 WhatsApp AI 角色 <code>ningxx</code>、安全檢查。
+  </p>
+</div>
+
+<!-- 8. 今日金句 -->
+<div class="section">
+  <div class="section-title">💡 8. 今日學習金句</div>
+  <ul style="margin-left:1.2rem; color:var(--text-dim);">
+    <li>「Session 是聊天記憶的存檔，讓 AI 記得你是誰」</li>
+    <li>「<code>.json</code> 是引擎備份，<code>.jsonl</code> 是 Gateway 原始記錄」</li>
+    <li>「Root 是電腦的萬能鑰匙持有者，能力越大責任越大」</li>
+    <li>「Resume 對話從 SQLite 載入，不是從 <code>.json</code>」</li>
+    <li>「刪 <code>.json</code> 只會暫時清空間，對話繼續就會自動再生」</li>
+    <li>「把 Hermes 當副駕駛，不是自動駕駛——方向盤在你手中」</li>
+  </ul>
+</div>
+
+<!-- 9. 下一步學習地圖 -->
+<div class="section">
+  <div class="section-title">🗺️ 9. 下一步學習地圖</div>
+  <div class="arch-row">
+    <div class="arch-item" style="border-color: var(--success);">
+      <strong>模組 A：Cron 自動化</strong><br>
+      <span style="font-size:0.8rem; color:var(--text-dim);">條件式觸發、多步驟流程</span>
+    </div>
+    <div class="arch-item" style="border-color: var(--accent);">
+      <strong>模組 B：AI 角色系統</strong><br>
+      <span style="font-size:0.8rem; color:var(--text-dim);">讓 ningxx 正式上線</span>
+    </div>
+    <div class="arch-item" style="border-color: var(--accent2);">
+      <strong>模組 C：工具組合</strong><br>
+      <span style="font-size:0.8rem; color:var(--text-dim);">讀網頁 + 摘要 + 發送</span>
+    </div>
+    <div class="arch-item" style="border-color: var(--warning);">
+      <strong>模組 D：Skills 系統</strong><br>
+      <span style="font-size:0.8rem; color:var(--text-dim);">載入與自創任務模板</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  製作日期：2026-05-17｜學習者：K K｜工具：Hermes Agent + Kimi k2.6<br>
+  <span style="font-size:0.8rem;">「先理解原理，再駕馭工具」</span>
+</div>
+
+</body>
+</html>

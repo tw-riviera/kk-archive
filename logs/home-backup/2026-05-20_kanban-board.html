@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Kanban — Dual Board View</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    padding: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .board-section {
+    margin-bottom: 40px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    background: #111;
+  }
+  .board-title {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  .column {
+    background: #1a1a1a;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 200px;
+  }
+  .column h3 {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #333;
+    color: #888;
+  }
+  .task {
+    background: #222;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 3px solid #444;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .task:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .task.blocked { border-left-color: #e74c3c; }
+  .task.todo { border-left-color: #f39c12; }
+  .task.ready { border-left-color: #3498db; }
+  .task.running { border-left-color: #9b59b6; }
+  .task.done { border-left-color: #2ecc71; opacity: 0.7; }
+  .task-title {
+    font-size: 0.95em;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  .task-meta {
+    font-size: 0.75em;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .status-todo { background: #f39c1220; color: #f39c12; }
+  .status-ready { background: #3498db20; color: #3498db; }
+  .status-running { background: #9b59b620; color: #9b59b6; }
+  .status-blocked { background: #e74c3c20; color: #e74c3c; }
+  .status-done { background: #2ecc7120; color: #2ecc71; }
+  .info {
+    text-align: center;
+    color: #555;
+    margin-top: 30px;
+    font-size: 0.85em;
+  }
+</style>
+</head>
+<body>
+  <h1>HERMES KANBAN</h1>
+  
+  <!-- KK Board -->
+  <div class="board-section">
+    <div class="board-title">👤 KK Board</div>
+    <div class="columns">
+      <div class="column">
+        <h3>Blocked</h3>
+        <div class="task blocked"><div class="task-title">補回 5/22 daily log</div><div class="task-meta"><span>default</span><span class="status-badge status-blocked">blocked</span></div></div>
+      </div>
+      <div class="column">
+        <h3>Todo</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Ready</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Running</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Done</h3>
+        <div class="task done"><div class="task-title">更新 TOC 加入 5/23</div><div class="task-meta"><span>default</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">統一 5/23 log 視覺風格</div><div class="task-meta"><span>default</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">Deploy 到 GitHub Pages</div><div class="task-meta"><span>default</span><span class="status-badge status-done">done</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ningxx Board -->
+  <div class="board-section">
+    <div class="board-title">🤖 Ningxx Board</div>
+    <div class="columns">
+      <div class="column">
+        <h3>Blocked</h3>
+        <div class="task blocked"><div class="task-title">[2026-05-24] 每日報告整合</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-blocked">blocked</span></div></div>
+      </div>
+      <div class="column">
+        <h3>Todo</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Ready</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Running</h3>
+        
+      </div>
+      <div class="column">
+        <h3>Done</h3>
+        <div class="task done"><div class="task-title">[2026-05-24] 每日禱文</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 每日禱文</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 感知引擎更新</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">撰寫晚間反思</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 每日報告整合</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 設計視覺排版</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">Deploy 到 GitHub Pages</div><div class="task-meta"><span>ningxx-deployer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">每日報告整合</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 設計視覺排版</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] Deploy 到 GitHub</div><div class="task-meta"><span>ningxx-deployer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 晚間反思</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">撰寫每日禱文</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] Deploy 到 GitHub</div><div class="task-meta"><span>ningxx-deployer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 感知引擎更新</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">感知引擎更新</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">設計視覺排版</div><div class="task-meta"><span>ningxx-designer</span><span class="status-badge status-done">done</span></div></div><div class="task done"><div class="task-title">[2026-05-24] 晚間反思</div><div class="task-meta"><span>ningxx-poet</span><span class="status-badge status-done">done</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info">
+    HERMES KANBAN — Dual Board System<br>
+    Last updated: 2026-05-24 16:26:43
+  </div>
+</body>
+</html>

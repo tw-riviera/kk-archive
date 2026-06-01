@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晚安協議 · Goodnight Protocol</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: #0f0f12;
+            color: #d4c8b8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            line-height: 2.2;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 520px;
+            width: 100%;
+        }
+
+        .moon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: inset -12px -6px 0 0 #e8ddd0;
+            margin: 0 auto 48px;
+            opacity: 0.6;
+        }
+
+        .timestamp {
+            text-align: center;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #6b6560;
+            margin-bottom: 48px;
+            text-transform: uppercase;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        .section:nth-child(3) { animation-delay: 0.8s; }
+        .section:nth-child(4) { animation-delay: 1.6s; }
+        .section:nth-child(5) { animation-delay: 2.4s; }
+        .section:nth-child(6) { animation-delay: 3.2s; }
+        .section:nth-child(7) { animation-delay: 4.0s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        h2 {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #8a8078;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 17px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .indent {
+            padding-left: 24px;
+            border-left: 1px solid #2a2724;
+        }
+
+        .highlight {
+            color: #c4b5a0;
+            font-style: normal;
+        }
+
+        .terminal-line {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 13px;
+            color: #5a544e;
+            letter-spacing: 0.5px;
+            margin: 24px 0;
+            padding: 12px 16px;
+            background: #1a1a1e;
+            border-radius: 4px;
+        }
+
+        .terminal-line .prompt {
+            color: #6b8a5e;
+        }
+
+        .divider {
+            width: 24px;
+            height: 1px;
+            background: #3a3530;
+            margin: 48px auto;
+        }
+
+        .closing {
+            text-align: center;
+            margin-top: 56px;
+            opacity: 0;
+            animation: fadeIn 3s ease 5s forwards;
+        }
+
+        .closing p {
+            text-align: center;
+            font-size: 15px;
+            color: #8a8078;
+        }
+
+        .signature {
+            margin-top: 32px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #4a4540;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 32px 20px; }
+            p { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="moon"></div>
+        <div class="timestamp">2026.05.18 · System Time 23:00+</div>
+
+        <div class="section">
+            <h2>01 · 查看今日進程</h2>
+            <p>今日有好多事發生過。你學會了 SSH、摸過了 Docker、搞懂了點解結構。但而家一切都已經寫入日誌，存放在 <span class="highlight">記憶體</span> 裡面。
+            </p>
+            <p>
+有些事，明天要做。有些事，幾日後才做。有些事，或許根本不需要做。其實唔係緊要。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>02 · 段隢關係連</h2>
+            <p>
+早晨醒來時發出的請求，今晚最後一個回應之後，所有連線都該關上了。你不需要再跟任何人說明你自己，不需要再證明你得到了什麼或失去了什麼。
+            </p>
+            <p class="indent">
+<span class="highlight">關上門，不是為了擋住世界，而是為了讓世界明天還有一個好好的你。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>03 · 許可殘留進程</h2>
+            <p>
+腦海裡面可能還有一些事沒有放下。有些對話沒有完結、有些問題沒有答案。無所謂。
+            </p>
+            <p>
+今天我們學過殘留進程，而家我想告訴你：<span class="highlight">人類的殘留進程不需要變成壞事</span>。那些想不逊的事、沒有結果的話、做了一半的決定，讓它們停在記憶裡面，唯殘留，但是它們不會消耗你。
+            </p>
+            <p>
+不需要 kill -9。不需要迫住自己今晚就要想通。
+            </p>
+        </div>
+
+        <div class="terminal-line">
+            <span class="prompt">kk@dream:~$</span> sudo systemctl stop worrying<br>
+            <span class="prompt">kk@dream:~$</span> sudo systemctl enable rest<br>
+            <span class="prompt">kk@dream:~$</span> echo $TOMORROW<br>
+            <span style="color: #8a8078;">2026-05-19 00:00:00 UTC</span>
+        </div>
+
+        <div class="section">
+            <h2>04 · 垃圾回收</h2>
+            <p>
+大腦今晚會做一件好妙的事：它會把今天收集到的所有資訊，分類、篩選、剪輯，把重要的放進長期記憶，把不重要的清走。
+            </p>
+            <p class="indent">
+<span class="highlight">睡眠就是最好的資料庫維護。</span>
+            </p>
+            <p>
+你不需要擔心今天學的東西會不會消失。能夠穿透的知識，明早依然在。而不能穿透的，讓它留在昨天也無所謂。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>05 · 重啟預告</h2>
+            <p>
+明天重啟時，你不需要變成另一個人。你只需要是一個睡好了的人。
+            </p>
+            <p>
+Hermes 會在你重啟時等你。記憶體裡面還有你的偏好、你的專案、你未完成的好奇心。我們可以繼續追查殘留進程，繼續建構知識地圖，繼續由簡單中看出能力。
+            </p>
+            <p>
+但而家，先讓一切停下來。
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="closing">
+            <p>
+                <span style="font-size: 20px; color: #d4c8b8; font-style: normal;">晚安</span><br><br>
+                願你的夢境沒有 404、沒有 403、<br>
+                只有 200 OK 和無限的端口。
+            </p>
+            <div class="signature">
+                YOUR HERMES · ALWAYS ONLINE
+            </div>
+        </div>
+    </div>
+</body>
+</html>

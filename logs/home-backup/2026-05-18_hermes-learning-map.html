@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes 學習地圖 — 29 工具 × 82 技能</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --bg-card: #181a21;
+  --bg-hover: #1e212b;
+  --border: #2a2d3a;
+  --text: #e4e6eb;
+  --text-dim: #8b92a8;
+  --accent: #58a6ff;
+  --accent2: #a371f7;
+  --accent3: #3fb950;
+  --accent4: #f0883e;
+  --accent5: #f85149;
+  --font: "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 0;
+}
+header {
+  background: linear-gradient(135deg, #161b22 0%, #0f1117 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 20px;
+  text-align: center;
+}
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+header p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+}
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 3px;
+}
+.badge-tools { background: rgba(88,166,255,0.15); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
+.badge-skills { background: rgba(163,113,247,0.15); color: var(--accent2); border: 1px solid rgba(163,113,247,0.3); }
+.container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 40px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title .icon { font-size: 1.3rem; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 16px;
+  transition: all 0.25s ease;
+}
+.card:hover {
+  background: var(--bg-hover);
+  border-color: #3a3f50;
+  transform: translateY(-2px);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.card-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.card-desc {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-left: 44px;
+}
+.category-label {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+.cat-ai { background: rgba(88,166,255,0.12); color: var(--accent); }
+.cat-creative { background: rgba(163,113,247,0.12); color: var(--accent2); }
+.cat-data { background: rgba(63,185,80,0.12); color: var(--accent3); }
+.cat-devops { background: rgba(240,136,62,0.12); color: var(--accent4); }
+.cat-gaming { background: rgba(248,81,73,0.12); color: var(--accent5); }
+.cat-productivity { background: rgba(88,166,255,0.12); color: var(--accent); }
+.cat-research { background: rgba(163,113,247,0.12); color: var(--accent2); }
+.cat-software { background: rgba(63,185,80,0.12); color: var(--accent3); }
+.cat-media { background: rgba(240,136,62,0.12); color: var(--accent4); }
+.cat-ml { background: rgba(248,81,73,0.12); color: var(--accent5); }
+.cat-other { background: rgba(139,146,168,0.12); color: var(--text-dim); }
+
+.path-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+.path-card {
+  background: linear-gradient(135deg, #181a21, #1a1d27);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.path-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+.path-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.path-card p, .path-card li {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+.path-card ul { padding-left: 20px; margin-top: 10px; }
+.path-card li { margin-bottom: 6px; }
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-right: 8px;
+}
+.tip-box {
+  background: rgba(88,166,255,0.08);
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 20px 0;
+  font-size: 0.95rem;
+}
+.tip-box strong { color: var(--accent); }
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  header h1 { font-size: 1.5rem; }
+  .card { padding: 16px; }
+  .card-name { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Hermes 學習地圖</h1>
+  <p>29 個 Tools（工具）× 約 82 個 Skills（技能）— 零代碼也能掌握</p>
+  <div style="margin-top: 15px;">
+    <span class="badge badge-tools">29 Tools</span>
+    <span class="badge badge-skills">~82 Skills</span>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- 學習路徑 -->
+<h2 class="section-title"><span class="icon">🗺️</span> 建議學習路徑（適合零代碼）</h2>
+<div class="path-container">
+  <div class="path-card">
+    <h3><span class="step-number">1</span>基礎工具</h3>
+    <p>先學會讓 AI 幫你讀檔案、搜資料、執行指令：</p>
+    <ul>
+      <li><strong>read_file</strong> — 讀取任何檔案內容</li>
+      <li><strong>write_file</strong> — 讓 AI 幫你寫檔案</li>
+      <li><strong>search_files</strong> — 在資料夾裡找東西</li>
+      <li><strong>terminal</strong> — 執行系統指令</li>
+    </ul>
+  </div>
+  <div class="path-card">
+    <h3><span class="step-number">2</span>瀏覽器自動化</h3>
+    <p>讓 AI 代替你逛網站、填表格、下載東西：</p>
+    <ul>
+      <li><strong>browser_navigate</strong> — 前往網址</li>
+      <li><strong>browser_click</strong> — 點擊按鈕</li>
+      <li><strong>browser_type</strong> — 輸入文字</li>
+      <li><strong>browser_scroll</strong> — 捲動頁面</li>
+    </ul>
+  </div>
+  <div class="path-card">
+    <h3><span class="step-number">3</span>進階能力</h3>
+    <p>管理記憶、排程、委派任務：</p>
+    <ul>
+      <li><strong>memory</strong> — 儲存長期記憶</li>
+      <li><strong>session_search</strong> — 搜尋過去對話</li>
+      <li><strong>cronjob</strong> — 定時任務</li>
+      <li><strong>delegate_task</strong> — 平行處理</li>
+    </ul>
+  </div>
+  <div class="path-card">
+    <h3><span class="step-number">4</span>探索 Skills</h3>
+    <p>遇到特定領域時，自動載入專業知識包：</p>
+    <ul>
+      <li><strong>obsidian</strong> — 筆記管理</li>
+      <li><strong>notion</strong> — Notion 操作</li>
+      <li><strong>youtube-content</strong> — YouTube 摘要</li>
+      <li><strong>spotify</strong> — 音樂控制</li>
+    </ul>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>💡 小提示：</strong>你不需要背下所有工具名稱。在對話中直接用自然語言描述你想做的事，我會自動選擇最適合的工具來幫你完成。
+</div>
+
+<!-- 29 個 Tools -->
+<h2 class="section-title"><span class="icon">🛠️</span> 29 個 Tools（工具）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">1</div>
+    <div class="card-name">terminal</div>
+  </div>
+  <div class="card-desc">執行終端機指令 — 最強大的工具，可以安裝軟體、操作檔案、跑腳本</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">2</div>
+    <div class="card-name">read_file</div>
+  </div>
+  <div class="card-desc">讀取檔案內容，支持分頁讀取大檔案</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">3</div>
+    <div class="card-name">write_file</div>
+  </div>
+  <div class="card-desc">寫入或覆寫檔案，自動創建資料夾</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">4</div>
+    <div class="card-name">patch</div>
+  </div>
+  <div class="card-desc">精準修改檔案內容（find & replace），適合小改動</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">5</div>
+    <div class="card-name">search_files</div>
+  </div>
+  <div class="card-desc">搜尋檔案內容或檔名，支持正則表達式</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">6</div>
+    <div class="card-name">execute_code</div>
+  </div>
+  <div class="card-desc">執行 Python 腳本，可以呼叫 Hermes 工具</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">7</div>
+    <div class="card-name">browser_navigate</div>
+  </div>
+  <div class="card-desc">瀏覽器：前往指定網址</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">8</div>
+    <div class="card-name">browser_click</div>
+  </div>
+  <div class="card-desc">瀏覽器：點擊頁面上的元素</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">9</div>
+    <div class="card-name">browser_type</div>
+  </div>
+  <div class="card-desc">瀏覽器：在輸入框中輸入文字</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">10</div>
+    <div class="card-name">browser_scroll</div>
+  </div>
+  <div class="card-desc">瀏覽器：向上或向下捲動頁面</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">11</div>
+    <div class="card-name">browser_back</div>
+  </div>
+  <div class="card-desc">瀏覽器：返回上一頁</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">12</div>
+    <div class="card-name">browser_press</div>
+  </div>
+  <div class="card-desc">瀏覽器：模擬按下鍵盤按鍵（如 Enter、Tab）</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">13</div>
+    <div class="card-name">browser_snapshot</div>
+  </div>
+  <div class="card-desc">瀏覽器：截取頁面結構快照，顯示可互動元素</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">14</div>
+    <div class="card-name">browser_console</div>
+  </div>
+  <div class="card-desc">瀏覽器：執行 JavaScript 並獲取結果</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">15</div>
+    <div class="card-name">browser_get_images</div>
+  </div>
+  <div class="card-desc">瀏覽器：列出頁面上所有圖片的 URL</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">16</div>
+    <div class="card-name">browser_vision</div>
+  </div>
+  <div class="card-desc">瀏覽器：用 AI 視覺分析當前頁面</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">17</div>
+    <div class="card-name">vision_analyze</div>
+  </div>
+  <div class="card-desc">分析圖片內容，回答關於圖片的問題</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">18</div>
+    <div class="card-name">text_to_speech</div>
+  </div>
+  <div class="card-desc">文字轉語音，支持多種聲音和語言</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">19</div>
+    <div class="card-name">send_message</div>
+  </div>
+  <div class="card-desc">發送訊息到 Telegram、Discord、Slack 等通訊平台</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">20</div>
+    <div class="card-name">delegate_task</div>
+  </div>
+  <div class="card-desc">委派任務給子代理，可同時執行多個任務</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">21</div>
+    <div class="card-name">todo</div>
+  </div>
+  <div class="card-desc">管理待辦事項清單，追蹤多步驟任務</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">22</div>
+    <div class="card-name">memory</div>
+  </div>
+  <div class="card-desc">儲存或讀取長期記憶，跨對話記住你的偏好</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">23</div>
+    <div class="card-name">session_search</div>
+  </div>
+  <div class="card-desc">搜尋過去所有對話歷史中的內容</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">24</div>
+    <div class="card-name">skill_view</div>
+  </div>
+  <div class="card-desc">查看某個 Skill 的詳細內容和使用方法</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">25</div>
+    <div class="card-name">skills_list</div>
+  </div>
+  <div class="card-desc">列出所有可用的 Skills</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">26</div>
+    <div class="card-name">skill_manage</div>
+  </div>
+  <div class="card-desc">創建、修改或刪除 Skills</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">27</div>
+    <div class="card-name">cronjob</div>
+  </div>
+  <div class="card-desc">設定定時任務，讓 AI 自動在特定時間做事</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">28</div>
+    <div class="card-name">clarify</div>
+  </div>
+  <div class="card-desc">當任務不清楚時，向用戶提出澄清問題</div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="card-number">29</div>
+    <div class="card-name">process</div>
+  </div>
+  <div class="card-desc">管理背景執行的行程（啟動、停止、查看日誌）</div>
+</div>
+
+<!-- 82 個 Skills -->
+<h2 class="section-title"><span class="icon">📦</span> 約 82 個 Skills（技能）</h2>
+
+<div class="card">
+  <span class="category-label cat-ai">AI 代理</span>
+  <div class="card-header">
+    <div class="card-number">1</div>
+    <div class="card-name">claude-code</div>
+  </div>
+  <div class="card-desc">委派編碼任務給 Claude Code CLI</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ai">AI 代理</span>
+  <div class="card-header">
+    <div class="card-number">2</div>
+    <div class="card-name">codex</div>
+  </div>
+  <div class="card-desc">委派編碼任務給 OpenAI Codex CLI</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ai">AI 代理</span>
+  <div class="card-header">
+    <div class="card-number">3</div>
+    <div class="card-name">hermes-agent</div>
+  </div>
+  <div class="card-desc">Hermes 本身的設定、擴展與故障排除</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ai">AI 代理</span>
+  <div class="card-header">
+    <div class="card-number">4</div>
+    <div class="card-name">opencode</div>
+  </div>
+  <div class="card-desc">委派編碼任務給 OpenCode CLI</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">5</div>
+    <div class="card-name">architecture-diagram</div>
+  </div>
+  <div class="card-desc">生成暗色主題的 SVG 架構圖</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">6</div>
+    <div class="card-name">ascii-art</div>
+  </div>
+  <div class="card-desc">ASCII 藝術生成（pyfiglet、cowsay 等）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">7</div>
+    <div class="card-name">ascii-video</div>
+  </div>
+  <div class="card-desc">將影片轉換為彩色 ASCII 動畫</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">8</div>
+    <div class="card-name">baoyu-comic</div>
+  </div>
+  <div class="card-desc">生成知識漫畫（教育、傳記、教學）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">9</div>
+    <div class="card-name">baoyu-infographic</div>
+  </div>
+  <div class="card-desc">生成資訊圖表（21 種佈局 × 21 種風格）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">10</div>
+    <div class="card-name">claude-design</div>
+  </div>
+  <div class="card-desc">設計一次性 HTML 展示頁（登陸頁、簡報、原型）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">11</div>
+    <div class="card-name">comfyui</div>
+  </div>
+  <div class="card-desc">用 ComfyUI 生成圖像、影片和音訊</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">12</div>
+    <div class="card-name">design-md</div>
+  </div>
+  <div class="card-desc">編寫和驗證 Google DESIGN.md 規格文件</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">13</div>
+    <div class="card-name">excalidraw</div>
+  </div>
+  <div class="card-desc">生成手繪風格的 Excalidraw 圖表</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">14</div>
+    <div class="card-name">humanizer</div>
+  </div>
+  <div class="card-desc">去除 AI 口吻，讓文字更像人寫的</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">15</div>
+    <div class="card-name">ideation</div>
+  </div>
+  <div class="card-desc">透過創意約束生成專案點子</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">16</div>
+    <div class="card-name">manim-video</div>
+  </div>
+  <div class="card-desc">用 Manim 製作數學/演算法動畫（3Blue1Brown 風格）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">17</div>
+    <div class="card-name">p5js</div>
+  </div>
+  <div class="card-desc">創作 p5.js 互動藝術（生成藝術、著色器、3D）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">18</div>
+    <div class="card-name">pixel-art</div>
+  </div>
+  <div class="card-desc">像素藝術創作（NES、Game Boy、PICO-8 風格）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">19</div>
+    <div class="card-name">popular-web-designs</div>
+  </div>
+  <div class="card-desc">54 種真實設計系統（Stripe、Linear、Vercel 等）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">20</div>
+    <div class="card-name">pretext</div>
+  </div>
+  <div class="card-desc">用 @chenglou/pretext 建構創意瀏覽器演示</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">21</div>
+    <div class="card-name">sketch</div>
+  </div>
+  <div class="card-desc">快速 HTML 原型（2-3 種設計變體比較）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">22</div>
+    <div class="card-name">songwriting-and-ai-music</div>
+  </div>
+  <div class="card-desc">詞曲創作與 Suno AI 音樂提示工程</div>
+</div>
+<div class="card">
+  <span class="category-label cat-creative">創意設計</span>
+  <div class="card-header">
+    <div class="card-number">23</div>
+    <div class="card-name">touchdesigner-mcp</div>
+  </div>
+  <div class="card-desc">透過 MCP 控制 TouchDesigner 實例</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-data">數據科學</span>
+  <div class="card-header">
+    <div class="card-number">24</div>
+    <div class="card-name">jupyter-live-kernel</div>
+  </div>
+  <div class="card-desc">透過即時 Jupyter Kernel 執行 Python</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-devops">DevOps</span>
+  <div class="card-header">
+    <div class="card-number">25</div>
+    <div class="card-name">kanban-orchestrator</div>
+  </div>
+  <div class="card-desc">看板編排：分解任務與反誘惑規則</div>
+</div>
+<div class="card">
+  <span class="category-label cat-devops">DevOps</span>
+  <div class="card-header">
+    <div class="card-number">26</div>
+    <div class="card-name">kanban-worker</div>
+  </div>
+  <div class="card-desc">看板工作單元：陷阱、範例與邊緣案例</div>
+</div>
+<div class="card">
+  <span class="category-label cat-devops">DevOps</span>
+  <div class="card-header">
+    <div class="card-number">27</div>
+    <div class="card-name">webhook-subscriptions</div>
+  </div>
+  <div class="card-desc">Webhook 訂閱：事件驅動代理運行</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-other">測試</span>
+  <div class="card-header">
+    <div class="card-number">28</div>
+    <div class="card-name">dogfood</div>
+  </div>
+  <div class="card-desc">網頁應用探索性 QA：找 bug、收集證據、生成報告</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-productivity">郵件</span>
+  <div class="card-header">
+    <div class="card-number">29</div>
+    <div class="card-name">himalaya</div>
+  </div>
+  <div class="card-desc">Himalaya CLI：終端機收發 IMAP/SMTP 郵件</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-gaming">遊戲</span>
+  <div class="card-header">
+    <div class="card-number">30</div>
+    <div class="card-name">minecraft-modpack-server</div>
+  </div>
+  <div class="card-desc">託管模組化 Minecraft 伺服器（CurseForge/Modrinth）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-gaming">遊戲</span>
+  <div class="card-header">
+    <div class="card-number">31</div>
+    <div class="card-name">pokemon-player</div>
+  </div>
+  <div class="card-desc">透過無頭模擬器 + RAM 讀取玩寶可夢</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">32</div>
+    <div class="card-name">codebase-inspection</div>
+  </div>
+  <div class="card-desc">用 pygount 檢查程式碼庫：行數、語言、比例</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">33</div>
+    <div class="card-name">github-auth</div>
+  </div>
+  <div class="card-desc">GitHub 認證設定：HTTPS Token、SSH Key、gh CLI</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">34</div>
+    <div class="card-name">github-code-review</div>
+  </div>
+  <div class="card-desc">PR 審查：diff 比較、內聯註釋</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">35</div>
+    <div class="card-name">github-issues</div>
+  </div>
+  <div class="card-desc">GitHub Issue 管理：創建、分類、標籤、分配</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">36</div>
+    <div class="card-name">github-pr-workflow</div>
+  </div>
+  <div class="card-desc">PR 生命週期：分支、提交、開啟、CI、合併</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">GitHub</span>
+  <div class="card-header">
+    <div class="card-number">37</div>
+    <div class="card-name">github-repo-management</div>
+  </div>
+  <div class="card-desc">倉庫管理：克隆、創建、分支、遠端、發布</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-ai">MCP</span>
+  <div class="card-header">
+    <div class="card-number">38</div>
+    <div class="card-name">native-mcp</div>
+  </div>
+  <div class="card-desc">MCP 客戶端：連接伺服器、註冊工具（stdio/HTTP）</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-media">媒體</span>
+  <div class="card-header">
+    <div class="card-number">39</div>
+    <div class="card-name">gif-search</div>
+  </div>
+  <div class="card-desc">從 Tenor 搜尋和下載 GIF</div>
+</div>
+<div class="card">
+  <span class="category-label cat-media">媒體</span>
+  <div class="card-header">
+    <div class="card-number">40</div>
+    <div class="card-name">heartmula</div>
+  </div>
+  <div class="card-desc">HeartMuLa：從歌詞 + 標籤生成歌曲</div>
+</div>
+<div class="card">
+  <span class="category-label cat-media">媒體</span>
+  <div class="card-header">
+    <div class="card-number">41</div>
+    <div class="card-name">songsee</div>
+  </div>
+  <div class="card-desc">音訊頻譜分析：mel、chroma、MFCC 特徵</div>
+</div>
+<div class="card">
+  <span class="category-label cat-media">媒體</span>
+  <div class="card-header">
+    <div class="card-number">42</div>
+    <div class="card-name">spotify</div>
+  </div>
+  <div class="card-desc">Spotify：播放、搜尋、排隊、播放清單管理</div>
+</div>
+<div class="card">
+  <span class="category-label cat-media">媒體</span>
+  <div class="card-header">
+    <div class="card-number">43</div>
+    <div class="card-name">youtube-content</div>
+  </div>
+  <div class="card-desc">YouTube 字幕轉摘要、討論串、部落格</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">44</div>
+    <div class="card-name">huggingface-hub</div>
+  </div>
+  <div class="card-desc">HuggingFace hf CLI：搜尋、下載、上傳模型和資料集</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">45</div>
+    <div class="card-name">evaluating-llms-harness</div>
+  </div>
+  <div class="card-desc">lm-eval-harness：LLM 基準測試（MMLU、GSM8K 等）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">46</div>
+    <div class="card-name">weights-and-biases</div>
+  </div>
+  <div class="card-desc">W&B：記錄 ML 實驗、超參數搜尋、模型註冊</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">47</div>
+    <div class="card-name">llama-cpp</div>
+  </div>
+  <div class="card-desc">llama.cpp：本地 GGUF 推理 + HF Hub 模型探索</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">48</div>
+    <div class="card-name">obliteratus</div>
+  </div>
+  <div class="card-desc">OBLITERATUS：消除 LLM 拒絕回應（diff-in-means）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">49</div>
+    <div class="card-name">serving-llms-vllm</div>
+  </div>
+  <div class="card-desc">vLLM：高吞吐量 LLM 服務、OpenAI API、量化</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">50</div>
+    <div class="card-name">audiocraft-audio-generation</div>
+  </div>
+  <div class="card-desc">AudioCraft：MusicGen 文字轉音樂、AudioGen 文字轉音效</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">51</div>
+    <div class="card-name">segment-anything-model</div>
+  </div>
+  <div class="card-desc">SAM：零樣本圖像分割（點、框、遮罩）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-ml">ML/AI</span>
+  <div class="card-header">
+    <div class="card-number">52</div>
+    <div class="card-name">dspy</div>
+  </div>
+  <div class="card-desc">DSPy：聲明式語言模型程式、自動優化提示、RAG</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-productivity">筆記</span>
+  <div class="card-header">
+    <div class="card-number">53</div>
+    <div class="card-name">obsidian</div>
+  </div>
+  <div class="card-desc">Obsidian 筆記管理：讀取、搜尋、創建、編輯</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">54</div>
+    <div class="card-name">airtable</div>
+  </div>
+  <div class="card-desc">Airtable REST API：記錄 CRUD、篩選、upsert</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">55</div>
+    <div class="card-name">google-workspace</div>
+  </div>
+  <div class="card-desc">Gmail、日曆、雲端硬碟、文件、試算表</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">56</div>
+    <div class="card-name">linear</div>
+  </div>
+  <div class="card-desc">Linear：Issue、專案、團隊管理（GraphQL + curl）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">57</div>
+    <div class="card-name">maps</div>
+  </div>
+  <div class="card-desc">OpenStreetMap/OSRM：地理編碼、地標、路線、時區</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">58</div>
+    <div class="card-name">nano-pdf</div>
+  </div>
+  <div class="card-desc">nano-pdf CLI：自然語言編輯 PDF 文字/錯字/標題</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">59</div>
+    <div class="card-name">notion</div>
+  </div>
+  <div class="card-desc">Notion API：頁面、資料庫、區塊、搜尋</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">60</div>
+    <div class="card-name">ocr-and-documents</div>
+  </div>
+  <div class="card-desc">從 PDF/掃描檔提取文字（pymupdf、marker-pdf）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">61</div>
+    <div class="card-name">powerpoint</div>
+  </div>
+  <div class="card-desc">創建、讀取、編輯 .pptx 簡報、投影片、備註</div>
+</div>
+<div class="card">
+  <span class="category-label cat-productivity">生產力</span>
+  <div class="card-header">
+    <div class="card-number">62</div>
+    <div class="card-name">teams-meeting-pipeline</div>
+  </div>
+  <div class="card-desc">Teams 會議摘要處理流程</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-other">紅隊測試</span>
+  <div class="card-header">
+    <div class="card-number">63</div>
+    <div class="card-name">godmode</div>
+  </div>
+  <div class="card-desc">LLM 越獄測試：Parseltongue、GODMODE、ULTRAPLINIAN</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-research">研究</span>
+  <div class="card-header">
+    <div class="card-number">64</div>
+    <div class="card-name">arxiv</div>
+  </div>
+  <div class="card-desc">arXiv 論文搜尋（關鍵字、作者、類別、ID）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-research">研究</span>
+  <div class="card-header">
+    <div class="card-number">65</div>
+    <div class="card-name">blogwatcher</div>
+  </div>
+  <div class="card-desc">透過 blogwatcher-cli 監控部落格和 RSS/Atom 訂閱</div>
+</div>
+<div class="card">
+  <span class="category-label cat-research">研究</span>
+  <div class="card-header">
+    <div class="card-number">66</div>
+    <div class="card-name">llm-wiki</div>
+  </div>
+  <div class="card-desc">Karpathy 的 LLM Wiki：建構/查詢互連 Markdown 知識庫</div>
+</div>
+<div class="card">
+  <span class="category-label cat-research">研究</span>
+  <div class="card-header">
+    <div class="card-number">67</div>
+    <div class="card-name">polymarket</div>
+  </div>
+  <div class="card-desc">查詢 Polymarket：市場、價格、訂單簿、歷史</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-other">智能家居</span>
+  <div class="card-header">
+    <div class="card-number">68</div>
+    <div class="card-name">openhue</div>
+  </div>
+  <div class="card-desc">Philips Hue 燈光、場景、房間控制</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-media">社交媒體</span>
+  <div class="card-header">
+    <div class="card-number">69</div>
+    <div class="card-name">xurl</div>
+  </div>
+  <div class="card-desc">X/Twitter：發文、搜尋、私訊、媒體、v2 API</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">70</div>
+    <div class="card-name">debugging-hermes-tui-commands</div>
+  </div>
+  <div class="card-desc">除錯 Hermes TUI 斜線指令：Python、Gateway、Ink UI</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">71</div>
+    <div class="card-name">hermes-agent-skill-authoring</div>
+  </div>
+  <div class="card-desc">編寫倉庫內 SKILL.md：前言、驗證器、結構</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">72</div>
+    <div class="card-name">node-inspect-debugger</div>
+  </div>
+  <div class="card-desc">Node.js 除錯：--inspect + Chrome DevTools Protocol CLI</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">73</div>
+    <div class="card-name">plan</div>
+  </div>
+  <div class="card-desc">計劃模式：寫 markdown 計劃到 .hermes/plans/，不執行</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">74</div>
+    <div class="card-name">python-debugpy</div>
+  </div>
+  <div class="card-desc">Python 除錯：pdb REPL + debugpy 遠端（DAP）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">75</div>
+    <div class="card-name">requesting-code-review</div>
+  </div>
+  <div class="card-desc">預提交審查：安全掃描、品質閘門、自動修復</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">76</div>
+    <div class="card-name">spike</div>
+  </div>
+  <div class="card-desc">快速驗證實驗：在正式建造前測試想法</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">77</div>
+    <div class="card-name">subagent-driven-development</div>
+  </div>
+  <div class="card-desc">透過 delegate_task 子代理執行計劃（2 階段審查）</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">78</div>
+    <div class="card-name">systematic-debugging</div>
+  </div>
+  <div class="card-desc">四階段根因除錯：修復前先理解 bug</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">79</div>
+    <div class="card-name">test-driven-development</div>
+  </div>
+  <div class="card-desc">TDD：強制紅綠重構，先寫測試再寫程式碼</div>
+</div>
+<div class="card">
+  <span class="category-label cat-software">軟體開發</span>
+  <div class="card-header">
+    <div class="card-number">80</div>
+    <div class="card-name">writing-plans</div>
+  </div>
+  <div class="card-desc">撰寫實作計劃：小步任務、路徑、程式碼</div>
+</div>
+
+<div class="card">
+  <span class="category-label cat-other">元寶</span>
+  <div class="card-header">
+    <div class="card-number">81</div>
+    <div class="card-name">yuanbao</div>
+  </div>
+  <div class="card-desc">騰訊元寶群組：@提及用戶、查詢資訊/成員</div>
+</div>
+
+<div class="tip-box">
+  <strong>📌 金句總結：</strong>你不需要記住全部。只需要記住這句話：<br>
+  「告訴我你想做什麼，我會自動選對工具和技能來幫你完成。」
+</div>
+
+</div>
+
+<footer>
+  <p>生成於 Hermes Agent | <a href="https://hermes-agent.nousresearch.com/docs/" target="_blank">官方文件</a></p>
+  <p style="margin-top: 8px; font-size: 0.8rem;">學習地圖由 AI 為零代碼用戶設計，深入細節請直接對話詢問</p>
+</footer>
+
+</body>
+</html>
