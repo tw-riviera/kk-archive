@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conway's Game of Life</title>
+  <style>
+    /* ===== CSS Reset & Base ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-body: #0B0C10;
+      --bg-gradient-end: #1A1A2E;
+      --canvas-bg: #050505;
+      --cell-alive: #00E5FF;
+      --cell-glow: rgba(0, 229, 255, 0.35);
+      --grid-line: rgba(255, 255, 255, 0.03);
+      --panel-bg: rgba(15, 16, 25, 0.88);
+      --panel-border: rgba(0, 229, 255, 0.12);
+      --text-primary: #E0E0E0;
+      --text-muted: #6B7280;
+      --accent-cyan: #00E5FF;
+      --accent-magenta: #FF4081;
+      --button-bg: rgba(255, 255, 255, 0.08);
+      --button-hover: rgba(0, 229, 255, 0.15);
+      --button-active: rgba(0, 229, 255, 0.25);
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-body) 0%, var(--bg-gradient-end) 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+      position: relative;
+    }
+
+    /* ===== Vignette Overlay ===== */
+    .vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%);
+      z-index: 1;
+    }
+
+    /* ===== Canvas Container ===== */
+    .canvas-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      width: 100%;
+      z-index: 2;
+    }
+
+    canvas {
+      display: block;
+      border-radius: 4px;
+      box-shadow:
+        0 0 40px rgba(0, 229, 255, 0.08),
+        0 0 80px rgba(0, 229, 255, 0.04),
+        inset 0 0 40px rgba(0, 0, 0, 0.5);
+      max-width: 95vw;
+      max-height: calc(100vh - 120px);
+      cursor: crosshair;
+      image-rendering: pixelated;
+    }
+
+    /* ===== Scanlines Overlay ===== */
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+      border-radius: 4px;
+      z-index: 3;
+    }
+
+    /* ===== Control Bar ===== */
+    .control-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-16px);
+      opacity: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 229, 255, 0.05);
+      max-width: 95vw;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: panelIn 500ms cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards;
+    }
+
+    @keyframes panelIn {
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* ===== Buttons ===== */
+    .icon-btn, .ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+    }
+
+    .ctrl-btn {
+      padding: 8px 14px;
+    }
+
+    .icon-btn:hover, .ctrl-btn:hover {
+      background: var(--button-hover);
+      border-color: rgba(0, 229, 255, 0.3);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.1);
+    }
+
+    .icon-btn:active, .ctrl-btn:active {
+      background: var(--button-active);
+      transform: scale(0.95);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+    }
+
+    .ctrl-btn.accent {
+      border-color: rgba(255, 64, 129, 0.3);
+      color: #FFB3C9;
+    }
+
+    .ctrl-btn.accent:hover {
+      background: rgba(255, 64, 129, 0.15);
+      border-color: rgba(255, 64, 129, 0.5);
+      box-shadow: 0 0 12px rgba(255, 64, 129, 0.15);
+    }
+
+    .icon-btn.playing {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: rgba(0, 229, 255, 0.4);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ===== Divider ===== */
+    .divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 2px;
+    }
+
+    /* ===== Speed Control ===== */
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .speed-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+    }
+
+    .speed-value {
+      font-size: 11px;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      min-width: 44px;
+      text-align: right;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+      cursor: pointer;
+      border: none;
+    }
+
+    /* ===== Stats Bar ===== */
+    .stats-bar {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+      display: flex;
+      gap: 16px;
+      padding: 12px 18px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: statsIn 400ms ease-out 350ms forwards;
+    }
+
+    @keyframes statsIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    .stat-value {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      min-width: 56px;
+      transition: color 0.15s ease;
+    }
+
+    .stat-value.flash {
+      color: #FFFFFF;
+    }
+
+    /* ===== Instructions Toast ===== */
+    .instructions {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      padding: 10px 18px;
+      background: rgba(15, 16, 25, 0.92);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      pointer-events: auto;
+      cursor: pointer;
+      opacity: 0;
+      animation: toastIn 300ms ease 800ms forwards, toastOut 300ms ease 6s forwards;
+      white-space: nowrap;
+    }
+
+    @keyframes toastIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes toastOut {
+      to { opacity: 0; pointer-events: none; }
+    }
+
+    /* ===== Canvas Entrance ===== */
+    canvas {
+      opacity: 0;
+      transform: scale(0.96);
+      animation: canvasIn 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes canvasIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vignette -->
+  <div class="vignette"></div>
+
+  <!-- Control Bar -->
+  <div class="control-bar">
+    <button id="playPauseBtn" class="icon-btn" title="Play/Pause (Space)" aria-label="Play or Pause">
+      <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <button id="stepBtn" class="icon-btn" title="Step (S)" aria-label="Step one generation">
+      <svg viewBox="0 0 24 24"><path d="M16 18l2.29-2.29-4.88-4.88-4 4L2 7.41 3.41 6l6 6 4-4 6.3 6.29L22 12v6z" style="display:none"/><path d="M9 18h2V5H9v13zm4 0h2V5h-2v13zM5 11h2v6H5v-6zm12 0h2v6h-2v-6z" style="display:none"/><path d="M4 5v14l11-7z M17 5v14h2V5h-2z"/></svg>
+    </button>
+
+    <div class="divider"></div>
+
+    <button id="randomBtn" class="ctrl-btn" title="Randomize (R)">Random</button>
+    <button id="clearBtn" class="ctrl-btn" title="Clear (C)">Clear</button>
+
+    <div class="divider"></div>
+
+    <div class="speed-control">
+      <span class="speed-label">Speed</span>
+      <input type="range" id="speedSlider" min="0" max="100" value="60">
+      <span class="speed-value" id="speedValue">Normal</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <button id="gliderBtn" class="ctrl-btn accent" title="Add Glider (G)">Add Glider</button>
+    <button id="lwssBtn" class="ctrl-btn accent" title="Add LWSS (L)">Add LWSS</button>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-container">
+    <canvas id="lifeCanvas" width="1200" height="800"></canvas>
+    <div class="scanlines"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-label">Generation</span>
+      <span class="stat-value" id="genCount">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Population</span>
+      <span class="stat-value" id="popCount">0</span>
+    </div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions" id="instructions">
+    Left-click to draw &bull; Right-click to erase &bull; Space to play/pause
+  </div>
+
+  <script>
+    /* ============================================================
+       CONWAY'S GAME OF LIFE
+       ============================================================ */
+
+    // ----- Constants -----
+    const COLS = 150;
+    const ROWS = 100;
+    const CELL_SIZE = 8; // pixels per cell
+    const GAP = 1;       // gap between cells
+    const DRAW_SIZE = CELL_SIZE - GAP;
+    const CANVAS_WIDTH = COLS * CELL_SIZE;
+    const CANVAS_HEIGHT = ROWS * CELL_SIZE;
+
+    // ----- Canvas Setup -----
+    const canvas = document.getElementById('lifeCanvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
+
+    // ----- Grid Arrays (flat Uint8Array for performance) -----
+    let grid = new Uint8Array(COLS * ROWS);
+    let nextGrid = new Uint8Array(COLS * ROWS);
+
+    function idx(r, c) {
+      return r * COLS + c;
+    }
+
+    // ----- State -----
+    let generation = 0;
+    let population = 0;
+    let isPlaying = false;
+    let speed = 60; // 0-100
+    let speedInterval = speedToInterval(speed);
+    let lastTime = 0;
+    let accumulator = 0;
+    let animationId = null;
+
+    // Mouse state
+    let isDrawing = false;
+    let drawTool = 'draw'; // 'draw' or 'erase'
+    let lastMouseCol = -1;
+    let lastMouseRow = -1;
+
+    // Visual effects
+    let ripples = []; // {cx, cy, radius, opacity, startTime}
+    let birthFlash = new Uint8Array(COLS * ROWS); // cells that just born (for flash effect)
+
+    // ----- Speed Mapping -----
+    function speedToInterval(s) {
+      // Map 0-100 to ~2000ms - 0ms
+      if (s >= 100) return 0;
+      return Math.round(2000 * Math.pow(1 - s / 100, 2));
+    }
+
+    function speedToLabel(s) {
+      if (s === 0) return 'Slow';
+      if (s < 30) return 'Slow';
+      if (s < 60) return 'Normal';
+      if (s < 90) return 'Fast';
+      return 'Max';
+    }
+
+    // ----- DOM Elements -----
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const stepBtn = document.getElementById('stepBtn');
+    const randomBtn = document.getElementById('randomBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
+    const gliderBtn = document.getElementById('gliderBtn');
+    const lwssBtn = document.getElementById('lwssBtn');
+    const genCount = document.getElementById('genCount');
+    const popCount = document.getElementById('popCount');
+    const instructions = document.getElementById('instructions');
+
+    // ----- Simulation Logic -----
+    function countNeighbors(r, c) {
+      // Toroidal (wrapping) boundaries
+      let count = 0;
+      const rUp = (r - 1 + ROWS) % ROWS;
+      const rDown = (r + 1) % ROWS;
+      const cLeft = (c - 1 + COLS) % COLS;
+      const cRight = (c + 1) % COLS;
+
+      count += grid[idx(rUp, cLeft)];
+      count += grid[idx(rUp, c)];
+      count += grid[idx(rUp, cRight)];
+      count += grid[idx(r, cLeft)];
+      count += grid[idx(r, cRight)];
+      count += grid[idx(rDown, cLeft)];
+      count += grid[idx(rDown, c)];
+      count += grid[idx(rDown, cRight)];
+
+      return count;
+    }
+
+    function stepSimulation() {
+      let pop = 0;
+      birthFlash.fill(0);
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const i = idx(r, c);
+          const neighbors = countNeighbors(r, c);
+          const alive = grid[i];
+
+          let nextState;
+          if (alive) {
+            nextState = (neighbors === 2 || neighbors === 3) ? 1 : 0;
+          } else {
+            nextState = (neighbors === 3) ? 1 : 0;
+          }
+
+          nextGrid[i] = nextState;
+          if (nextState) pop++;
+          if (!alive && nextState) birthFlash[i] = 1;
+        }
+      }
+
+      // Swap grids
+      const temp = grid;
+      grid = nextGrid;
+      nextGrid = temp;
+
+      generation++;
+      population = pop;
+      updateStats();
+    }
+
+    function randomizeGrid() {
+      let pop = 0;
+      for (let i = 0; i < grid.length; i++) {
+        grid[i] = Math.random() < 0.25 ? 1 : 0;
+        if (grid[i]) pop++;
+      }
+      population = pop;
+      generation = 0;
+      updateStats();
+    }
+
+    function clearGrid() {
+      grid.fill(0);
+      nextGrid.fill(0);
+      birthFlash.fill(0);
+      population = 0;
+      generation = 0;
+      isPlaying = false;
+      updatePlayPauseIcon();
+      updateStats();
+    }
+
+    // ----- Pattern Placement -----
+    function addGlider(startCol, startRow) {
+      // Exact pattern from spec:
+      // grid[startY][startX + 1] = 1;
+      // grid[startY + 1][startX + 2] = 1;
+      // grid[startY + 2][startX] = 1;
+      // grid[startY + 2][startX + 1] = 1;
+      // grid[startY + 2][startX + 2] = 1;
+      const c = startCol;
+      const r = startRow;
+      grid[idx(r, c + 1)] = 1;
+      grid[idx(r + 1, c + 2)] = 1;
+      grid[idx(r + 2, c)] = 1;
+      grid[idx(r + 2, c + 1)] = 1;
+      grid[idx(r + 2, c + 2)] = 1;
+    }
+
+    function addLWSS(startCol, startRow) {
+      // Standard LWSS pattern (5 wide x 4 tall):
+      // ..X..X  -> (0,2), (0,4)
+      // X.....  -> (1,0)
+      // X...X.  -> (2,0), (2,3)
+      // XXXX..  -> (3,0), (3,1), (3,2), (3,3)
+      const c = startCol;
+      const r = startRow;
+      grid[idx(r, c + 2)] = 1;
+      grid[idx(r, c + 4)] = 1;
+      grid[idx(r + 1, c)] = 1;
+      grid[idx(r + 2, c)] = 1;
+      grid[idx(r + 2, c + 3)] = 1;
+      grid[idx(r + 3, c)] = 1;
+      grid[idx(r + 3, c + 1)] = 1;
+      grid[idx(r + 3, c + 2)] = 1;
+      grid[idx(r + 3, c + 3)] = 1;
+    }
+
+    function placeGlider() {
+      const centerCol = Math.floor(COLS / 2) - 1;
+      const centerRow = Math.floor(ROWS / 2) - 1;
+      addGlider(centerCol, centerRow);
+      addRipple(centerCol + 1, centerRow + 1);
+      recountPopulation();
+      updateStats();
+    }
+
+    function placeLWSS() {
+      const centerCol = Math.floor(COLS / 2) - 2;
+      const centerRow = Math.floor(ROWS / 2) - 1;
+      addLWSS(centerCol, centerRow);
+      addRipple(centerCol + 2, centerRow + 2);
+      recountPopulation();
+      updateStats();
+    }
+
+    function recountPopulation() {
+      let pop = 0;
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i]) pop++;
+      }
+      population = pop;
+    }
+
+    // ----- Ripple Effect -----
+    function addRipple(col, row) {
+      ripples.push({
+        cx: col * CELL_SIZE + CELL_SIZE / 2,
+        cy: row * CELL_SIZE + CELL_SIZE / 2,
+        radius: 0,
+        opacity: 0.6,
+        startTime: performance.now()
+      });
+    }
+
+    function updateRipples(dt) {
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += dt * 0.15; // expand speed
+        r.opacity -= dt * 0.0015; // fade speed
+        if (r.opacity <= 0) {
+          ripples.splice(i, 1);
+        }
+      }
+    }
+
+    function drawRipples() {
+      ctx.save();
+      for (const r of ripples) {
+        ctx.beginPath();
+        ctx.arc(r.cx, r.cy, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 229, 255, ${r.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // ----- Rendering -----
+    function render() {
+      // 1. Clear background
+      ctx.fillStyle = '#050505';
+      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+      // 2. Grid lines (subtle)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      for (let c = 0; c <= COLS; c += 5) {
+        const x = c * CELL_SIZE;
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, CANVAS_HEIGHT);
+      }
+      for (let r = 0; r <= ROWS; r += 5) {
+        const y = r * CELL_SIZE;
+        ctx.moveTo(0, y);
+        ctx.lineTo(CANVAS_WIDTH, y);
+      }
+      ctx.stroke();
+
+      // 3. Living cells with glow
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = 'rgba(0, 229, 255, 0.35)';
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const i = idx(r, c);
+          if (grid[i]) {
+            // Flash effect for newly born cells
+            if (birthFlash[i]) {
+              ctx.fillStyle = '#80F5FF';
+              ctx.shadowBlur = 18;
+              ctx.shadowColor = 'rgba(0, 229, 255, 0.6)';
+            } else {
+              ctx.fillStyle = '#00E5FF';
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = 'rgba(0, 229, 255, 0.35)';
+            }
+            ctx.fillRect(
+              c * CELL_SIZE + GAP,
+              r * CELL_SIZE + GAP,
+              DRAW_SIZE,
+              DRAW_SIZE
+            );
+          }
+        }
+      }
+
+      // Reset shadow
+      ctx.shadowBlur = 0;
+
+      // 4. Cursor highlight
+      if (lastMouseCol >= 0 && lastMouseCol < COLS && lastMouseRow >= 0 && lastMouseRow < ROWS) {
+        ctx.strokeStyle = 'rgba(0, 229, 255, 0.5)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(
+          lastMouseCol * CELL_SIZE + 0.5,
+          lastMouseRow * CELL_SIZE + 0.5,
+          CELL_SIZE - 1,
+          CELL_SIZE - 1
+        );
+      }
+
+      // 5. Ripples
+      drawRipples();
+    }
+
+    // ----- Stats Update -----
+    function updateStats() {
+      const oldGen = genCount.textContent;
+      const oldPop = popCount.textContent;
+      const newGen = generation.toLocaleString();
+      const newPop = population.toLocaleString();
+
+      genCount.textContent = newGen;
+      popCount.textContent = newPop;
+
+      // Flash effect on change
+      if (oldGen !== newGen) flashElement(genCount);
+      if (oldPop !== newPop) flashElement(popCount);
+    }
+
+    function flashElement(el) {
+      el.classList.add('flash');
+      setTimeout(() => el.classList.remove('flash'), 150);
+    }
+
+    function updatePlayPauseIcon() {
+      if (isPlaying) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        playPauseBtn.classList.add('playing');
+      } else {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        playPauseBtn.classList.remove('playing');
+      }
+    }
+
+    // ----- Animation Loop -----
+    function loop(timestamp) {
+      const dt = timestamp - lastTime;
+      lastTime = timestamp;
+
+      if (isPlaying) {
+        if (speedInterval <= 0) {
+          // Max speed: one gen per frame
+          stepSimulation();
+        } else {
+          accumulator += dt;
+          while (accumulator >= speedInterval) {
+            stepSimulation();
+            accumulator -= speedInterval;
+          }
+        }
+      }
+
+      updateRipples(dt);
+      render();
+      animationId = requestAnimationFrame(loop);
+    }
+
+    // ----- Mouse Interaction -----
+    function getGridCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+      const col = Math.floor(x / CELL_SIZE);
+      const row = Math.floor(y / CELL_SIZE);
+      return { col, row };
+    }
+
+    function applyTool(col, row) {
+      if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return;
+      const i = idx(row, col);
+      if (drawTool === 'draw') {
+        if (!grid[i]) {
+          grid[i] = 1;
+          population++;
+        }
+      } else {
+        if (grid[i]) {
+          grid[i] = 0;
+          population--;
+        }
+      }
+      updateStats();
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const { col, row } = getGridCoords(e);
+      isDrawing = true;
+      drawTool = (e.button === 2 || e.shiftKey) ? 'erase' : 'draw';
+      applyTool(col, row);
+      lastMouseCol = col;
+      lastMouseRow = row;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const { col, row } = getGridCoords(e);
+      lastMouseCol = col;
+      lastMouseRow = row;
+
+      if (isDrawing) {
+        applyTool(col, row);
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      isDrawing = false;
+      lastMouseCol = -1;
+      lastMouseRow = -1;
+    });
+
+    canvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    // Touch support
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const { col, row } = getGridCoords(touch);
+      isDrawing = true;
+      drawTool = 'draw';
+      applyTool(col, row);
+      lastMouseCol = col;
+      lastMouseRow = row;
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const { col, row } = getGridCoords(touch);
+      lastMouseCol = col;
+      lastMouseRow = row;
+      if (isDrawing) applyTool(col, row);
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => {
+      isDrawing = false;
+    });
+
+    // ----- Control Event Listeners -----
+    playPauseBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      updatePlayPauseIcon();
+    });
+
+    stepBtn.addEventListener('click', () => {
+      const wasPlaying = isPlaying;
+      isPlaying = false;
+      updatePlayPauseIcon();
+      stepSimulation();
+      if (wasPlaying) {
+        isPlaying = true;
+        updatePlayPauseIcon();
+      }
+    });
+
+    randomBtn.addEventListener('click', () => {
+      randomizeGrid();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      clearGrid();
+    });
+
+    speedSlider.addEventListener('input', (e) => {
+      speed = parseInt(e.target.value);
+      speedInterval = speedToInterval(speed);
+      speedValue.textContent = speedToLabel(speed);
+    });
+
+    gliderBtn.addEventListener('click', () => {
+      placeGlider();
+    });
+
+    lwssBtn.addEventListener('click', () => {
+      placeLWSS();
+    });
+
+    // Dismiss instructions
+    instructions.addEventListener('click', () => {
+      instructions.style.display = 'none';
+    });
+
+    // ----- Keyboard Shortcuts -----
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+
+      switch (e.code) {
+        case 'Space':
+          e.preventDefault();
+          isPlaying = !isPlaying;
+          updatePlayPauseIcon();
+          break;
+        case 'KeyS':
+          e.preventDefault();
+          stepSimulation();
+          break;
+        case 'KeyR':
+          e.preventDefault();
+          randomizeGrid();
+          break;
+        case 'KeyC':
+          e.preventDefault();
+          clearGrid();
+          break;
+        case 'KeyG':
+          e.preventDefault();
+          placeGlider();
+          break;
+        case 'KeyL':
+          e.preventDefault();
+          placeLWSS();
+          break;
+      }
+    });
+
+    // ----- Initialize -----
+    randomizeGrid();
+    updatePlayPauseIcon();
+    speedValue.textContent = speedToLabel(speed);
+    lastTime = performance.now();
+    animationId = requestAnimationFrame(loop);
+  </script>
+
+</body>
+</html>

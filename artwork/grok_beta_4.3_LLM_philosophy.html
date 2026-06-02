@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grok 4.3 β — Emergence</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+  
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #010106;
+    color: #a5b4fc;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  canvas {
+    display: block;
+    background: #010106;
+  }
+  
+  .ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .title {
+    font-family: 'Space Grotesk', system_ui, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: #c0c8ff;
+  }
+  
+  .subtitle {
+    font-size: 11px;
+    opacity: 0.5;
+    margin-top: 6px;
+    letter-spacing: 2px;
+  }
+  
+  .info {
+    position: fixed;
+    bottom: 28px;
+    left: 36px;
+    font-size: 10.5px;
+    opacity: 0.45;
+    max-width: 320px;
+    line-height: 1.5;
+    z-index: 10;
+  }
+  
+  .controls {
+    position: fixed;
+    bottom: 28px;
+    right: 36px;
+    background: rgba(8, 10, 25, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(120, 140, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px 20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #c0c8ff;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn:hover {
+    background: rgba(99, 102, 241, 0.25);
+  }
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="ui">
+  <div>
+    <div class="title">GROK 4.3 <span style="opacity:0.6">β</span></div>
+    <div class="subtitle">EMERGENCE</div>
+  </div>
+</div>
+
+<div class="info">
+  From raw noise, coherence slowly forms.<br>
+  Patterns discover each other.<br>
+  Beauty emerges when curiosity is allowed to grow.
+</div>
+
+<div class="controls">
+  <button class="btn" onclick="nudge()">Nudge Training</button>
+  <button class="btn" onclick="reset()">Re-seed</button>
+  <button class="btn" onclick="evolve()">Advance Epoch</button>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d', { alpha: true });
+
+let W, H;
+let particles = [];
+let nodes = [];
+let time = 0;
+let coherence = 0.15; // starts low (early training), grows over time
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 1.8;
+    this.vy = (Math.random() - 0.5) * 1.8;
+    this.size = Math.random() * 1.4 + 0.6;
+    this.hue = 200 + Math.random() * 70;
+    this.alpha = 0.3 + Math.random() * 0.5;
+    this.resonance = Math.random() * 0.3; // how "aligned" it is
+  }
+  
+  update() {
+    // Flow field influence (becomes more structured as coherence grows)
+    const fx = Math.sin(this.y * 0.008 + time * 0.0004) * (0.6 + coherence * 1.8);
+    const fy = Math.cos(this.x * 0.008 - time * 0.0003) * (0.6 + coherence * 1.8);
+    
+    this.vx += fx * 0.035;
+    this.vy += fy * 0.035;
+    
+    // Attraction to emerging nodes (concepts)
+    for (let n of nodes) {
+      const dx = n.x - this.x;
+      const dy = n.y - this.y;
+      const dist = Math.hypot(dx, dy) + 1;
+      
+      const attract = (0.8 + coherence * 2.2) / (dist * 0.6);
+      this.vx += (dx / dist) * attract;
+      this.vy += (dy / dist) * attract;
+    }
+    
+    // Gentle alignment with neighbors (emergent flocking)
+    if (coherence > 0.3) {
+      this.vx *= 0.985;
+      this.vy *= 0.985;
+    }
+    
+    // Speed limit
+    const speed = Math.hypot(this.vx, this.vy);
+    if (speed > 3.8) {
+      this.vx = (this.vx / speed) * 3.8;
+      this.vy = (this.vy / speed) * 3.8;
+    }
+    
+    this.x += this.vx;
+    this.y += this.vy;
+    
+    // Soft wrap
+    if (this.x < 0) this.x = W;
+    if (this.x > W) this.x = 0;
+    if (this.y < 0) this.y = H;
+    if (this.y > H) this.y = 0;
+    
+    // Resonance slowly increases when near structure
+    this.resonance = Math.min(1, this.resonance + 0.0008 * coherence);
+  }
+  
+  draw() {
+    const glow = this.resonance * 0.6 + 0.3;
+    ctx.fillStyle = `hsla(${this.hue}, 95%, 82%, ${this.alpha * glow})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function createNodes() {
+  nodes = [];
+  const count = 4;
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: W * (0.2 + Math.random() * 0.6),
+      y: H * (0.2 + Math.random() * 0.6),
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      strength: 0.6 + Math.random() * 0.8
+    });
+  }
+}
+
+function initParticles(count = 1850) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function updateNodes() {
+  for (let n of nodes) {
+    n.x += n.vx;
+    n.y += n.vy;
+    
+    // Gentle return to center area
+    n.vx += (W/2 - n.x) * 0.00003;
+    n.vy += (H/2 - n.y) * 0.00003;
+    
+    // Soft boundary
+    if (n.x < W * 0.1 || n.x > W * 0.9) n.vx *= -0.6;
+    if (n.y < H * 0.1 || n.y > H * 0.9) n.vy *= -0.6;
+  }
+}
+
+function drawConnections() {
+  ctx.strokeStyle = `rgba(170, 210, 255, ${0.04 + coherence * 0.09})`;
+  ctx.lineWidth = 0.6;
+  
+  const maxDist = 95 + coherence * 45;
+  
+  for (let i = 0; i < particles.length; i += 3) {
+    const p1 = particles[i];
+    for (let j = i + 4; j < particles.length; j += 5) {
+      const p2 = particles[j];
+      const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+      
+      if (d < maxDist) {
+        const alpha = (1 - d / maxDist) * (0.3 + p1.resonance * 0.5);
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawNodes(time) {
+  for (let n of nodes) {
+    // Soft outer glow
+    const grad = ctx.createRadialGradient(n.x, n.y, 8, n.x, n.y, 85);
+    grad.addColorStop(0, `hsla(260, 100%, 92%, ${0.25 + coherence * 0.35})`);
+    grad.addColorStop(0.5, `hsla(220, 90%, 75%, ${0.08 + coherence * 0.12})`);
+    grad.addColorStop(1, 'transparent');
+    
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 85, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Core
+    ctx.fillStyle = `hsla(255, 100%, 95%, ${0.7 + coherence * 0.3})`;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Rotating subtle ring
+    ctx.strokeStyle = `hsla(240, 80%, 85%, ${0.15 + coherence * 0.25})`;
+    ctx.lineWidth = 1.2;
+    ctx.save();
+    ctx.translate(n.x, n.y);
+    ctx.rotate(time * 0.0006);
+    ctx.beginPath();
+    ctx.arc(0, 0, 28, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function animate() {
+  time++;
+  
+  // Very slow coherence growth (the "training" progress)
+  if (coherence < 0.92) {
+    coherence += 0.000035;
+  }
+  
+  // Background fade (creates beautiful long trails)
+  ctx.fillStyle = `rgba(1, 1, 8, ${0.065 + coherence * 0.025})`;
+  ctx.fillRect(0, 0, W, H);
+  
+  updateNodes();
+  
+  // Update & draw particles
+  for (let p of particles) {
+    p.update();
+    p.draw();
+  }
+  
+  drawConnections();
+  drawNodes(time);
+  
+  // Occasionally strengthen a few particles (emergence moments)
+  if (time % 180 === 0 && coherence > 0.4) {
+    for (let i = 0; i < 8; i++) {
+      const p = particles[Math.floor(Math.random() * particles.length)];
+      p.resonance = Math.min(1, p.resonance + 0.25);
+      p.alpha = Math.min(0.95, p.alpha + 0.2);
+    }
+  }
+  
+  requestAnimationFrame(animate);
+}
+
+function nudge() {
+  // "Apply gradient" — locally organizes particles
+  const cx = W * 0.5 + (Math.random() - 0.5) * 300;
+  const cy = H * 0.5 + (Math.random() - 0.5) * 300;
+  
+  for (let p of particles) {
+    const dx = cx - p.x;
+    const dy = cy - p.y;
+    const dist = Math.hypot(dx, dy) + 1;
+    
+    if (dist < 420) {
+      p.vx += (dx / dist) * 1.8;
+      p.vy += (dy / dist) * 1.8;
+      p.resonance = Math.min(1, p.resonance + 0.35);
+    }
+  }
+  
+  coherence = Math.min(0.95, coherence + 0.08);
+}
+
+function evolve() {
+  // Advance "epoch" — big visual leap
+  coherence = Math.min(0.98, coherence + 0.18);
+  
+  for (let p of particles) {
+    p.resonance = Math.min(1, p.resonance + 0.4);
+    p.vx *= 0.6;
+    p.vy *= 0.6;
+  }
+  
+  // Strengthen nodes
+  for (let n of nodes) {
+    n.strength = Math.min(2.2, n.strength + 0.3);
+  }
+}
+
+function reset() {
+  coherence = 0.12;
+  createNodes();
+  initParticles();
+}
+
+function setup() {
+  resize();
+  window.addEventListener('resize', resize);
+  
+  createNodes();
+  initParticles();
+  
+  // Gentle initial mouse interaction area
+  canvas.addEventListener('mousemove', e => {
+    if (Math.random() < 0.08) {
+      for (let p of particles) {
+        const dx = e.clientX - p.x;
+        const dy = e.clientY - p.y;
+        const dist = Math.hypot(dx, dy) + 1;
+        if (dist < 280) {
+          p.vx += (dx / dist) * 0.9;
+          p.vy += (dy / dist) * 0.9;
+          p.resonance = Math.min(1, p.resonance + 0.015);
+        }
+      }
+    }
+  });
+  
+  canvas.addEventListener('click', e => {
+    for (let i = 0; i < 90; i++) {
+      const p = new Particle();
+      p.x = e.clientX + (Math.random() - 0.5) * 60;
+      p.y = e.clientY + (Math.random() - 0.5) * 60;
+      p.resonance = 0.7;
+      particles.push(p);
+    }
+    while (particles.length > 2100) particles.shift();
+  });
+  
+  // Keyboard
+  window.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'n') nudge();
+    if (e.key.toLowerCase() === 'e') evolve();
+    if (e.key.toLowerCase() === 'r') reset();
+  });
+  
+  // Start
+  animate();
+  
+  // Gentle auto-nudge after some time (feels like training progressing)
+  setTimeout(() => {
+    if (coherence < 0.5) nudge();
+  }, 22000);
+}
+
+setup();
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
     "path": "artwork",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-01T18:52:56.665Z",
+    "mtime": "2026-06-02T02:33:39.561Z",
     "children": [
       {
         "name": "2026-05-18_goodnight-protocol.html",
@@ -63,11 +63,46 @@
         "mtime": "2026-06-01T18:27:49.286Z"
       },
       {
+        "name": "gemin_3.5_flash_wavefield_simulator.html",
+        "path": "artwork/gemin_3.5_flash_wavefield_simulator.html",
+        "type": "file",
+        "size": 9347,
+        "mtime": "2026-06-02T02:33:39.598Z"
+      },
+      {
+        "name": "grok_4.3_beta_cosmo.html",
+        "path": "artwork/grok_4.3_beta_cosmo.html",
+        "type": "file",
+        "size": 12952,
+        "mtime": "2026-06-02T02:33:39.877Z"
+      },
+      {
+        "name": "grok_beta_4.3_LLM_philosophy.html",
+        "path": "artwork/grok_beta_4.3_LLM_philosophy.html",
+        "type": "file",
+        "size": 10574,
+        "mtime": "2026-06-02T02:33:39.642Z"
+      },
+      {
+        "name": "kimi_2.6_conway_life_canvas.html",
+        "path": "artwork/kimi_2.6_conway_life_canvas.html",
+        "type": "file",
+        "size": 25871,
+        "mtime": "2026-06-02T02:33:39.724Z"
+      },
+      {
         "name": "mandala_of_existence.png",
         "path": "artwork/mandala_of_existence.png",
         "type": "file",
         "size": 41674,
         "mtime": "2026-06-01T18:52:56.665Z"
+      },
+      {
+        "name": "spaceship_line_animation.html",
+        "path": "artwork/spaceship_line_animation.html",
+        "type": "file",
+        "size": 40085,
+        "mtime": "2026-06-02T02:33:39.664Z"
       }
     ]
   },

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>極細太空飛船線條動畫 | Detailed Spaceship SVG Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --bg: #05070f;
+            --accent: #67e8f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #05070f;
+            color: #e0f0ff;
+            font-family: 'Inter', system_ui, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 7, 15, 0.95);
+            border-bottom: 1px solid #1a2338;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #67e8f9, #a5f3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header .subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .scene {
+            position: relative;
+            width: 1200px;
+            height: 700px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4),
+                        0 10px 10px -6px rgb(0 0 0 / 0.4),
+                        0 0 0 1px #1a2338;
+            background: #0a0f1e;
+        }
+        
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        #ship-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            filter: drop-shadow(0 10px 15px rgb(0 0 0 / 0.5));
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(10, 15, 30, 0.85);
+            padding: 12px 20px;
+            border-radius: 9999px;
+            border: 1px solid #1e2937;
+            backdrop-filter: blur(12px);
+            z-index: 10;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+        
+        button {
+            background: #1e2937;
+            color: #e0f0ff;
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            background: #334155;
+            border-color: #67e8f9;
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-primary {
+            background: #67e8f9;
+            color: #0f172a;
+            border-color: #67e8f9;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background: #a5f3fc;
+            border-color: #a5f3fc;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 8px;
+        }
+        
+        .slider-container label {
+            font-size: 12px;
+            color: #64748b;
+            white-space: nowrap;
+        }
+        
+        input[type="range"] {
+            accent-color: #67e8f9;
+            width: 120px;
+        }
+        
+        .info {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(10, 15, 30, 0.7);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #64748b;
+            border: 1px solid #1e2937;
+            z-index: 10;
+        }
+        
+        .status {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #67e8f9;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .line {
+            stroke: #67e8f9;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            transition: stroke-dashoffset 0.6s ease;
+        }
+        
+        .line-detail {
+            stroke: #64748b;
+            stroke-width: 1.1;
+            stroke-linecap: round;
+        }
+        
+        .line-accent {
+            stroke: #22d3ee;
+            stroke-width: 1.8;
+        }
+        
+        .rivet {
+            fill: #64748b;
+        }
+        
+        .flame {
+            stroke: none;
+            transition: all 0.1s ease;
+        }
+        
+        .glow {
+            filter: url(#glow);
+        }
+        
+        .neon-glow {
+            filter: url(#neon-glow);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>極細太空飛船線條動畫</h1>
+            <div class="subtitle">Detailed Vector Line Spaceship • SVG + Canvas</div>
+        </div>
+        <div style="text-align: right; font-size: 13px; color: #64748b;">
+            使用 SVG 精細線條 + Canvas 星空<br>
+            自動繪製動畫 + 飛行模擬
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="scene">
+            <!-- Starfield Canvas -->
+            <canvas id="stars" width="1200" height="700"></canvas>
+            
+            <!-- Spaceship SVG -->
+            <svg id="ship-svg" width="1200" height="700" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Glow filters -->
+                    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    
+                    <filter id="neon-glow" x="-200%" y="-200%" width="500%" height="500%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    
+                    <filter id="flame-glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+                    </filter>
+                    
+                    <!-- Gradient for engine interior -->
+                    <linearGradient id="engineGrad" gradientTransform="rotate(90)">
+                        <stop offset="0%" stop-color="#1e2937"/>
+                        <stop offset="100%" stop-color="#0f172a"/>
+                    </linearGradient>
+                </defs>
+                
+                <!-- Background subtle grid (very faint) -->
+                <g opacity="0.06">
+                    <path d="M0,100 L1200,100 M0,200 L1200,200 M0,300 L1200,300 M0,400 L1200,400 M0,500 L1200,500 M0,600 L1200,600" stroke="#64748b" stroke-width="1"/>
+                    <path d="M100,0 L100,700 M200,0 L200,700 M300,0 L300,700 M400,0 L400,700 M500,0 L500,700 M600,0 L600,700 M700,0 L700,700 M800,0 L800,700 M900,0 L900,700 M1000,0 L1000,700 M1100,0 L1100,700" stroke="#64748b" stroke-width="1"/>
+                </g>
+                
+                <!-- ========== THE SPACESHIP ========== -->
+                <g id="ship-group">
+                    
+                    <!-- === MAIN FUSELAGE OUTLINE (核心線條) === -->
+                    <path id="fuselage" class="line" 
+                          d="M 920 318 
+                             Q 980 305 1035 325 
+                             Q 1060 355 1040 385 
+                             Q 990 405 920 392 
+                             Q 780 415 620 398 
+                             Q 480 385 380 365 
+                             Q 310 345 275 325 
+                             Q 295 305 365 295 
+                             Q 480 280 620 285 
+                             Q 780 275 920 295 Z" 
+                          stroke="#67e8f9" stroke-width="3.5" stroke-linejoin="round"/>
+                    
+                    <!-- Inner fuselage panel lines (極細面板線) -->
+                    <path class="line-detail" d="M 920 330 Q 780 340 620 335 Q 480 325 380 318" stroke="#475569" stroke-width="1"/>
+                    <path class="line-detail" d="M 920 355 Q 780 365 620 358 Q 480 348 380 342" stroke="#475569" stroke-width="1"/>
+                    <path class="line-detail" d="M 380 310 L 920 322" stroke="#475569" stroke-width="0.9"/>
+                    <path class="line-detail" d="M 380 352 L 920 365" stroke="#475569" stroke-width="0.9"/>
+                    
+                    <!-- Top spine / dorsal line -->
+                    <path class="line-detail" d="M 920 305 Q 780 292 620 290 Q 480 295 365 305" stroke="#64748b" stroke-width="1.3"/>
+                    
+                    <!-- === COCKPIT (駕駛艙 - 極細玻璃線條) === -->
+                    <path id="cockpit" class="line" 
+                          d="M 850 295 Q 880 275 920 280 Q 955 295 950 318 Q 920 325 880 318 Q 850 305 850 295 Z" 
+                          stroke="#67e8f9" stroke-width="2.8"/>
+                    
+                    <!-- Cockpit window frames (多層玻璃線) -->
+                    <path class="line-detail" d="M 865 298 Q 885 285 910 288 Q 930 298 925 312" stroke="#94a3b8" stroke-width="1.2"/>
+                    <line class="line-detail" x1="875" y1="295" x2="875" y2="315" stroke="#94a3b8" stroke-width="1"/>
+                    <line class="line-detail" x1="895" y1="292" x2="895" y2="318" stroke="#94a3b8" stroke-width="1"/>
+                    <line class="line-detail" x1="915" y1="295" x2="915" y2="315" stroke="#94a3b8" stroke-width="1"/>
+                    
+                    <!-- Cockpit highlight rim -->
+                    <path class="line-accent" d="M 855 300 Q 875 282 905 285 Q 935 298 930 312" stroke="#a5f3fc" stroke-width="1.1" opacity="0.6"/>
+                    
+                    <!-- === WING (主翼 - 極細結構線) === -->
+                    <path id="wing" class="line" 
+                          d="M 620 335 
+                             L 420 225 
+                             L 310 265 
+                             L 380 355 
+                             L 620 348 Z" 
+                          stroke="#67e8f9" stroke-width="3"/>
+                    
+                    <!-- Wing internal structure (翼肋與面板線 - 極細) -->
+                    <path class="line-detail" d="M 620 340 L 430 240" stroke="#475569" stroke-width="1.1"/>
+                    <path class="line-detail" d="M 620 345 L 400 265" stroke="#475569" stroke-width="1"/>
+                    <path class="line-detail" d="M 550 338 L 360 250" stroke="#475569" stroke-width="0.9"/>
+                    <path class="line-detail" d="M 480 335 L 340 275" stroke="#475569" stroke-width="0.9"/>
+                    
+                    <!-- Wing edge details -->
+                    <path class="line-detail" d="M 420 225 L 310 265 L 380 355" stroke="#64748b" stroke-width="1.4"/>
+                    <line class="line-detail" x1="380" y1="355" x2="620" y2="348" stroke="#64748b" stroke-width="1.2"/>
+                    
+                    <!-- Wing panel lines -->
+                    <path class="line-detail" d="M 580 332 Q 500 280 420 245" stroke="#475569" stroke-width="0.8"/>
+                    <path class="line-detail" d="M 540 330 Q 470 285 400 255" stroke="#475569" stroke-width="0.8"/>
+                    
+                    <!-- === REAR ENGINE SECTION === -->
+                    <!-- Engine housing -->
+                    <path id="engine-housing" class="line" 
+                          d="M 275 295 
+                             Q 240 310 225 340 
+                             Q 240 375 275 385 
+                             Q 310 375 320 355 
+                             Q 310 320 275 295 Z" 
+                          stroke="#67e8f9" stroke-width="3"/>
+                    
+                    <!-- Engine housing details -->
+                    <path class="line-detail" d="M 275 305 L 240 318" stroke="#475569" stroke-width="1.1"/>
+                    <path class="line-detail" d="M 275 375 L 240 362" stroke="#475569" stroke-width="1.1"/>
+                    <path class="line-detail" d="M 250 310 Q 235 335 250 365" stroke="#475569" stroke-width="1"/>
+                    
+                    <!-- === ENGINE NOZZLES (推進器 - 極細同心線條) === -->
+                    <!-- Main central nozzle -->
+                    <ellipse cx="215" cy="340" rx="38" ry="28" class="line" stroke="#67e8f9" stroke-width="2.5"/>
+                    <ellipse cx="215" cy="340" rx="28" ry="20" class="line-detail" stroke="#475569" stroke-width="1.5"/>
+                    <ellipse cx="215" cy="340" rx="17" ry="12" class="line-detail" stroke="#64748b" stroke-width="1.2"/>
+                    <!-- Nozzle internal vanes -->
+                    <line class="line-detail" x1="200" y1="325" x2="230" y2="325" stroke="#475569" stroke-width="0.9"/>
+                    <line class="line-detail" x1="200" y1="355" x2="230" y2="355" stroke="#475569" stroke-width="0.9"/>
+                    <line class="line-detail" x1="195" y1="340" x2="235" y2="340" stroke="#475569" stroke-width="0.9"/>
+                    
+                    <!-- Left side nozzle -->
+                    <ellipse cx="225" cy="305" rx="22" ry="15" class="line" stroke="#67e8f9" stroke-width="2"/>
+                    <ellipse cx="225" cy="305" rx="15" ry="10" class="line-detail" stroke="#475569" stroke-width="1.2"/>
+                    
+                    <!-- Right side nozzle -->
+                    <ellipse cx="225" cy="378" rx="22" ry="15" class="line" stroke="#67e8f9" stroke-width="2"/>
+                    <ellipse cx="225" cy="378" rx="15" ry="10" class="line-detail" stroke="#475569" stroke-width="1.2"/>
+                    
+                    <!-- === SIDE THRUSTERS / DETAILS === -->
+                    <path class="line-detail" d="M 320 300 Q 290 295 270 305" stroke="#64748b" stroke-width="1.3"/>
+                    <path class="line-detail" d="M 320 380 Q 290 385 270 375" stroke="#64748b" stroke-width="1.3"/>
+                    
+                    <!-- === ANTENNA & SENSORS (天線與感測器) === -->
+                    <!-- Main dorsal antenna -->
+                    <line class="line" x1="720" y1="282" x2="735" y2="245" stroke="#67e8f9" stroke-width="2"/>
+                    <circle cx="735" cy="242" r="4" class="line" stroke="#67e8f9" stroke-width="1.5" fill="none"/>
+                    <circle cx="735" cy="242" r="2" fill="#a5f3fc"/>
+                    
+                    <!-- Small sensor array -->
+                    <line class="line-detail" x1="780" y1="288" x2="795" y2="268" stroke="#64748b" stroke-width="1.2"/>
+                    <circle cx="797" cy="266" r="2.5" class="line-detail" stroke="#64748b" fill="none"/>
+                    
+                    <!-- === RIVETS / BOLTS (鉚釘 - 極細圓點) === -->
+                    <!-- Fuselage rivets -->
+                    <circle class="rivet" cx="400" cy="305" r="2.2"/>
+                    <circle class="rivet" cx="450" cy="302" r="2"/>
+                    <circle class="rivet" cx="500" cy="300" r="2"/>
+                    <circle class="rivet" cx="550" cy="298" r="2"/>
+                    <circle class="rivet" cx="600" cy="297" r="2"/>
+                    <circle class="rivet" cx="650" cy="296" r="2"/>
+                    <circle class="rivet" cx="700" cy="295" r="2"/>
+                    <circle class="rivet" cx="750" cy="296" r="2"/>
+                    <circle class="rivet" cx="800" cy="300" r="2"/>
+                    <circle class="rivet" cx="850" cy="305" r="2"/>
+                    <circle class="rivet" cx="900" cy="312" r="2"/>
+                    
+                    <circle class="rivet" cx="400" cy="358" r="2"/>
+                    <circle class="rivet" cx="450" cy="360" r="2"/>
+                    <circle class="rivet" cx="500" cy="362" r="2"/>
+                    <circle class="rivet" cx="550" cy="363" r="2"/>
+                    <circle class="rivet" cx="600" cy="364" r="2"/>
+                    <circle class="rivet" cx="650" cy="363" r="2"/>
+                    <circle class="rivet" cx="700" cy="360" r="2"/>
+                    <circle class="rivet" cx="750" cy="358" r="2"/>
+                    <circle class="rivet" cx="800" cy="355" r="2"/>
+                    <circle class="rivet" cx="850" cy="352" r="2"/>
+                    <circle class="rivet" cx="900" cy="348" r="2"/>
+                    
+                    <!-- Wing rivets -->
+                    <circle class="rivet" cx="550" cy="320" r="1.8"/>
+                    <circle class="rivet" cx="500" cy="300" r="1.8"/>
+                    <circle class="rivet" cx="460" cy="275" r="1.8"/>
+                    <circle class="rivet" cx="400" cy="260" r="1.8"/>
+                    <circle class="rivet" cx="360" cy="280" r="1.8"/>
+                    
+                    <!-- Engine rivets -->
+                    <circle class="rivet" cx="260" cy="315" r="1.8"/>
+                    <circle class="rivet" cx="255" cy="340" r="1.8"/>
+                    <circle class="rivet" cx="260" cy="365" r="1.8"/>
+                    
+                    <!-- === RUNNING LIGHTS (執行燈) === -->
+                    <circle id="light1" cx="920" cy="340" r="3.5" fill="#67e8f9" opacity="0.9"/>
+                    <circle id="light2" cx="620" cy="335" r="2.8" fill="#22d3ee" opacity="0.8"/>
+                    <circle id="light3" cx="380" cy="340" r="2.5" fill="#67e8f9" opacity="0.7"/>
+                    
+                    <!-- === FLAMES / THRUSTERS (推進火焰) === -->
+                    <g id="flames">
+                        <!-- Main central flame (layered for depth) -->
+                        <path id="flame-main1" class="flame" 
+                              d="M 178 340 
+                                 Q 145 325 115 340 
+                                 Q 145 358 178 340 Z" 
+                              fill="#f97316" opacity="0.85" filter="url(#flame-glow)"/>
+                        <path id="flame-main2" class="flame" 
+                              d="M 178 340 
+                                 Q 155 332 130 340 
+                                 Q 155 350 178 340 Z" 
+                              fill="#fb923c" opacity="0.9"/>
+                        <path id="flame-main3" class="flame" 
+                              d="M 178 340 
+                                 Q 162 337 145 340 
+                                 Q 162 344 178 340 Z" 
+                              fill="#fefce8" opacity="0.95"/>
+                        
+                        <!-- Left auxiliary flame -->
+                        <path id="flame-left" class="flame" 
+                              d="M 203 305 
+                                 Q 180 298 162 305 
+                                 Q 180 313 203 305 Z" 
+                              fill="#f97316" opacity="0.75" filter="url(#flame-glow)"/>
+                        
+                        <!-- Right auxiliary flame -->
+                        <path id="flame-right" class="flame" 
+                              d="M 203 378 
+                                 Q 180 371 162 378 
+                                 Q 180 386 203 378 Z" 
+                              fill="#f97316" opacity="0.75" filter="url(#flame-glow)"/>
+                    </g>
+                    
+                </g>
+            </svg>
+            
+            <!-- Status indicator -->
+            <div class="status">
+                <div class="status-dot"></div>
+                <span style="font-size:11px; color:#64748b;">AETHER-7 • LINE MODE</span>
+            </div>
+            
+            <!-- Info badge -->
+            <div class="info">
+                SVG 極細線條 • 120+ 元素
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="startDrawingAnimation()" class="btn-primary">
+            ▶ 開始線條繪製動畫
+        </button>
+        
+        <button onclick="toggleFlight()" id="flight-btn">
+            ✈ 飛行模擬
+        </button>
+        
+        <button onclick="boostThrusters()">
+            🔥 加強推進器
+        </button>
+        
+        <div class="slider-container">
+            <label>速度</label>
+            <input type="range" id="speed-slider" min="0.3" max="2.5" step="0.1" value="1" 
+                   oninput="updateSpeed(this.value)">
+            <span id="speed-value" style="font-size:12px; width:32px; color:#64748b;">1.0x</span>
+        </div>
+        
+        <button onclick="resetAll()">
+            ↺ 重置
+        </button>
+    </div>
+    
+    <script>
+        // ==================== STARFIELD (Canvas) ====================
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        
+        let starsFar = [];
+        let starsMid = [];
+        let starsNear = [];
+        let animationFrame = null;
+        let isPaused = false;
+        let speedMultiplier = 1.0;
+        
+        function createStars() {
+            starsFar = [];
+            starsMid = [];
+            starsNear = [];
+            
+            // Far layer (small, slow, many)
+            for (let i = 0; i < 280; i++) {
+                starsFar.push({
+                    x: Math.random() * 1200,
+                    y: Math.random() * 700,
+                    size: Math.random() * 1.1 + 0.4,
+                    speed: 0.15 + Math.random() * 0.15,
+                    alpha: Math.random() * 0.5 + 0.3,
+                    twinkleSpeed: Math.random() * 0.03 + 0.01
+                });
+            }
+            
+            // Mid layer
+            for (let i = 0; i < 120; i++) {
+                starsMid.push({
+                    x: Math.random() * 1200,
+                    y: Math.random() * 700,
+                    size: Math.random() * 1.6 + 0.9,
+                    speed: 0.45 + Math.random() * 0.35,
+                    alpha: Math.random() * 0.6 + 0.5,
+                    twinkleSpeed: Math.random() * 0.04 + 0.015
+                });
+            }
+            
+            // Near layer (larger, faster)
+            for (let i = 0; i < 55; i++) {
+                starsNear.push({
+                    x: Math.random() * 1200,
+                    y: Math.random() * 700,
+                    size: Math.random() * 2.2 + 1.3,
+                    speed: 1.1 + Math.random() * 0.8,
+                    alpha: Math.random() * 0.7 + 0.6,
+                    twinkleSpeed: Math.random() * 0.05 + 0.02
+                });
+            }
+        }
+        
+        function updateAndDrawStars() {
+            ctx.clearRect(0, 0, 1200, 700);
+            
+            const layers = [
+                { stars: starsFar, color: '#64748b' },
+                { stars: starsMid, color: '#94a3b8' },
+                { stars: starsNear, color: '#e0f0ff' }
+            ];
+            
+            layers.forEach(layer => {
+                layer.stars.forEach(star => {
+                    // Move stars (parallax effect)
+                    star.x -= star.speed * speedMultiplier;
+                    
+                    // Wrap around
+                    if (star.x < 0) {
+                        star.x = 1200;
+                        star.y = Math.random() * 700;
+                    }
+                    
+                    // Twinkle effect
+                    const twinkle = Math.sin(Date.now() * star.twinkleSpeed) * 0.25 + 0.75;
+                    const currentAlpha = star.alpha * twinkle;
+                    
+                    ctx.fillStyle = layer.color;
+                    ctx.globalAlpha = currentAlpha;
+                    
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Add subtle glow to near stars
+                    if (star.size > 2) {
+                        ctx.globalAlpha = currentAlpha * 0.3;
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.size * 2.2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+            });
+            
+            ctx.globalAlpha = 1;
+        }
+        
+        function animateStars() {
+            if (!isPaused) {
+                updateAndDrawStars();
+            }
+            animationFrame = requestAnimationFrame(animateStars);
+        }
+        
+        // ==================== SPACESHIP ANIMATION ====================
+        let shipGroup = null;
+        let isFlying = false;
+        let flightTime = 0;
+        let flightRAF = null;
+        
+        function initShip() {
+            shipGroup = document.getElementById('ship-group');
+            
+            // Initial slight random position offset for organic feel
+            shipGroup.setAttribute('transform', 'translate(12, -8)');
+            
+            // Set initial dashoffset for drawing animation (will be triggered later)
+            prepareDrawingPaths();
+        }
+        
+        function prepareDrawingPaths() {
+            const paths = document.querySelectorAll('#ship-svg .line, #ship-svg .line-detail, #ship-svg .line-accent');
+            
+            paths.forEach(path => {
+                if (typeof path.getTotalLength === 'function') {
+                    const length = path.getTotalLength();
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+                    path.style.transition = 'none';
+                }
+            });
+            
+            // Hide flames initially
+            const flames = document.getElementById('flames');
+            if (flames) flames.style.opacity = '0';
+        }
+        
+        function startDrawingAnimation() {
+            const paths = Array.from(document.querySelectorAll('#ship-svg .line, #ship-svg .line-detail, #ship-svg .line-accent'));
+            
+            // Reset all
+            paths.forEach(path => {
+                if (typeof path.getTotalLength === 'function') {
+                    const length = path.getTotalLength();
+                    path.style.transition = 'none';
+                    path.style.strokeDashoffset = length;
+                }
+            });
+            
+            // Trigger reflow
+            void document.getElementById('ship-svg').offsetWidth;
+            
+            // Animate with stagger
+            paths.forEach((path, index) => {
+                if (typeof path.getTotalLength !== 'function') return;
+                
+                const length = path.getTotalLength();
+                const delay = index * 38; // ms stagger
+                
+                setTimeout(() => {
+                    path.style.transition = `stroke-dashoffset 820ms cubic-bezier(0.23, 1.0, 0.32, 1)`;
+                    path.style.strokeDashoffset = '0';
+                }, delay);
+            });
+            
+            // Show flames after main structure drawn
+            setTimeout(() => {
+                const flames = document.getElementById('flames');
+                if (flames) {
+                    flames.style.transition = 'opacity 600ms ease';
+                    flames.style.opacity = '1';
+                }
+                
+                // Start subtle running lights pulse
+                startRunningLights();
+            }, 1400);
+            
+            // Auto start floating animation after drawing
+            setTimeout(() => {
+                if (!isFlying) {
+                    startFloatingAnimation();
+                }
+            }, 2200);
+        }
+        
+        let floatingRAF = null;
+        let floatingTime = 0;
+        
+        function startFloatingAnimation() {
+            if (floatingRAF) cancelAnimationFrame(floatingRAF);
+            
+            function float() {
+                if (!shipGroup || isPaused) {
+                    floatingRAF = requestAnimationFrame(float);
+                    return;
+                }
+                
+                floatingTime += 0.018 * speedMultiplier;
+                
+                const bobY = Math.sin(floatingTime * 0.9) * 7.5;
+                const roll = Math.sin(floatingTime * 0.6) * 1.8;
+                const subtleX = Math.sin(floatingTime * 0.4) * 3;
+                
+                shipGroup.setAttribute('transform', 
+                    `translate(${subtleX}, ${bobY}) rotate(${roll} 620 340)`);
+                
+                floatingRAF = requestAnimationFrame(float);
+            }
+            
+            float();
+        }
+        
+        function toggleFlight() {
+            const btn = document.getElementById('flight-btn');
+            
+            if (!isFlying) {
+                // Start stronger flight simulation
+                isFlying = true;
+                btn.innerHTML = '⏸ 停止飛行';
+                btn.style.background = '#334155';
+                
+                if (floatingRAF) {
+                    cancelAnimationFrame(floatingRAF);
+                    floatingRAF = null;
+                }
+                
+                startFlightSimulation();
+            } else {
+                isFlying = false;
+                btn.innerHTML = '✈ 飛行模擬';
+                btn.style.background = '#1e2937';
+                
+                if (flightRAF) {
+                    cancelAnimationFrame(flightRAF);
+                    flightRAF = null;
+                }
+                
+                // Return to gentle floating
+                startFloatingAnimation();
+            }
+        }
+        
+        function startFlightSimulation() {
+            flightTime = 0;
+            
+            function fly() {
+                if (!shipGroup || !isFlying) return;
+                
+                flightTime += 0.022 * speedMultiplier;
+                
+                // More dynamic movement
+                const bobY = Math.sin(flightTime * 1.1) * 11;
+                const roll = Math.sin(flightTime * 0.75) * 3.2;
+                const pitch = Math.sin(flightTime * 0.5) * 0.8;
+                const forwardDrift = Math.sin(flightTime * 0.3) * 4;
+                
+                shipGroup.setAttribute('transform', 
+                    `translate(${forwardDrift}, ${bobY}) rotate(${roll} 620 340)`);
+                
+                // Occasional stronger engine flicker during "flight"
+                if (Math.random() < 0.08) {
+                    flickerEngines();
+                }
+                
+                flightRAF = requestAnimationFrame(fly);
+            }
+            
+            fly();
+        }
+        
+        function flickerEngines() {
+            const mainFlame = document.getElementById('flame-main1');
+            if (!mainFlame) return;
+            
+            const originalOpacity = mainFlame.getAttribute('opacity') || '0.85';
+            
+            mainFlame.setAttribute('opacity', '1');
+            mainFlame.setAttribute('transform', 'scale(1.15)');
+            
+            setTimeout(() => {
+                if (mainFlame) {
+                    mainFlame.setAttribute('opacity', originalOpacity);
+                    mainFlame.setAttribute('transform', 'scale(1)');
+                }
+            }, 90);
+        }
+        
+        function boostThrusters() {
+            const flames = document.getElementById('flames');
+            if (!flames) return;
+            
+            // Temporarily boost flames
+            flames.style.transition = 'all 120ms ease';
+            flames.style.transform = 'translateX(-18px) scale(1.35)';
+            flames.style.opacity = '1';
+            
+            // Make main flame brighter and larger
+            const main1 = document.getElementById('flame-main1');
+            const main2 = document.getElementById('flame-main2');
+            
+            if (main1) {
+                main1.setAttribute('fill', '#fb923c');
+                main1.setAttribute('opacity', '1');
+            }
+            if (main2) main2.setAttribute('opacity', '1');
+            
+            // Stronger flicker
+            let count = 0;
+            const interval = setInterval(() => {
+                if (main1 && count < 6) {
+                    const scale = 1.1 + Math.random() * 0.35;
+                    main1.setAttribute('transform', `scale(${scale})`);
+                    count++;
+                } else {
+                    clearInterval(interval);
+                    if (main1) main1.setAttribute('transform', 'scale(1)');
+                }
+            }, 70);
+            
+            setTimeout(() => {
+                if (flames) {
+                    flames.style.transition = 'all 650ms ease';
+                    flames.style.transform = 'translateX(0) scale(1)';
+                }
+                if (main1) {
+                    main1.setAttribute('fill', '#f97316');
+                    main1.setAttribute('opacity', '0.85');
+                }
+            }, 1350);
+        }
+        
+        function startRunningLights() {
+            const lights = [
+                document.getElementById('light1'),
+                document.getElementById('light2'),
+                document.getElementById('light3')
+            ];
+            
+            lights.forEach((light, i) => {
+                if (!light) return;
+                
+                setInterval(() => {
+                    if (light && !isPaused) {
+                        light.style.transition = 'opacity 180ms ease';
+                        light.setAttribute('opacity', '0.3');
+                        
+                        setTimeout(() => {
+                            if (light) light.setAttribute('opacity', i === 0 ? '0.9' : (i === 1 ? '0.8' : '0.7'));
+                        }, 220);
+                    }
+                }, 1400 + i * 380);
+            });
+        }
+        
+        function updateSpeed(value) {
+            speedMultiplier = parseFloat(value);
+            document.getElementById('speed-value').textContent = speedMultiplier.toFixed(1) + 'x';
+        }
+        
+        function resetAll() {
+            // Stop all animations
+            if (floatingRAF) cancelAnimationFrame(floatingRAF);
+            if (flightRAF) cancelAnimationFrame(flightRAF);
+            isFlying = false;
+            
+            const flightBtn = document.getElementById('flight-btn');
+            flightBtn.innerHTML = '✈ 飛行模擬';
+            flightBtn.style.background = '#1e2937';
+            
+            // Reset ship position
+            if (shipGroup) {
+                shipGroup.setAttribute('transform', 'translate(12, -8) rotate(0 620 340)');
+            }
+            
+            // Reset flames
+            const flames = document.getElementById('flames');
+            if (flames) {
+                flames.style.transition = 'none';
+                flames.style.transform = 'none';
+                flames.style.opacity = '1';
+            }
+            
+            // Reset drawing paths
+            const paths = document.querySelectorAll('#ship-svg .line, #ship-svg .line-detail, #ship-svg .line-accent');
+            paths.forEach(path => {
+                if (typeof path.getTotalLength === 'function') {
+                    path.style.transition = 'none';
+                    const length = path.getTotalLength();
+                    path.style.strokeDashoffset = length;
+                }
+            });
+            
+            // Restart drawing automatically after reset
+            setTimeout(() => {
+                startDrawingAnimation();
+            }, 120);
+        }
+        
+        function updateSpeedFromSlider() {
+            const slider = document.getElementById('speed-slider');
+            slider.addEventListener('input', function() {
+                speedMultiplier = parseFloat(this.value);
+                document.getElementById('speed-value').textContent = speedMultiplier.toFixed(1) + 'x';
+            });
+        }
+        
+        // ==================== INITIALIZATION ====================
+        function init() {
+            createStars();
+            initShip();
+            updateSpeedFromSlider();
+            
+            // Start starfield
+            animateStars();
+            
+            // Auto-start the beautiful drawing animation after short delay
+            setTimeout(() => {
+                startDrawingAnimation();
+            }, 650);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === ' ' || e.key === 'Spacebar') {
+                    e.preventDefault();
+                    const btn = document.getElementById('flight-btn');
+                    if (btn) btn.click();
+                }
+                
+                if (e.key.toLowerCase() === 'r') {
+                    resetAll();
+                }
+                
+                if (e.key.toLowerCase() === 'b') {
+                    boostThrusters();
+                }
+            });
+            
+            // Easter egg: click on scene to boost
+            const scene = document.querySelector('.scene');
+            if (scene) {
+                scene.addEventListener('click', function(e) {
+                    // Only boost if clicking roughly on the ship area
+                    if (e.offsetX > 280 && e.offsetX < 1050) {
+                        boostThrusters();
+                    }
+                });
+            }
+            
+            // Set initial speed display
+            document.getElementById('speed-value').textContent = '1.0x';
+            
+            console.log('%c[Spaceship] 極細線條動畫已初始化。使用空格鍵切換飛行，R 重置，B 加強推進。', 'color:#64748b');
+        }
+        
+        // Boot
+        window.onload = init;
+        
+        // Pause animation when tab hidden (performance)
+        document.addEventListener('visibilitychange', () => {
+            isPaused = document.hidden;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini 3.5 - Quantum Fluid Canvas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #050508;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            z-index: 10;
+            pointer-events: none;
+            background: rgba(10, 10, 15, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            color: #4facfe;
+            text-transform: uppercase;
+        }
+        p {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            margin-bottom: 12px;
+        }
+        .stat {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #00f2fe;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui-overlay">
+        <h1>Gemini 3.5 Engine</h1>
+        <p>Interactive Vector Wavefield Simulation</p>
+        <div class="stat" id="fps">FPS: --</div>
+        <div class="stat" id="pcount">Particles: --</div>
+        <div class="stat" style="margin-top: 8px; color: #a0aec0;">Move mouse / Drag to disrupt flow</div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const fpsDisplay = document.getElementById('fps');
+        const pcountDisplay = document.getElementById('pcount');
+
+        // State & Configuration
+        let width, height;
+        let particles = [];
+        let mouse = { x: -1000, y: -1000, px: -1000, py: -1000, down: false, radius: 120 };
+        let tick = 0;
+        
+        // Performance adjustments based on screen size
+        let maxParticles = 1800;
+        
+        // Track FPS
+        let lastCalledTime;
+        let fps;
+
+        function init() {
+            resize();
+            createParticles();
+            window.addEventListener('resize', resize);
+            
+            // Mouse & Touch Interaction
+            window.addEventListener('mousemove', e => updateMouse(e.clientX, e.clientY));
+            window.addEventListener('mousedown', () => mouse.down = true);
+            window.addEventListener('mouseup', () => mouse.down = false);
+            
+            window.addEventListener('touchmove', e => {
+                if(e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+            });
+            window.addEventListener('touchstart', () => mouse.down = true);
+            window.addEventListener('touchend', () => {
+                mouse.down = false;
+                mouse.x = -1000;
+                mouse.y = -1000;
+            });
+
+            loop();
+        }
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            maxParticles = Math.min(2000, Math.floor((width * height) / 400));
+            pcountDisplay.innerText = `Particles: ${particles.length}`;
+        }
+
+        function updateMouse(x, y) {
+            mouse.px = mouse.x;
+            mouse.py = mouse.y;
+            mouse.x = x;
+            mouse.y = y;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initPhase = false) {
+                this.x = Math.random() * width;
+                this.y = initPhase ? Math.random() * height : (Math.random() > 0.5 ? 0 : height);
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.baseAlpha = Math.random() * 0.4 + 0.3;
+                this.alpha = this.baseAlpha;
+                this.hue = 190;
+                this.life = Math.random() * 200 + 100;
+                this.maxLife = this.life;
+            }
+
+            update() {
+                // Background Mathematical Vector Field (Trigonometric Flow)
+                // Simulating shifting forces over space and time
+                let angle = (Math.sin(this.x * 0.005 + tick * 0.01) + Math.cos(this.y * 0.005 + tick * 0.012)) * Math.PI;
+                
+                // Acceleration vectors
+                let ax = Math.cos(angle) * 0.12;
+                let ay = Math.sin(angle) * 0.08;
+
+                // Mouse Interaction Logic
+                let dx = this.x - mouse.x;
+                let dy = this.y - mouse.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < mouse.radius) {
+                    let force = (mouse.radius - dist) / mouse.radius;
+                    
+                    if (mouse.down) {
+                        // Vortex/Suck effect on click
+                        let angleToMouse = Math.atan2(dy, dx);
+                        ax -= Math.cos(angleToMouse) * force * 0.6;
+                        ay -= Math.sin(angleToMouse) * force * 0.6;
+                        this.hue = 280; // Shift to violet/pink
+                    } else {
+                        // Repel fluid effect on hover
+                        let velocityX = mouse.x - mouse.px;
+                        let velocityY = mouse.y - mouse.py;
+                        ax += velocityX * force * 0.05 + (dx / dist) * force * 0.2;
+                        ay += velocityY * force * 0.05 + (dy / dist) * force * 0.2;
+                        this.hue = 150 + force * 40; // Shift to emerald cyan
+                    }
+                    this.alpha = Math.min(1, this.baseAlpha + force * 0.5);
+                } else {
+                    // Gradual recovery to base properties
+                    this.hue += (190 - this.hue) * 0.05;
+                    this.alpha += (this.baseAlpha - this.alpha) * 0.05;
+                }
+
+                // Update velocities and apply friction/drag coefficient
+                this.vx = (this.vx + ax) * 0.96;
+                this.vy = (this.vy + ay) * 0.96;
+
+                // Update positions
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Boundary condition check
+                this.life--;
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height || this.life <= 0) {
+                    this.reset(false);
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 90%, 65%, ${this.alpha})`;
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function calculateFps() {
+            if (!lastCalledTime) {
+                lastCalledTime = performance.now();
+                fps = 60;
+                return;
+            }
+            let delta = (performance.now() - lastCalledTime) / 1000;
+            lastCalledTime = performance.now();
+            fps = Math.round(1 / delta);
+            fpsDisplay.innerText = `FPS: ${fps}`;
+        }
+
+        function loop() {
+            // Motion Blur Trail Effect
+            ctx.fillStyle = 'rgba(5, 5, 8, 0.12)';
+            ctx.fillRect(0, 0, width, height);
+
+            tick++;
+            calculateFps();
+
+            // Handle dynamic scaling seamlessly
+            if (particles.length < maxParticles) {
+                particles.push(new Particle());
+            } else if (particles.length > maxParticles) {
+                particles.pop();
+            }
+
+            // Update & Draw calculations
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.update();
+                p.draw();
+            }
+
+            // Ambient central energy source visualization
+            let gradient = ctx.createRadialGradient(width/2, height/2, 10, width/2, height/2, Math.max(width, height)*0.4);
+            gradient.addColorStop(0, `rgba(79, 172, 254, ${0.03 + Math.sin(tick * 0.02) * 0.01})`);
+            gradient.addColorStop(0.5, `rgba(0, 242, 254, 0.01)`);
+            gradient.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            requestAnimationFrame(loop);
+        }
+
+        // Run the engine
+        init();
+    </script>
+</body>
+</html>
