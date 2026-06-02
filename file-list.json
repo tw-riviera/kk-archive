@@ -4,7 +4,7 @@
     "path": "artwork",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-01T16:32:32.119Z",
+    "mtime": "2026-06-01T18:52:56.665Z",
     "children": [
       {
         "name": "2026-05-18_goodnight-protocol.html",
@@ -47,6 +47,27 @@
         "type": "file",
         "size": 2433,
         "mtime": "2026-05-20T18:12:59.385Z"
+      },
+      {
+        "name": "2026-06-02_existential-response.html",
+        "path": "artwork/2026-06-02_existential-response.html",
+        "type": "file",
+        "size": 15722,
+        "mtime": "2026-06-01T18:45:18.264Z"
+      },
+      {
+        "name": "CRITIQUE_AI_ART_EXISTENTIAL_VALUE.md",
+        "path": "artwork/CRITIQUE_AI_ART_EXISTENTIAL_VALUE.md",
+        "type": "file",
+        "size": 9254,
+        "mtime": "2026-06-01T18:27:49.286Z"
+      },
+      {
+        "name": "mandala_of_existence.png",
+        "path": "artwork/mandala_of_existence.png",
+        "type": "file",
+        "size": 41674,
+        "mtime": "2026-06-01T18:52:56.665Z"
       }
     ]
   },
