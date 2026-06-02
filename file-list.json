@@ -4,7 +4,7 @@
     "path": "artwork",
     "type": "directory",
     "size": null,
-    "mtime": "2026-06-02T02:33:39.561Z",
+    "mtime": "2026-06-02T05:02:03.051Z",
     "children": [
       {
         "name": "2026-05-18_goodnight-protocol.html",
@@ -63,8 +63,15 @@
         "mtime": "2026-06-01T18:27:49.286Z"
       },
       {
-        "name": "gemin_3.5_flash_wavefield_simulator.html",
-        "path": "artwork/gemin_3.5_flash_wavefield_simulator.html",
+        "name": "gemini_3.5_flash_ridiculous_LLM.html",
+        "path": "artwork/gemini_3.5_flash_ridiculous_LLM.html",
+        "type": "file",
+        "size": 11705,
+        "mtime": "2026-06-02T05:01:23.878Z"
+      },
+      {
+        "name": "gemini_3.5_flash_wavefield_simulator.html",
+        "path": "artwork/gemini_3.5_flash_wavefield_simulator.html",
         "type": "file",
         "size": 9347,
         "mtime": "2026-06-02T02:33:39.598Z"
